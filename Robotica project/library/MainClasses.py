@@ -33,7 +33,7 @@ class Leg:
         pass
 
     def moveForward(self):
-        self
+        pass
 
     def moveBackwards(self):
         pass
@@ -77,9 +77,21 @@ class Dance:
     def configureLegs(self):
         pass
 
+    def detectSound(self):
+        pass
+
+    def pirouette(self):
+        pass
+
+    def touch_line(self):
+        pass
+
+    def show_emotion(self):
+        pass
+
 
 class Arm:
-    def __int__(self):
+    def __init__(self):
         pass
 
     def grab(self):
