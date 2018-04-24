@@ -32,10 +32,8 @@ class Leg:
     def __init__(self):
         pass
 
-    def moveForward(self):
-        pass
     def move_forward(self):
-        self
+        pass
 
     def move_backwards(self):
         pass
@@ -44,10 +42,10 @@ class Leg:
         pass
 
     def get_position(self):
-        self
+        pass
 
     def set_position(self):
-        self
+        pass
 
 
 class Lights:
@@ -85,7 +83,7 @@ class Dance:
     def configure_legs(self):
         pass
 
-    def detectSound(self):
+    def detect_sound(self):
         pass
 
     def pirouette(self):
@@ -95,6 +93,15 @@ class Dance:
         pass
 
     def show_emotion(self):
+        Emotion.movements()
+        Emotion.sounds()
+
+
+class Emotion:
+    def movements(self):
+        pass
+
+    def sounds(self):
         pass
 
 
