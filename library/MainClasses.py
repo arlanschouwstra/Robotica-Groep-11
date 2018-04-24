@@ -112,6 +112,12 @@ class Dance:
     def __init__(self):
         pass
 
+    def begin(self):
+        pass
+
+    def end(self):
+        pass
+    
     def configure_legs(self):
         pass
 
