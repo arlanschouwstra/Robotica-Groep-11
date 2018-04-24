@@ -1,80 +1,70 @@
-class Servo{
+class Servo:
+    def __init__(self):
+        pass
 
-	def rotate{
-	}
+    def rotate(self):
+        pass
+    def forward(self):
+        pass
+    def backwards(self):
+        pass
 
-	def forward{
-	}
+class Network:
+    def __init__(self):
+        pass
+    def configure(self):
+        pass
 
-	def backwards{
-	}
-}
+class BluetoothController:
+    def __init__(self):
+        pass
+    def configure(self):
+        pass
 
-class Network{
-	
-	def configure{
-	}
-}
+class Leg:
+    def __init__(self):
+        pass
+    def moveForward(self):
+        self
+    def moveBackwards(self):
+        pass
+    def rotate(self):
+        pass
 
-class BluetoothController{
+class Lights:
+    def __init__(self):
+        pass
+    def turnOn(self):
+        pass
+    def turnOff(self):
+        pass
 
-	def configure{
-	}
-}
+class Camera:
+    def __init__(self):
+        pass
+    def turnOn(self):
+        pass
+    def turnOff(self):
+        pass
+    def reset(self):
+        pass
+    def detectObjects(self):
+        pass
 
-class Leg{
+class Dance:
+    def __init__(self):
+        pass
+    def configureLegs(self):
+        pass
 
-	def moveForward{
-	}
-	
-	def moveBackwards{
-	}
-	
-	def rotate{
-	}
-}
-
-class Lights{
-	
-	def turnOn{
-	}
-	
-	def turnOff{
-	}
-}
-
-class Camera{
-	
-	def turnOn{
-	}
-	
-	def turnOff{
-	}
-	
-	def reset{
-	}
-	
-	def detectObjects{
-	}
-}
-
-class Dance{
-
-	def configureLegs{
-	}
-}
-
-class Arm{
-
-	def grab{
-	}
-	
-	def rotate{
-	}
-	
-	def moveForward{
-	}
-	
-	def moveBackwards{
-	}
-}
+class Arm:
+    def __int__(self):
+        pass
+    def grab(self):
+        pass
+    def rotate(self):
+        pass
+    def moveForward(self):
+        pass
+    def moveBackwards(self):
+        pass
