@@ -1,3 +1,9 @@
+# import all variables needed for the functions, call with 'Variables.[variable_name]'
+import Variables
+
+# Classes created:  Servo, Network, BluetoothController, Leg, Lights, Camera, Dance, Emotion, Arm, Build, Move
+
+
 class Servo:
     import RPi.GPIO as GPIO
 
@@ -71,6 +77,9 @@ class Lights:
     def turn_off(self):
         pass
 
+    def sync_with_sound(self):
+        pass
+
 
 class Camera:
     def __init__(self):
@@ -108,14 +117,21 @@ class Dance:
     def show_emotion(self):
         Emotion.movements()
         Emotion.sounds()
+        pass
 
 
 class Emotion:
+    def __init__(self):
+        pass
+
     def movements(self):
         pass
 
     def sounds(self):
         pass
+
+    def lights(self):
+       pass
 
 
 class Arm:
@@ -149,4 +165,18 @@ class Build:
         pass
 
     def detect_blocks(self):
+        pass
+
+    def place_block(self, position):
+        pass
+
+
+class Move:
+    def __init__(self):
+        pass
+
+    def legs(self, leg, position):
+        pass
+
+    def arm(self, arm, position):
         pass
