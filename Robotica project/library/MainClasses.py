@@ -108,6 +108,11 @@ class Arm:
 
 
 class Build:
-
     def __init__(self):
-        self
+        pass
+
+    def configure_arms(self):
+        pass
+
+    def detect_blocks(self):
+        pass
