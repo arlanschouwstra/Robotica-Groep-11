@@ -1,3 +1,7 @@
+# import all variables needed for the functions, call with 'Variables.[variable_name]'
+import Variables
+
+
 class Servo:
     def __init__(self):
         pass
@@ -98,6 +102,9 @@ class Dance:
 
 
 class Emotion:
+    def __init__(self):
+        pass
+
     def movements(self):
         pass
 
