@@ -1,5 +1,8 @@
+# We are not going to use legs, so this class is pointless now.
+
 class Leg:
-    def __init__(self):
+    def __init__(self, servos):
+        self.servos = servos
         pass
 
     def move_forward(self):

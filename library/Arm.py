@@ -1,5 +1,6 @@
 class Arm:
-    def __init__(self):
+    def __init__(self, servos):
+        self.servos = servos
         pass
 
     def grab(self):
