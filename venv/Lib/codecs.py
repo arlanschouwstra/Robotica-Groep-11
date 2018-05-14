@@ -82,7 +82,7 @@ class CodecInfo(tuple):
     """Codec details when looking up the codec registry"""
 
     # Private API to allow Python to blacklist the known non-Unicode
-    # codecs in the standard library. A more general mechanism to
+    # codecs in the standard Models. A more general mechanism to
     # reliably distinguish test encodings from other codecs will hopefully
     # be defined for Python 3.5
     #

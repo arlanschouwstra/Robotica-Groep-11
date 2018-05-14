@@ -5,7 +5,7 @@
 #
 # Copyright (c) 1998-2001 by Secret Labs AB.  All rights reserved.
 #
-# This version of the SRE library can be redistributed under CNRI's
+# This version of the SRE Models can be redistributed under CNRI's
 # Python 1.6 license.  For any other use, please contact Secret Labs
 # AB (info@pythonware.com).
 #
