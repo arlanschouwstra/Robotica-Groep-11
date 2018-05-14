@@ -78,6 +78,22 @@ h1{
     display:inline-block;
     text-align: center;
     font-family: Serif;
+    margin-left: -5px;
+    margin-right: -5px;
+    color: black;
+    cursor: pointer;
+    border-bottom: 1px solid black;
+    text-decoration: none;
+    text-decoration-line: none;
+    text-decoration-style: initial;
+    text-decoration-color: initial;
+}
+.list-item2 {
+    display:inline-block;
+    margin-left: 100px;
+    margin-right: 100px;
+    text-align: center;
+    font-family: Serif;
     color: black;
     cursor: pointer;
     border-bottom: 1px solid black;
@@ -95,6 +111,16 @@ h1{
 
 }
 
+.github-logo2{
+    margin-top: 200px;
+    margin-right: 10px;
+    width: 500px;
+    height: auto;
+}
+
+.top{
+    text-align: center;
+}
 .list-item a {
     display: flex;
     color: black;
