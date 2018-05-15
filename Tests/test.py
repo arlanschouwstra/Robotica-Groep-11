@@ -1,4 +1,4 @@
-import ax12 as x
+import Models.ax12 as x
 import time
 
 y = x.Ax12()
