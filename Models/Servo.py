@@ -1,27 +1,32 @@
+import pygame
+import ax12 as x
+import time
+
+
 class Servo:
-    import RPi.GPIO as GPIO
 
-    def __init__(self, pin):
-        # define the pin for the servo
-        self.pin = pin
+    def __init__(self):
+        pygame.init()
+        pygame.display.set_mode()
 
-        # setup the pin for output
-        GPIO.setup(pin, GPIO.OUT)
-        pass
+    def move_forward(self, id):                     # moving the servo forward on button press
+        y = x.Ax12()
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_UP:    # can be changed later for controller keys or joysticks
+                        y.moveSpeed(id, 0, 1000)
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_UP:    # can be changed later for controller keys or joysticks
+                        y.moveSpeed(id, 0, 0)
 
-    # move the servo to a given position
-    def move(self, position):
-        GPIO.output(self.pin, position)
-        pass
-
-    def rotate(self):
-        pass
-
-    def forward(self):
-        pass
-
-    def backwards(self):
-        pass
-
-
-
+    def move_backward(self, id):                    # moving the servo backward on button press
+        y = x.Ax12()
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_DOWN:  # can be changed later for controller keys or joysticks
+                        y.moveSpeed(id, 0, 2000)
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_DOWN:  # can be changed later for controller keys or joysticks
+                        y.moveSpeed(id, 0, 0)
