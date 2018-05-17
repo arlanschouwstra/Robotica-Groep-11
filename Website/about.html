@@ -1,62 +1,357 @@
-<!doctype html>
-<html class="no-js" lang="">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <!-- Basic Page Needs
+        ================================================== -->
+        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="icon" href="favicon.ico">
+        <title>IDP Groep 11</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="">
+        <!-- Mobile Specific Metas
+        ================================================== -->
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="apple-touch-icon" href="icon.png">
-    <!-- Place favicon.ico in the root directory -->
+        
+        <!-- Template CSS Files
+        ================================================== -->
+        <!-- Twitter Bootstrs CSS -->
+        <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css">
+        <!-- Ionicons Fonts Css -->
+        <link rel="stylesheet" href="plugins/ionicons/ionicons.min.css">
+        <!-- animate css -->
+        <link rel="stylesheet" href="plugins/animate-css/animate.css">
+        <!-- Hero area slider css-->
+        <link rel="stylesheet" href="plugins/slider/slider.css">
+        <!-- owl craousel css -->
+        <link rel="stylesheet" href="plugins/owl-carousel/owl.carousel.css">
+        <link rel="stylesheet" href="plugins/owl-carousel/owl.theme.css">
+        <!-- Fancybox -->
+        <link rel="stylesheet" href="plugins/facncybox/jquery.fancybox.css">
+        <!-- template main css file -->
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
 
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/main.css">
-</head>
-<body>
-<div class="background-image"></div>
 
-<div class="content">
-<!--[if lte IE 9]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-<![endif]-->
+        <!--
+        ==================================================
+        Header Section Start
+        ================================================== -->
+        <header id="top-bar" class="navbar-fixed-top animated-header">
+            <div class="container">
+                <div class="navbar-header">
+                    <!-- responsive nav button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!-- /responsive nav button -->
 
-<!-- Add your site or application content here -->
-<div class="container">
-    <div class="nav-bar">
-        <ul class="nav-bar">
-            <li class="list-item"><a class="list-item" href="index.html">HOME</a></li>
-            <li class="list-item"><a class="list-item" href="news.html">NEWS     </a></li>
-            <a href="https://github.com/arlanschouwstra/Robotica-Groep-11" title="Github"><img class="github-logo" src="img/logo.png" onmouseover="this.src='img/logo2.png'" onmouseout="this.src='img/logo.png'"/></a>            <li class="list-item"><a class="list-item" href="contact.html">     CONTACT</a></li>
-            <li class="list-item"><a class="list-item" href="about.html">     ABOUT</a></li>
-        </ul>
+                    <!-- logo -->
+                    <div class="navbar-brand">
+                        <a href="index.html" >
+                            <img src="images/NhlStenden.png" alt="">
+                        </a>
+                    </div>
+                    <!-- /logo -->
+                </div>
+                <!-- main menu -->
+                <nav class="collapse navbar-collapse navbar-right" role="navigation">
+                    <div class="main-menu">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="index.html" >Home</a></li>
+                            <li><a href="about.html">Info</a></li>
+                            <li><a href="blog-fullwidth.html">Blog</a></li>
+                        </ul>
+                    </div>
+                </nav>
+                <!-- /main nav -->
+            </div>
+        </header>
+
+
+        <!--
+                ==================================================
+                    Global Page Section Start
+                ================================================== -->
+        <section class="global-page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="block">
+                            <h2>Info</h2>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <a href="index.html">
+                                        <i class="ion-ios-home"></i>
+                                        Home
+                                    </a>
+                                </li>
+                                <li class="active">Info</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+<!-- 
+================================================== 
+    Company Description Section Start
+================================================== -->
+<section class="company-description">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 wow fadeInLeft" data-wow-delay=".3s" >
+                <img src="images/about/about-company.jpg" alt="" class="img-responsive">
+            </div>
+            <div class="col-md-6">
+                <div class="block">
+                    <h3 class="subtitle wow fadeInUp" data-wow-delay=".3s" data-wow-duration="500ms">Project informatie</h3>
+                    <p  class="wow fadeInUp" data-wow-delay=".5s" data-wow-duration="500ms">
+                        Afgelopen maandag 23 april, zijn wij begonnen aan het project IDP op het NHL in Leeuwarden.
+                        Dit is een interdisciplinair project tussen de opleidingen Werktuigbouwkunde,
+                        Elektro Techniek en Informatica, waarbij de opdracht bestaat uit het ontwikkelen van een robot die verschillende soorten taken moet kunnen uitvoeren.
+                    </p>
+                    <p  class="wow fadeInUp" data-wow-delay=".7s" data-wow-duration="500ms">
+                        Deze robot wordt door middel van een controller aangestuurd via een touchscreen waarmee de gebruiker de robot verschillende opdrachten kan geven.
+                        Deze opdrachten bestaan onder andere uit het opbouwen van een toren met blokken, dansen in een danswedstrijd en het opvangen van ballen uit de lucht.
+                        De project groepen bestaan uit studenten Werktuigbouwkunde, Elektro Techniek en Informatica,
+                        deze studenten zijn elk verantwoordelijk voor het ontwikkelen van onderdelen van de robot die te maken hebben met hun opleiding.
+                        Dit project duurt tot 25 juni, waarna er een wedstrijd wordt gehouden tussen de robots die zijn ontwikkeld door alle verschillende groepen.
+                        Hieruit zal uiteindelijk een aantal winnaars komen die worden beloont voor hun werk.
+                    </p>
+                    
+                </div>
+            </div>
+        </div>
     </div>
+</section>
 
-    <div class="about">
-        <h1>IDP Project Groep 11</h1>
-        <p>
-            Afgelopen maandag 23 april, zijn wij begonnen aan het project IDP op het NHL in Leeuwarden.
-            Dit is een interdisciplinair project tussen de opleidingen Werktuigbouwkunde, Elektro Techniek en Informatica, waarbij de opdracht bestaat uit het ontwikkelen van een robot die verschillende soorten taken moet kunnen uitvoeren.
-            Deze robot wordt door middel van een controller aangestuurd via een touchscreen waarmee de gebruiker de robot verschillende opdrachten kan geven. Deze opdrachten bestaan onder andere uit het opbouwen van een toren met blokken, dansen in een danswedstrijd en het opvangen van ballen uit de lucht.
-            De project groepen bestaan uit studenten Werktuigbouwkunde, Elektro Techniek en Informatica, deze studenten zijn elk verantwoordelijk voor het ontwikkelen van onderdelen van de robot die te maken hebben met hun opleiding.
-            Dit project duurt tot 25 juni, waarna er een wedstrijd wordt gehouden tussen de robots die zijn ontwikkeld door alle verschillende groepen.
-            Hieruit zal uiteindelijk een aantal winnaars komen die worden beloont voor hun werk.</p>
+
+<!--
+================================================== 
+    Team Section Start
+================================================== -->
+<section id="team">
+    <div class="container">
+        <div class="row">
+            <h2 class="subtitle text-center">Het Team</h2>
+            <div class="col-md-3">
+                <div class="team-member wow fadeInLeft" data-wow-duration="500ms" data-wow-delay=".5s">
+                    <div class="team-img">
+                        <img src="images/team/Lars.png" class="team-pic" alt="">
+                    </div>
+                    <h3 class="team_name">Lars Hoogma</h3>
+                    <p class="team_designation">Student Informatica</p>
+                    <p class="team_text">Email: hoog1511@student.nhl.nl</p>
+                    <p class="team_text">Phone: +31643725972</p>
+                    <p class="social-icons">
+                        <a href="https://www.facebook.com/lars.hoogma" class="facebook" target="_blank"><i class="ion-social-facebook-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-twitter-outline"></i></a>
+                        <a href="https://www.linkedin.com/in/lars-hoogma-1ba76783/" target="_blank"><i class="ion-social-linkedin-outline"></i></a>
+                        <a href="https://plus.google.com/u/0/105995785150527403828" target="_blank"><i class="ion-social-googleplus-outline"></i></a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="team-member wow fadeInLeft" data-wow-duration="500ms" data-wow-delay=".5s">
+                    <div class="team-img">
+                        <img src="images/team/Tom.png" class="team-pic" alt="">
+                    </div>
+                    <h3 class="team_name">Tom Doornbos</h3>
+                    <p class="team_designation">Student Informatica</p>
+                    <p class="team_text">Email: door1602@student.nhl.nl</p>
+                    <p class="team_text">Phone: +31619502095</p>
+                    <p class="social-icons">
+                        <a href="#" class="facebook" target="_blank"><i class="ion-social-facebook-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-twitter-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-linkedin-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-googleplus-outline"></i></a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="team-member wow fadeInLeft" data-wow-duration="500ms" data-wow-delay=".5s">
+                    <div class="team-img">
+                        <img src="images/team/Arlan.png" class="team-pic" alt="">
+                    </div>
+                    <h3 class="team_name">Arlan Schouwstra</h3>
+                    <p class="team_designation">Student Informatica</p>
+                    <p class="team_text">Email: scho1514@student.nhl.nl</p>
+                    <p class="team_text">Phone: +31659434065</p>
+                    <p class="social-icons">
+                        <a href="#" class="facebook" target="_blank"><i class="ion-social-facebook-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-twitter-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-linkedin-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-googleplus-outline"></i></a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="team-member wow fadeInLeft" data-wow-duration="500ms" data-wow-delay=".5s">
+                    <div class="team-img">
+                        <img src="images/team/Random.png" class="team-pic" alt="">
+                    </div>
+                    <h3 class="team_name">Thijs Zijlstra</h3>
+                    <p class="team_designation">Student Informatica</p>
+                    <p class="team_text">Email: zijl1614@student.nhl.nl</p>
+                    <p class="team_text">Phone: +31629345725</p>
+                    <p class="social-icons">
+                        <a href="#" class="facebook" target="_blank"><i class="ion-social-facebook-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-twitter-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-linkedin-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-googleplus-outline"></i></a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="team-member wow fadeInLeft" data-wow-duration="500ms" data-wow-delay=".5s">
+                    <div class="team-img">
+                        <img src="images/team/Leon.png" class="team-pic" alt="">
+                    </div>
+                    <h3 class="team_name">Leon Schubert</h3>
+                    <p class="team_designation">Student Informatica</p>
+                    <p class="team_text">Email: schu1609@student.nhl.nl</p>
+                    <p class="team_text">Phone: +31629871314</p>
+                    <p class="social-icons">
+                        <a href="#" class="facebook" target="_blank"><i class="ion-social-facebook-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-twitter-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-linkedin-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-googleplus-outline"></i></a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="team-member wow fadeInLeft" data-wow-duration="500ms" data-wow-delay=".5s">
+                    <div class="team-img">
+                        <img src="images/team/Random.png" class="team-pic" alt="">
+                    </div>
+                    <h3 class="team_name">Lucas Bakker</h3>
+                    <p class="team_designation">Student Werktuigbouw</p>
+                    <p class="team_text">Email: bakk1606@student.nhl.nl</p>
+                    <p class="team_text">Phone: +31615085963</p>
+                    <p class="social-icons">
+                        <a href="#" class="facebook" target="_blank"><i class="ion-social-facebook-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-twitter-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-linkedin-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-googleplus-outline"></i></a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="team-member wow fadeInLeft" data-wow-duration="500ms" data-wow-delay=".5s">
+                    <div class="team-img">
+                        <img src="images/team/Random.png" class="team-pic" alt="">
+                    </div>
+                    <h3 class="team_name">Maarten Jorna</h3>
+                    <p class="team_designation">Student Werktuigbouw</p>
+                    <p class="team_text">Email: jorn1600@student.nhl.nl</p>
+                    <p class="team_text">Phone: +31613042724</p>
+                    <p class="social-icons">
+                        <a href="#" class="facebook" target="_blank"><i class="ion-social-facebook-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-twitter-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-linkedin-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-googleplus-outline"></i></a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="team-member wow fadeInLeft" data-wow-duration="500ms" data-wow-delay=".5s">
+                    <div class="team-img">
+                        <img src="images/team/Random.png" class="team-pic" alt="">
+                    </div>
+                    <h3 class="team_name">Toon Jorna</h3>
+                    <p class="team_designation">Student Werktuigbouw</p>
+                    <p class="team_text">Email: jorn1601@student.nhl.nl</p>
+                    <p class="team_text">Phone: +31630544017</p>
+                    <p class="social-icons">
+                        <a href="#" class="facebook" target="_blank"><i class="ion-social-facebook-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-twitter-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-linkedin-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-googleplus-outline"></i></a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="team-member wow fadeInLeft" data-wow-duration="500ms" data-wow-delay=".7s">
+                    <div class="team-img">
+                        <img src="images/team/Random.png" class="team-pic" alt="">
+                    </div>
+                    <h3 class="team_name">Steven Wijnja</h3>
+                    <p class="team_designation">Student Elektro Techniek</p>
+                    <p class="team_text">Email: wijn1600@student.nhl.nl</p>
+                    <p class="team_text">Phone: +31630030825</p>
+                    <p class="social-icons">
+                        <a href="#" class="facebook" target="_blank"><i class="ion-social-facebook-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-twitter-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-linkedin-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-googleplus-outline"></i></a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="team-member wow fadeInLeft" data-wow-duration="500ms" data-wow-delay=".9s">
+                    <div class="team-img">
+                        <img src="images/team/Jorn.jpg" class="team-pic" alt="">
+                    </div>
+                    <h3 class="team_name">Jorn Souverein</h3>
+                    <p class="team_designation">Student Elektro Techniek</p>
+                    <p class="team_text">Email: souv1600@student.nhl.nl</p>
+                    <p class="team_text">Phone: +31646791802</p>
+                    <p class="social-icons">
+                        <a href="#" class="facebook" target="_blank"><i class="ion-social-facebook-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-twitter-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-linkedin-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-googleplus-outline"></i></a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="team-member wow fadeInLeft" data-wow-duration="500ms" data-wow-delay=".9s">
+                    <div class="team-img">
+                        <img src="images/team/Random.png" class="team-pic" alt="">
+                    </div>
+                    <h3 class="team_name">Ype Breeuwsma</h3>
+                    <p class="team_designation">Student Elektro Techniek</p>
+                    <p class="team_text">Email: bree1601@student.nhl.nl</p>
+                    <p class="team_text">Phone: +31614052514</p>
+                    <p class="social-icons">
+                        <a href="#" class="facebook" target="_blank"><i class="ion-social-facebook-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-twitter-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-linkedin-outline"></i></a>
+                        <a href="#" target="_blank"><i class="ion-social-googleplus-outline"></i></a>
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-
-<script src="js/vendor/modernizr-3.5.0.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
-<script src="js/plugins.js"></script>
-<script src="js/main.js"></script>
-
-<!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-<script>
-    window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
-    ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
-</script>
-<script src="https://www.google-analytics.com/analytics.js" async defer></script>
-</div>
-</body>
+</section>
+	<!-- Template Javascript Files
+	================================================== -->
+	<!-- jquery -->
+	<script src="plugins/jQurey/jquery.min.js"></script>
+	<!-- Form Validation -->
+    <script src="plugins/form-validation/jquery.form.js"></script> 
+    <script src="plugins/form-validation/jquery.validate.min.js"></script>
+	<!-- owl carouserl js -->
+	<script src="plugins/owl-carousel/owl.carousel.min.js"></script>
+	<!-- bootstrap js -->
+	<script src="plugins/bootstrap/bootstrap.min.js"></script>
+	<!-- wow js -->
+	<script src="plugins/wow-js/wow.min.js"></script>
+	<!-- slider js -->
+	<script src="plugins/slider/slider.js"></script>
+	<!-- Fancybox -->
+	<script src="plugins/facncybox/jquery.fancybox.js"></script>
+	<!-- template main js -->
+	<script src="js/main.js"></script>
+ 	</body>
 </html>
