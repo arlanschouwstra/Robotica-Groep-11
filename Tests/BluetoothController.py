@@ -1,6 +1,6 @@
 import unittest
 
-class TestStringMethods(unittest.TestCase):
+class TestBluetooth(unittest.TestCase):
 
     def test_upper(self):
         self.assertEqual('foo'.upper(), 'FOO')

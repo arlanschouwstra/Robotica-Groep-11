@@ -1,7 +1,7 @@
 import Models.ax12 as x
 import unittest
 
-class TestStringMethods(unittest.TestCase):
+class TestServo(unittest.TestCase):
 
     def test_upper(self):
         y = x.Ax12()
