@@ -29,84 +29,83 @@ class Servo:
 
     # moving the given servo forward or backward on button press
     @staticmethod
-    def move(servo_id, cw_servo, event, start_position, body, vertical):
+    def move(event, servo_id, start_position, clockwise, body, vertical):
         y = x.Ax12()
+        start_speed = 100
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:  # can be changed later for controller keys or joysticks
                 if body:
                     if vertical:
-                        y.moveSpeed(servo_id, start_position, 100)
+                        y.moveSpeed(servo_id, start_position, start_speed)
                         print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
 
             if event.key == pygame.K_DOWN:  # can be changed later for controller keys or joysticks
                 if body:
                     if vertical:
-                        if not cw_servo:
-                            y.moveSpeed(servo_id, start_position + 200, 100)
+                        if not clockwise:
+                            y.moveSpeed(servo_id, start_position + 200, start_speed)
                             print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
                         else:
-                            y.moveSpeed(servo_id, start_position - 200, 100)
+                            y.moveSpeed(servo_id, start_position - 200, start_speed)
                             print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
 
             if event.key == pygame.K_LEFT:  # can be changed later for controller keys or joysticks
                 if body:
                     if not vertical:
-                        y.moveSpeed(servo_id, start_position + 200, 100)
+                        y.moveSpeed(servo_id, start_position + 200, start_speed)
                         print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
 
             if event.key == pygame.K_RIGHT:  # can be changed later for controller keys or joysticks
                 if body:
                     if not vertical:
-                        y.moveSpeed(servo_id, start_position - 200, 100)
+                        y.moveSpeed(servo_id, start_position - 200, start_speed)
                         print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
 
             if event.key == pygame.K_a:  # can be changed later for controller keys or joysticks
                 if not body:
                     if not vertical:
-                        if cw_servo:
-                            y.moveSpeed(servo_id, start_position + 200, 100)
+                        if clockwise:
+                            y.moveSpeed(servo_id, start_position + 200, start_speed)
                             print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
 
             if event.key == pygame.K_d:  # can be changed later for controller keys or joysticks
                 if not body:
                     if not vertical:
-                        if cw_servo:
-                            y.moveSpeed(servo_id, start_position - 200, 100)
+                        if clockwise:
+                            y.moveSpeed(servo_id, start_position - 200, start_speed)
                             print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
 
             if event.key == pygame.K_w:  # can be changed later for controller keys or joysticks
                 if not body:
                     if not vertical:
-                        if not cw_servo:
-                            y.moveSpeed(servo_id, start_position + 200, 100)
+                        if not clockwise:
+                            y.moveSpeed(servo_id, start_position + 200, start_speed)
                             print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
 
             if event.key == pygame.K_s:  # can be changed later for controller keys or joysticks
                 if not body:
                     if not vertical:
-                        if not cw_servo:
-                            y.moveSpeed(servo_id, start_position - 200, 100)
+                        if not clockwise:
+                            y.moveSpeed(servo_id, start_position - 200, start_speed)
                             print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
 
             if event.type == pygame.KEYUP:
                 time.sleep(0.02)
-                y.moveSpeed(servo_id, y.readPosition(servo_id), 100)
+                y.moveSpeed(servo_id, y.readPosition(servo_id), start_speed)
 
     def run_servos(self):
         self.reset_servos()
-
+        servos = x.Ax12().learnServos()
+        start_positions = [[3, 200, True, True, True],
+                           [4, 500, False, False, False],
+                           [6, 500, False, False, False],
+                           [15, 823, False, True, True],
+                           [23, 823, True, True, True],
+                           [41, 500, True, True, False],
+                           [51, 823, True, False, False]]
         while True:
 
             for event in pygame.event.get():
-                self.move(3, True, event, 200, True, True)
-                self.move(15, False, event, 200, True, True)
-                self.move(23, True, event, 823, True, True)
-                self.move(41, True, event, 500, True, False)
-                self.move(51, True, event, 823, False, False)
-                self.move(6, False, event, 512, False, False)
-
-
-# call method for class:
-servo = Servo()
-servo.run_servos()
+                for servo in start_positions:
+                        self.move(event, servo[0], servo[1], servo[2],  servo[3], servo[4])
