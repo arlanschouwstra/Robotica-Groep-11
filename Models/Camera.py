@@ -21,7 +21,7 @@ class Camera:
         # icol = (89, 0, 0, 125, 255, 255)  # Blue
         # icol = (0, 100, 80, 10, 255, 255)   # Red
         # icol = (104, 117, 222, 121, 255, 255)   # test
-        icol = (0, 105, 160, 255, 255, 255)  # New start
+        icol = (0, 105, 180, 255, 255, 255)  # New start
 
         cv2.namedWindow('colorTest')
         # Lower range colour sliders.
@@ -74,9 +74,9 @@ class Camera:
             x, y, w, h = cv2.boundingRect(biggest_contour)
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-            # cv2.drawContours(frame, contours, -1, (0,255,0), 3)
+            cv2.drawContours(frame, contours, -1, (0,255,0), 3)
 
-            cv2.drawContours(frame, contours, 3, (0,255,0), 3)
+            # cv2.drawContours(frame, contours, 3, (0,255,0), 3)
 
             # cnt = contours[1]
             # cv2.drawContours(frame, [cnt], 0, (0,255,0), 3)
