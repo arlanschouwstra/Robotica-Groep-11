@@ -1,6 +1,6 @@
 import unittest
 
-class TestCamera(unittest.TestCase):
+class TestRF(unittest.TestCase):
 
     def test_upper(self):
         self.assertEqual('foo'.upper(), 'FOO')
@@ -16,5 +16,5 @@ class TestCamera(unittest.TestCase):
         with self.assertRaises(TypeError):
             s.split(2)
 
-if __name__ == '_camera_':
+if __name__ == '_bluetoothController_':
     unittest.main()
