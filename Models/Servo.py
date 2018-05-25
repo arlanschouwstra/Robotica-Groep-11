@@ -93,10 +93,10 @@ class Servo:
                             y.moveSpeed(servo_id, start_position - 200, start_speed)
                             print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
 
-            # can be used to stop keys at current position if they are released
-            if event.type == pygame.KEYUP:
-                time.sleep(0.02)
-                y.moveSpeed(servo_id, y.readPosition(servo_id), start_speed)
+        # can be used to stop keys at current position if they are released
+        if event.type == pygame.KEYUP:
+            time.sleep(0.02)
+            y.moveSpeed(servo_id, y.readPosition(servo_id), start_speed)
 
     # calling the servos to move
     def run_servos(self):
