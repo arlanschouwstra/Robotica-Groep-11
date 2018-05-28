@@ -10,8 +10,7 @@ from rpi_rf import RFDevice
 
 
 class RF:
-    def __init__(self, servos):
-        self.servos = servos
+    def __init__(self):
         pass
 
     def send(self):
