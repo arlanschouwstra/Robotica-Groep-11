@@ -10,24 +10,12 @@ class Servo:
         pygame.display.set_mode()
 
     @staticmethod
-    def reset_servos():
+    def reset_servos(id, start_position):
         y = x.Ax12()
-
         # set servos to their start positions
-        y.moveSpeed(15, 823, 50)
-        y.moveSpeed(3, 200, 50)
-        y.moveSpeed(23, 823, 50)
-        y.moveSpeed(41, 500, 50)
-        y.moveSpeed(51, 823, 50)
-        y.moveSpeed(6, 512, 50)
-
+        y.moveSpeed(id, start_position, 50)
         # print servos positions (for testing purposes)
-        print(y.readPosition(6))
-        print(y.readPosition(51))
-        print(y.readPosition(41))
-        print(y.readPosition(23))
-        print(y.readPosition(15))
-        print(y.readPosition(3))
+        print(y.readPosition(id))
 
     # moving the given servo forward or backward on button press
     @staticmethod
@@ -103,15 +91,17 @@ class Servo:
         self.reset_servos()
 
         # initialize servos
-        start_positions = [[3, 200, True, True, True],
-                           [4, 500, False, False, False],
+        start_positions = [[3, 200, True, True, True],      # right under for up/down
+                           [4, 500, False, False, False],   # top servo
                            [6, 500, False, False, False],
                            [15, 823, False, True, True],
                            [23, 823, True, True, True],
-                           [41, 500, True, True, False],
+                           [41, 500, True, True, False],    # left under for up/down
                            [51, 823, True, False, False]]
 
         while True:
+            for servo in start_positions:
+                self.reset_servos(servo[0], servo[1])
             for event in pygame.event.get():
                 for servo in start_positions:
                         self.move(event, servo[0], servo[1], servo[2],  servo[3], servo[4])
