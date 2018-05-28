@@ -64,6 +64,7 @@ class Dance:
         time.sleep(1)
         self.moveRight(y)
         self.stretchBackward(y)
+        doTwist = False
 
 
     def play_music(self):
