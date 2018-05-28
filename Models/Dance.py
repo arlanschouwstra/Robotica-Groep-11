@@ -20,13 +20,14 @@ class Dance:
         self.play_music()
         # (naam,beweging,snelheid)
         # -------onder servos lichaam-------
-        # y.moveSpeed(3, )    # onder servo
-        # y.moveSpeed(41, )   # onder servo tegen gesteld
-        # y.moveSpeed(23, )   # midden servo
+        # y.moveSpeed(3, )    # onder servo                 (0: max down, 200: max up)
+        # y.moveSpeed(15, )   # onder servo tegen gesteld   (1023: max down, 823 max up)
+        # y.moveSpeed(23, )   # midden servo                (623: max down, 823:max up)
+        # y.moveSpeed(41, )   # servo vertical              (300: max left, 700: max right)
         # -------servos kop------
-        # y.moveSpeed(15)     # 1e servo
-        # y.moveSpeed(6)      # 2e servo
-        # y.moveSpeed(4)      # 3e servo
+
+        # y.moveSpeed(6)      # 2e servo                    (300: max left, 700: max right)
+        # y.moveSpeed(4)      # 3e servo                    (300: max left, 700: max right)
         # time.sleep(1)       # used for sleep
 
     def play_music(self):
