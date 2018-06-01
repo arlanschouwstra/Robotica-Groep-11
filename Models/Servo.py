@@ -9,6 +9,22 @@ class Servo:
         pygame.init()
         pygame.display.set_mode()
 
+    # important! make sure the position is not less than 0
+    @staticmethod
+    def move_degree(servo, start_position, degree, clockwise):
+        y = x.Ax12()
+        if degree == 90:
+            if clockwise:
+                y.moveSpeed(servo, (start_position - 312), 50)
+            else:
+                y.moveSpeed(servo, (start_position + 312), 50)
+        else:
+            get_degree = 90 / degree
+            if clockwise:
+                y.moveSpeed(servo, (start_position - (312 / get_degree)), 50)
+            else:
+                y.moveSpeed(servo, (start_position - (312 / get_degree)), 50)
+    
     @staticmethod
     def reset_servos(id, start_position):
         y = x.Ax12()
