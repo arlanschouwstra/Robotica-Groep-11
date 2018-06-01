@@ -4,7 +4,7 @@ from pi_switch import RCSwitchReceiver
 
 class RF:
 
-    def recieve(self):
+    def receive(self):
 
         receiver = RCSwitchReceiver()
         receiver.enableReceive(2)
