@@ -26,7 +26,7 @@ class RF:
 
                 receiver.resetAvailable()
 
-    def get_XL_position():
+    def get_XL_position(self):
 
         receiver = RCSwitchReceiver()
         receiver.enableReceive(2)

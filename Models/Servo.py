@@ -11,6 +11,7 @@ class Servo:
         pygame.display.set_mode()
 
     # important! make sure the result position is not less than 0
+    # method not used but could be of use
     @staticmethod
     def move_degree(servo, start_position, degree, clockwise):
         y = x.Ax12()
@@ -25,6 +26,7 @@ class Servo:
                 y.moveSpeed(servo, (start_position - (312 / get_degree)), 50)
             else:
                 y.moveSpeed(servo, (start_position - (312 / get_degree)), 50)
+        print("moving servo: ", servo, "at", degree, "degrees")
 
     @staticmethod
     def reset_servos(id, start_position):
@@ -47,7 +49,7 @@ class Servo:
         y = x.Ax12()
         rf = RF()
 
-        # initialize each key what they need to do
+        # initialize each position of the joystick
         if rf.get_YL_position() > 520:      # move up
             if body:
                 if vertical:
