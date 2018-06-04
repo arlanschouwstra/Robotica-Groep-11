@@ -14,7 +14,7 @@ class Dance:
         y.moveSpeed(41, 512, 50)
         y.moveSpeed(51, 823, 50)
         y.moveSpeed(6, 512, 50)
-    def
+
     def buildUpSpeed(self, y, idServo, distance, speed):    #TESTEN!!!
         startSpeed = speed/2
         y.moveSpeed(idServo,distance,startSpeed)
@@ -36,6 +36,33 @@ class Dance:
         time.sleep(1)
         y.moveSpeed(6, 612, speed)    # turn far right
         time.sleep(1)
+
+    def sprinklerStart(self, y, speed):
+        y.moveSpeed(3, 200, speed)
+        y.moveSpeed(15, 823, speed)
+        y.moveSpeed(23, 723, speed)
+        self.moveRight(y, speed)
+
+    def sprinkler(self, y, speed):
+        self.sprinklerStart(y, speed)
+        time.sleep(1)
+        #   move left
+        y.moveSpeed(41, 600, speed)
+        time.sleep(1)
+        y.moveSpeed(41, 500, speed)
+        time.sleep(1)
+        y.moveSpeed(41, 400, speed)
+        time.sleep(1)
+        y.moveSpeed(41, 300, speed)
+        time.sleep(1)
+        #   move right
+        y.moveSpeed(41, 400, speed)
+        time.sleep(1)
+        y.moveSpeed(41, 500, speed)
+        time.sleep(1)
+        y.moveSpeed(41, 600, speed)
+        time.sleep(1)
+        y.moveSpeed(41, 700, speed)
 
     def stretchForward(self, y, speed):
         y.moveSpeed(3, 0, speed)
