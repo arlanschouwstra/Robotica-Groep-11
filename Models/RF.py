@@ -26,7 +26,7 @@ class RF:
 
                 receiver.resetAvailable()
 
-    def get_XL_position(self):
+    def get_XL_position():
 
         receiver = RCSwitchReceiver()
         receiver.enableReceive(2)
@@ -41,15 +41,15 @@ class RF:
                     matchNum = matchNum + 1
 
                     print ("Match {matchNum} was found at {start}-{end}: {match}".format(matchNum=matchNum, start=match.start(),
-                                                                                    end=match.end(), match=match.group()))
+                                                                                end=match.end(), match=match.group()))
 
                     for groupNum in range(0, len(match.groups())):
                         groupNum = groupNum + 1
 
                         print ("Group {groupNum} found at {start}-{end}: {group}".format(groupNum=groupNum,
-                                                                                        start=match.start(groupNum),
-                                                                                        end=match.end(groupNum),
-                                                                                        group=match.group(groupNum)))
+                                                                                    start=match.start(groupNum),
+                                                                                    end=match.end(groupNum),
+                                                                                    group=match.group(groupNum)))
             receiver.resetAvailable()
 
     def get_XR_position(self):
@@ -129,3 +129,5 @@ class RF:
                                                                                         end=match.end(groupNum),
                                                                                         group=match.group(groupNum)))
             receiver.resetAvailable()
+
+
