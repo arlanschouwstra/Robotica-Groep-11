@@ -32,24 +32,18 @@ class RF:
         receiver.enableReceive(2)
 
         if receiver.available():
-            regex = r"(\X\L).+?(.+)"
+            regex = r"(1)(.+)"
             received_value = receiver.getReceivedValue()
             if received_value:
                 matches = re.finditer(regex, received_value, re.MULTILINE)
 
-                for matchNum, match in enumerate(matches):
-                    matchNum = matchNum + 1
-
-                    print ("Match {matchNum} was found at {start}-{end}: {match}".format(matchNum=matchNum, start=match.start(),
-                                                                                end=match.end(), match=match.group()))
+                for match in enumerate(matches):
 
                     for groupNum in range(0, len(match.groups())):
                         groupNum = groupNum + 1
+                        if groupNum == 2:
+                            return match.group(groupNum)
 
-                        print ("Group {groupNum} found at {start}-{end}: {group}".format(groupNum=groupNum,
-                                                                                    start=match.start(groupNum),
-                                                                                    end=match.end(groupNum),
-                                                                                    group=match.group(groupNum)))
             receiver.resetAvailable()
 
     def get_XR_position(self):
@@ -63,19 +57,13 @@ class RF:
             if received_value:
                 matches = re.finditer(regex, received_value, re.MULTILINE)
 
-                for matchNum, match in enumerate(matches):
-                    matchNum = matchNum + 1
-
-                    print ("Match {matchNum} was found at {start}-{end}: {match}".format(matchNum=matchNum, start=match.start(),
-                                                                                    end=match.end(), match=match.group()))
+                for match in enumerate(matches):
 
                     for groupNum in range(0, len(match.groups())):
                         groupNum = groupNum + 1
+                        if groupNum == 2:
+                            return match.group(groupNum)
 
-                        print ("Group {groupNum} found at {start}-{end}: {group}".format(groupNum=groupNum,
-                                                                                        start=match.start(groupNum),
-                                                                                        end=match.end(groupNum),
-                                                                                        group=match.group(groupNum)))
             receiver.resetAvailable()
 
     def get_YL_position(self):
@@ -89,19 +77,13 @@ class RF:
             if received_value:
                 matches = re.finditer(regex, received_value, re.MULTILINE)
 
-                for matchNum, match in enumerate(matches):
-                    matchNum = matchNum + 1
-
-                    print ("Match {matchNum} was found at {start}-{end}: {match}".format(matchNum=matchNum, start=match.start(),
-                                                                                    end=match.end(), match=match.group()))
+                for match in enumerate(matches):
 
                     for groupNum in range(0, len(match.groups())):
                         groupNum = groupNum + 1
+                        if groupNum == 2:
+                            return match.group(groupNum)
 
-                        print ("Group {groupNum} found at {start}-{end}: {group}".format(groupNum=groupNum,
-                                                                                        start=match.start(groupNum),
-                                                                                        end=match.end(groupNum),
-                                                                                        group=match.group(groupNum)))
             receiver.resetAvailable()
 
     def get_YR_position(self):
@@ -115,19 +97,13 @@ class RF:
             if received_value:
                 matches = re.finditer(regex, received_value, re.MULTILINE)
 
-                for matchNum, match in enumerate(matches):
-                    matchNum = matchNum + 1
-
-                    print ("Match {matchNum} was found at {start}-{end}: {match}".format(matchNum=matchNum, start=match.start(),
-                                                                                    end=match.end(), match=match.group()))
+                for match in enumerate(matches):
 
                     for groupNum in range(0, len(match.groups())):
                         groupNum = groupNum + 1
+                        if groupNum == 2:
+                            return match.group(groupNum)
 
-                        print ("Group {groupNum} found at {start}-{end}: {group}".format(groupNum=groupNum,
-                                                                                        start=match.start(groupNum),
-                                                                                        end=match.end(groupNum),
-                                                                                        group=match.group(groupNum)))
             receiver.resetAvailable()
 
 
