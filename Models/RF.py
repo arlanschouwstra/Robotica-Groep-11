@@ -32,7 +32,7 @@ class RF:
         receiver.enableReceive(2)
 
         if receiver.available():
-            regex = r"(1)(.+)"
+            regex = r"(1)0*(.+)"
             received_value = receiver.getReceivedValue()
             if received_value:
                 matches = re.finditer(regex, received_value, re.MULTILINE)
@@ -52,7 +52,7 @@ class RF:
         receiver.enableReceive(2)
 
         if receiver.available():
-            regex = r"(\X\R).+?(.+)"
+            regex = r"(3)0*(.+)"
             received_value = receiver.getReceivedValue()
             if received_value:
                 matches = re.finditer(regex, received_value, re.MULTILINE)
@@ -72,7 +72,7 @@ class RF:
         receiver.enableReceive(2)
 
         if receiver.available():
-            regex = r"(\X\L).+?(.+)"
+            regex = r"(2)0*(.+)"
             received_value = receiver.getReceivedValue()
             if received_value:
                 matches = re.finditer(regex, received_value, re.MULTILINE)
@@ -92,7 +92,7 @@ class RF:
         receiver.enableReceive(2)
 
         if receiver.available():
-            regex = r"(\X\L).+?(.+)"
+            regex = r"(4)0*(.+)"
             received_value = receiver.getReceivedValue()
             if received_value:
                 matches = re.finditer(regex, received_value, re.MULTILINE)
