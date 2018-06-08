@@ -1,109 +1,119 @@
 # -*- coding: utf-8 -*-
 from pi_switch import RCSwitchReceiver
 import re
+import ax12 as x
+
 
 class RF:
+    receiver = RCSwitchReceiver()
+    receiver.enableReceive(2)
+    value_xl = 5
+    value_yl = 5
+    value_xr = 5
+    value_yr = 5
+
+    def regex(self, value):
+        regex = re.search(r"(.)(.)(.)(.)", str(value))
+        print(regex.group(1))
+        self.value_xl = regex.group(1)
+        self.value_yl = regex.group(2)
+        self.value_xr = regex.group(3)
+        self.value_yr = regex.group(4)
 
     # for test purposes
     def receive(self):
 
-        receiver = RCSwitchReceiver()
-        receiver.enableReceive(2)
-
-        num = 0
-
         while True:
-            if receiver.available():
-                received_value = receiver.getReceivedValue()
+
+            if self.receiver.available():
+                received_value = self.receiver.getReceivedValue()
 
                 if received_value:
-                    num += 1
-                    print("Received[%s]:" % num)
                     print(received_value)
-                    print("%s / %s bit" % (received_value, receiver.getReceivedBitlength()))
-                    print("Protocol: %s" % receiver.getReceivedProtocol())
-                    print("")
+                    self.regex_xl(received_value)
+                    print(self.value_xl)
 
-                receiver.resetAvailable()
+                self.receiver.resetAvailable()
 
-    def get_XL_position(self):
+    @staticmethod
+    def get_speed(joystick):
+        # ______to the right________#
+        if joystick == 1:
+            return 200
+        if joystick == 2:
+            return 150
+        if joystick == 3:
+            return 100
+        if joystick == 4:
+            return 50
+        # _______to the left_________#
+        if joystick == 6:
+            return 50
+        if joystick == 7:
+            return 100
+        if joystick == 8:
+            return 150
+        if joystick == 9:
+            return 200
 
-        receiver = RCSwitchReceiver()
-        receiver.enableReceive(2)
+    def move(self):  # hard coded moves for controller
+        y = x.Ax12()
 
-        if receiver.available():
-            regex = r"(1)0*(.+)"
-            received_value = receiver.getReceivedValue()
-            if received_value:
-                matches = re.finditer(regex, received_value, re.MULTILINE)
+        while True:
+            if self.receiver.available():
+                received_value = self.receiver.getReceivedValue()
 
-                for match in enumerate(matches):
+                if received_value:
+                    speed = self.get_speed(received_value)
+                    regex(received_value)
 
-                    for groupNum in range(0, len(match.groups())):
-                        groupNum = groupNum + 1
-                        if groupNum == 2:
-                            return match.group(groupNum)
+                    if value_xl < 5:
+                        y.moveSpeed(41, startPosition + 300, speed)
 
-            receiver.resetAvailable()
+                    elif value_xl > 5:
+                        y.moveSpeed(41, startPosition - 300, speed)
 
-    def get_XR_position(self):
+                    else:
+                        y.moveSpeed(41, y.readPosition(41), speed)
 
-        receiver = RCSwitchReceiver()
-        receiver.enableReceive(2)
+                    if value_yl < 5:
+                        y.moveSpeed(3, startPosition, speed)
+                        y.moveSpeed(15, startPosition, speed)
+                        y.moveSpeed(23, startPosition, speed)
 
-        if receiver.available():
-            regex = r"(3)0*(.+)"
-            received_value = receiver.getReceivedValue()
-            if received_value:
-                matches = re.finditer(regex, received_value, re.MULTILINE)
+                    elif value_yl > 5:
+                        y.moveSpeed(3, startPosition - 200, speed)
+                        y.moveSpeed(15, startPosition + 200, speed)
+                        y.moveSpeed(23, startPosition - 200, speed)
 
-                for match in enumerate(matches):
+                    else:
+                        y.moveSpeed(3, y.readPosition(3), speed)
+                        y.moveSpeed(15, y.readPosition(15), speed)
+                        y.moveSpeed(23, y.readPosition(23), speed)
 
-                    for groupNum in range(0, len(match.groups())):
-                        groupNum = groupNum + 1
-                        if groupNum == 2:
-                            return match.group(groupNum)
+                    if value_xr < 5:
+                        y.moveSpeed(6, startPosition6 + 200, speed)
 
-            receiver.resetAvailable()
+                    elif value_xr > 5:
+                        y.moveSpeed(6, startPosition6 - 200, speed)
 
-    def get_YL_position(self):
+                    else:
+                        y.moveSpeed(6, y.readPosition(6), speed)
 
-        receiver = RCSwitchReceiver()
-        receiver.enableReceive(2)
+                    if value_yr < 5:
+                        y.moveSpeed(6, startPosition6 + 200, speed)
 
-        if receiver.available():
-            regex = r"(2)0*(.+)"
-            received_value = receiver.getReceivedValue()
-            if received_value:
-                matches = re.finditer(regex, received_value, re.MULTILINE)
+                    elif value_yr > 5:
+                        y.moveSpeed(6, startPosition6 - 200, speed)
 
-                for match in enumerate(matches):
+                    else:
+                        y.moveSpeed(6, y.readPosition(6), speed)
 
-                    for groupNum in range(0, len(match.groups())):
-                        groupNum = groupNum + 1
-                        if groupNum == 2:
-                            return match.group(groupNum)
+                self.receiver.resetAvailable()
 
-            receiver.resetAvailable()
 
-    def get_YR_position(self):
+rf = RF()
 
-        receiver = RCSwitchReceiver()
-        receiver.enableReceive(2)
-
-        if receiver.available():
-            regex = r"(4)0*(.+)"
-            received_value = receiver.getReceivedValue()
-            if received_value:
-                matches = re.finditer(regex, received_value, re.MULTILINE)
-
-                for match in enumerate(matches):
-
-                    for groupNum in range(0, len(match.groups())):
-                        groupNum = groupNum + 1
-                        if groupNum == 2:
-                            return match.group(groupNum)
-
-            receiver.resetAvailable()
+rf.receive()
 
 
