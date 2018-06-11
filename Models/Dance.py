@@ -1,5 +1,28 @@
 import ax12 as x
 import time
+import pyfirmata
+
+#board = pyfirmata.Arduino('/dev/ttyACM0')
+
+#iter8 = pyfirmata.util.Iterator(board)
+#iter8.start()
+#check_sound = board.get_pin('d:5:o')    #   .read this variable for a change when music has started, to start dance sequence.
+#start_dance = board.get_pin('d:7:o')    #   pin where leds are connected (first dance bit uses these)
+##   code for wheels.
+#motor_left = board.get_pin('d:3:p')
+#motor_right = board.get_pin('d:4:p')
+#STEPS = 10000.0
+#if joystick_left == 1:
+#    for i in range(int(STEPS)):
+#            print i
+#            motor_left.write(i / STEPS)  # hardware-PWM accepts values 0.0 ... 1.0
+#            time.sleep(0.001)
+#
+#if joystick_right == 1:
+#    for i in range(int(STEPS)):
+#            print i
+#            motor_left.write(i / STEPS)  # hardware-PWM accepts values 0.0 ... 1.0
+#            time.sleep(0.001)
 
 class Dance:
 
@@ -47,22 +70,22 @@ class Dance:
         self.sprinklerStart(y, speed)
         time.sleep(1)
         #   move left
-        y.moveSpeed(41, 600, speed)
+        y.moveSpeed(41, 600, speed/2)
         time.sleep(1)
-        y.moveSpeed(41, 500, speed)
+        y.moveSpeed(41, 500, speed/2)
         time.sleep(1)
-        y.moveSpeed(41, 400, speed)
+        y.moveSpeed(41, 400, speed/2)
         time.sleep(1)
-        y.moveSpeed(41, 300, speed)
+        y.moveSpeed(41, 300, speed/2)
         time.sleep(1)
         #   move right
-        y.moveSpeed(41, 400, speed)
+        y.moveSpeed(41, 400, speed/2)
         time.sleep(1)
-        y.moveSpeed(41, 500, speed)
+        y.moveSpeed(41, 500, speed/2)
         time.sleep(1)
-        y.moveSpeed(41, 600, speed)
+        y.moveSpeed(41, 600, speed/2)
         time.sleep(1)
-        y.moveSpeed(41, 700, speed)
+        y.moveSpeed(41, 700, speed/2)
 
     def stretchForward(self, y, speed):
         y.moveSpeed(3, 0, speed)
@@ -83,21 +106,21 @@ class Dance:
     def moveCenter(self, y, speed):
         y.moveSpeed(41, 500, speed)
 
-    def weaveRight(self, y):
-        self.stretchBackward(y, 100)
-        self.moveRight(y, 50)
-        self.stretchForward(y, 50)
-        self.moveLeft(y, 50)
-        self.stretchBackward(y, 50)
-        self.moveCenter(y, 50)
+    def weaveRight(self, y, speed):
+        self.stretchBackward(y, speed)
+        self.moveRight(y, speed/2)
+        self.stretchForward(y, speed/2)
+        self.moveLeft(y, speed/2)
+        self.stretchBackward(y, speed/2)
+        self.moveCenter(y, speed/2)
 
-    def weaveLeft(self, y):
-        self.stretchBackward(y, 100)
-        self.moveLeft(y, 50)
-        self.stretchForward(y, 50)
-        self.moveRight(y, 50)
-        self.stretchBackward(y, 50)
-        self.moveCenter(y, 50)
+    def weaveLeft(self, y, speed):
+        self.stretchBackward(y, speed)
+        self.moveLeft(y, speed/2)
+        self.stretchForward(y, speed/2)
+        self.moveRight(y, speed/2)
+        self.stretchBackward(y, speed/2)
+        self.moveCenter(y, speed/2)
 
     def start(self):
         self.set_start_position()
@@ -114,7 +137,7 @@ class Dance:
         # y.moveSpeed(4)      # 3e servo                    (300: max left, 700: max right)
         # time.sleep(1)       # used for sleep
         y = x.Ax12()
-        self.weaveLeft(y)
+        self.weaveLeft(y, 100)
 
     def play_music(self):
         pass
