@@ -31,7 +31,7 @@ class RF:
                 if received_value:
                     print(received_value)
                     self.regex_xl(received_value)
-                    print(self.value_xl)
+                    print(value_xl)
 
                 self.receiver.resetAvailable()
 

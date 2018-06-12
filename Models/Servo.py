@@ -1,6 +1,6 @@
 import ax12 as x
 import RF as Rf
-
+import bluetooth
 
 class Servo:
     # important! make sure the result position is not less than 0
@@ -41,6 +41,7 @@ class Servo:
         print(y.readPosition(51))
         print(y.readPosition(41))
 
+    # old method to determine speed of the sensitivity for the joystick
     @staticmethod
     def get_speed(joystick):
         # ______to the right________#
@@ -63,92 +64,72 @@ class Servo:
             return 200
 
     # moving the given servo forward or backward on button press
-    def move(self, servo_id, start_position, clockwise, body, vertical):
+    # body, clockwise and vertical are booleans used for easy initialisations for the servos positions
+    def move(self, data, servo_id, start_position, clockwise, body, vertical):
         y = x.Ax12()
-        rf = Rf.RF()
 
-        if rf.receiver.available():
-            received_value = rf.receiver.getReceivedValue()
+        # initialize each position of the joystick
+        if data < 15 & data > 10:   # move up body
+            if body:
+                if vertical:
+                    y.moveSpeed(servo_id, start_position, 50)
+                    print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
 
-            # initialize each position of the joystick
-            if received_value:
-                rf.regex(received_value)
+        if data > 15 & data < 20:   # move down body
+            if body:
+                if vertical:
+                    if not clockwise:
+                        y.moveSpeed(servo_id, start_position + 200, 50)
+                        print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
+                    else:
+                        y.moveSpeed(servo_id, start_position - 200, 50)
+                        print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
 
-                if rf.value_yl > 5:  # move up
-                    speed = self.get_speed(rf.value_yl)
+        if data < 5:                # move left body
+            if body:
+                if not vertical:
+                    y.moveSpeed(servo_id, start_position + 200, 50)
+                    print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
 
-                    if body:
-                        if vertical:
-                            y.moveSpeed(servo_id, start_position, speed)
-                            print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
+        if data > 5 & data < 10:    # move right body
+            if body:
+                if not vertical:
+                    y.moveSpeed(servo_id, start_position - 200, 50)
+                    print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
 
-                if rf.value_yl < 5:  # move down
-                    speed = self.get_speed(rf.value_yl)
+        if data < 25 & data > 20:  # move left head
+            if not body:
+                if not vertical:
+                    if clockwise:
+                        y.moveSpeed(servo_id, start_position + 200, 50)
+                        print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
 
-                    if body:
-                        if vertical:
-                            if not clockwise:
-                                y.moveSpeed(servo_id, start_position + 200, speed)
-                                print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
-                            else:
-                                y.moveSpeed(servo_id, start_position - 200, speed)
-                                print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
+        if data > 25 & data < 30:  # move right head
+            if not body:
+                if not vertical:
+                    if clockwise:
+                        y.moveSpeed(servo_id, start_position - 200, 50)
+                        print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
 
-                if rf.value_xl < 5:  # move left
-                    speed = self.get_speed(rf.value_xl)
+        if data < 35 & data > 30:  # move up head
+            if not body:
+                if not vertical:
+                    if not clockwise:
+                        y.moveSpeed(servo_id, start_position + 200, 50)
+                        print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
 
-                    if body:
-                        if not vertical:
-                            y.moveSpeed(servo_id, start_position + 200, speed)
-                            print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
+        if data > 35 & data < 40:  # move down head
+            if not body:
+                if not vertical:
+                    if not clockwise:
+                        y.moveSpeed(servo_id, start_position - 200, 50)
+                        print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
 
-                if rf.value_xl > 5:  # move right
-                    speed = self.get_speed(rf.value_xl)
+        if data == 5 | data == 15 | data == 25 | data == 35:
+            y.moveSpeed(servo_id, y.readPosition(servo_id), 50)
 
-                    if body:
-                        if not vertical:
-                            y.moveSpeed(servo_id, start_position - 200, speed)
-                            print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
-
-                if rf.value_xr < 5:  # move left head
-                    speed = self.get_speed(rf.value_xr)
-
-                    if not body:
-                        if not vertical:
-                            if clockwise:
-                                y.moveSpeed(servo_id, start_position + 200, speed)
-                                print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
-
-                if rf.value_xr > 5:  # move right head
-                    speed = self.get_speed(rf.value_xr)
-
-                    if not body:
-                        if not vertical:
-                            if clockwise:
-                                y.moveSpeed(servo_id, start_position - 200, speed)
-                                print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
-
-                if rf.value_yr > 5:  # move up head
-                    if not body:
-                        if not vertical:
-                            if not clockwise:
-                                y.moveSpeed(servo_id, start_position + 200, speed)
-                                print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
-
-                if rf.value_yr < 5:  # move down head
-                    if not body:
-                        if not vertical:
-                            if not clockwise:
-                                y.moveSpeed(servo_id, start_position - 200, speed)
-                                print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
-
-                else:
-                    y.moveSpeed(servo_id, y.readPosition(servo_id), speed)
-
-    # calling the servos to move
-    def run_servos(self):
-        self.reset_servos()
-
+    # used to call all servos
+    def move_all_servos(self, data):
         # initialize servos
         start_positions = [[3, 512, True, True, True],  # right under for up/down
                            [4, 512, False, False, False],  # top servo
@@ -157,7 +138,34 @@ class Servo:
                            [23, 823, True, True, True],
                            [41, 512, True, True, False],  # left under for up/down
                            [51, 1023, True, False, False]]
-
+        # while necessary? test needed
         while True:
             for servo in start_positions:
-                self.move(servo[0], servo[1], servo[2], servo[3], servo[4])
+                self.move(data, servo[0], servo[1], servo[2], servo[3], servo[4])
+
+    # create connection with bluetooth
+    def bluetooth_connect(self):
+
+        bd_addr = "98:D3:31:FB:14:C8"   # MAC-address of our bluetooth-module
+        port = 1
+        sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+        sock.connect((bd_addr, port))
+
+        data = ""
+        while 1:
+            try:
+                data += sock.recv(1024)
+                data_end = data.find('\n')
+
+                if data_end != -1:
+                    self.move_all_servos(data)
+                    data = data[data_end + 1:]
+
+            except KeyboardInterrupt:
+                break
+        sock.close()
+
+    # calling the servos to move (only this needs to be called to run this code)
+    def run_servos(self):
+        self.reset_servos()
+        self.bluetooth_connect()
