@@ -10,6 +10,7 @@ board = pyfirmata.Arduino('/dev/ttyACM0')
 pin12 = board.get_pin('d:12:o')
 # turns LED on pin 13 on and off.
 while(True):
+    board.send_sysex(0x71, ["displayGroupName"])
     print("on")
     pin12.write(1)
     time.sleep(5)
