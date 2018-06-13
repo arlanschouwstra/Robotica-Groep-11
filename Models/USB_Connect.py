@@ -7,13 +7,10 @@ board = pyfirmata.Arduino('/dev/ttyACM0')
 # The second section is the number of the pin you would like to use.
 # The third section selects the pin mode between input, output, pwm, and servo.
 # The returned pin can be assigned to a variable and then later used to call read() and write() methods.
-pin12 = board.get_pin('d:12:o')
+pin7 = board.get_pin('d:7:o')
 # turns LED on pin 13 on and off.
 while(True):
     board.send_sysex(0x71, ["displayGroupName"])
     print("on")
-    pin12.write(1)
-    time.sleep(5)
-    print("off")
-    pin12.write(0)
-    time.sleep(5)
+    pin7.write(1)
+    time.sleep(3)
