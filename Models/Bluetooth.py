@@ -54,3 +54,7 @@ class Bluetooth:
 
     def disconnect(self):
         self.sock.close()
+
+
+if __name__ == '__Bluetooth__':
+    Bluetooth()

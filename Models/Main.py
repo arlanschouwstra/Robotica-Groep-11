@@ -5,12 +5,12 @@ Version:        1
 Description:    Main Function
 '''
 
-import Mode
+import Bluetooth
 
 while True:
     try:
-        mode = Mode.Mode()
-        mode.init_modes()
+        bluetooth = Bluetooth.Bluetooth()
+        bluetooth.read_data()
 
     except Exception as e:
         print "Exception occured: ", e
