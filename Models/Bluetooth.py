@@ -35,7 +35,7 @@ class Bluetooth:
                                                             # the needed int
                         result = array[len(array) - 2]
                         ser.write(result)                   # write data to arduino
-                        print result                        # testing
+                        print(result)                       # testing
                         self.mode.init_modes(result, array) # give result
 
             except KeyboardInterrupt:
