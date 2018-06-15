@@ -1,5 +1,4 @@
 import ax12 as x
-import RF as Rf
 import bluetooth
 
 class Servo:
