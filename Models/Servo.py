@@ -6,23 +6,16 @@ Description:    Servos with bluetooth controller
 '''
 
 import ax12 as x
-<<<<<<< HEAD
-import time
-import Bluetooth
-import re
 import serial
-
-=======
-import bluetooth
->>>>>>> 62b54c7a50f4ca36a7cf62ae9b5b2b61fb0d73e2
+from Models import Bluetooth
 
 class Servo:
     """_______VARIABLES__________"""
     y = x.Ax12()
-    bluetooth = Bluetooth.Bluetooth()
     ser = serial.Serial('/dev/ttyUSB0', 9600)
 
     def __init__(self):
+        self.bluetooth = Bluetooth
         pass
 
     # important! make sure the result position is not less than 0
@@ -280,4 +273,5 @@ class Servo:
 
     # calling the servos to move (only this needs to be called to run this code)
     def run_servos(self):
-        self.bluetooth.bluetooth_connect()
+        connect = getattr(self.bluetooth, 'connect')
+        connect()
