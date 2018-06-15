@@ -1,13 +1,15 @@
 import bluetooth
 import serial
+import Mode
+
 
 class Bluetooth:
+    mode = Mode.Mode()
 
     def __init__(self):
         pass
 
-    @staticmethod
-    def bluetooth_connect():
+    def bluetooth_connect(self):
         bd_addr = "98:D3:31:FB:14:C8"  # MAC-address of our bluetooth-module
         port = 1
         sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
@@ -32,7 +34,7 @@ class Bluetooth:
                         result = array[len(array) - 2]
                         ser.write(result)                   # write data to arduino
                         print result
-                        # init_modes(result, array)                # give result
+                        self.mode.init_modes(result, array)                # give result
 
             except KeyboardInterrupt:
                 break

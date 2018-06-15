@@ -1,6 +1,5 @@
-import Initialize
+import Mode
 
-init = Initialize.Initialize()
+mode = Mode.Mode()
 
-# call functions here: -->
-init.run_camera()
+mode.init_modes()
