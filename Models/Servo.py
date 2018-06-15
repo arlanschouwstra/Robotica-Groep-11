@@ -7,7 +7,7 @@ Description:    Servos
 
 import ax12 as x
 import time
-from Models import Bluetooth
+
 
 
 class Servo:
@@ -16,7 +16,6 @@ class Servo:
 
     def __init__(self):
         self.time = time
-        self.bluetooth = Bluetooth
         pass
 
     # important! make sure the result position is not less than 0
@@ -52,7 +51,6 @@ class Servo:
               "degrees")
 
     def reset_servos(self):
-
         # set servos to their start positions
         self.y.moveSpeed(3,  # id
                          512,  # position
@@ -110,7 +108,6 @@ class Servo:
     # moving the given servo forward or backward on button press
     # body, clockwise and vertical are booleans used for easy initialisations for the servos positions
     def move(self, data, servo_id, start_position, clockwise, body, vertical):
-
         # initialize each position of the joystick
         try:
             if 25 > int(data[6:8]) > 20:  # move up body
@@ -239,7 +236,7 @@ class Servo:
         self.y.moveSpeed(51,
                          int(self.y.readPosition(51)),
                          1)
-        self.time.sleep(0.01)
+        time.sleep(0.01)
 
     # used to call all servos
     def move_all_servos(self, data):
