@@ -7,14 +7,20 @@ class Bluetooth:
     mode = Mode.Mode()
 
     def __init__(self):
+        self.sock = self.connect()
         pass
 
+<<<<<<< HEAD
     def bluetooth_connect(self):
         bd_addr = "98:D3:31:FB:14:C8"  # MAC-address of our bluetooth-module
         port = 1
         sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
         sock.connect((bd_addr, port))
 
+=======
+    @staticmethod
+    def read_data(self):
+>>>>>>> 17c3628771f1ceee4a9d79ae25d51366f550bb36
         # send it to arduino
         ser = serial.Serial('/dev/ttyUSB0', 9600)
 
@@ -22,7 +28,7 @@ class Bluetooth:
         while 1:
             try:
 
-                data += sock.recv(1024)                     # read incoming data
+                data += self.sock.recv(1024)                     # read incoming data
                 data_end = data.find('\r\n')                # split by new line
                 array = []
                 if data_end != -1:
@@ -39,4 +45,14 @@ class Bluetooth:
             except KeyboardInterrupt:
                 break
 
-        sock.close()
+        self.disconnect()
+
+    def connect(self):
+        bd_addr = "98:D3:31:FB:14:C8"  # MAC-address of our bluetooth-module
+        port = 1
+        sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+        sock.connect((bd_addr, port))
+        return sock
+
+    def disconnect(self):
+         self.sock.close()
