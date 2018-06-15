@@ -10,7 +10,7 @@ def plot():
     finds the appropriate joint angles to reach that point."""
 
     # create an instance of the arm
-    arm = Arm.Arm3Link(L=np.array([100, 200, 100]))
+    arm = Arm.Arm3Link(L=np.array([66, 149.55, 114.75, 37.5, 62.05, 74]))
 
     # make our window for drawin'
     window = pyglet.window.Window()
