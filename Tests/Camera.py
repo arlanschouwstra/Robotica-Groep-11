@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 class TestCamera(unittest.TestCase):
 
     def test_image_recognition(self):
-        img = cv2.imread('C:\Users\Brave\Downloads\lel336.jpg', cv2.IMREAD_COLOR)
+        img = cv2.imread('http://groep11.idpi.nl/images/cameratest/lel336.jpg', cv2.IMREAD_COLOR)
 
         cv2.line(img, (0, 0), (150, 150), (255, 255, 255), 15)
         cv2.rectangle(img, (15, 25), (200, 150), (0, 255, 0), 15)
@@ -27,7 +27,7 @@ class TestCamera(unittest.TestCase):
         cv2.destroyAllWindows()
 
     def test_2(self):
-        img = cv2.imread('C:\Users\Brave\Downloads\lel336.jpg', cv2.IMREAD_COLOR)
+        img = cv2.imread('http://groep11.idpi.nl/images/cameratest/lel336.jpg', cv2.IMREAD_COLOR)
 
         img[55, 55] = [255, 255, 255]
         px = img[55, 55]
@@ -42,7 +42,7 @@ class TestCamera(unittest.TestCase):
         cv2.destroyAllWindows()
 
     def test_3(self):
-        img = cv2.imread('C:\Users\Brave\Downloads\lel336.jpg', cv2.IMREAD_COLOR)
+        img = cv2.imread('http://groep11.idpi.nl/images/cameratest/lel336.jpg', cv2.IMREAD_COLOR)
 
         img[55, 55] = [255, 255, 255]
         px = img[55, 55]
@@ -57,8 +57,8 @@ class TestCamera(unittest.TestCase):
         cv2.destroyAllWindows()
 
     def test_4(self):
-        img1 = cv2.imread('C:\Users\Brave\Downloads\\3D-Matplotlib.png')
-        img2 = cv2.imread('C:\Users\Brave\Downloads\mainlogo.png')
+        img1 = cv2.imread('http://groep11.idpi.nl/images/cameratest/3D-Matplotlib.png')
+        img2 = cv2.imread('http://groep11.idpi.nl/images/cameratest/mainlogo.png')
 
         rows, cols, channels = img2.shape
         roi = img1[0:rows, 0:cols]
@@ -89,7 +89,7 @@ class TestCamera(unittest.TestCase):
         cv2.destroyAllWindows()
 
     def test_5(self):
-        img = cv2.imread('C:\Users\Brave\Downloads\\blocks1.jpg')
+        img = cv2.imread('http://groep11.idpi.nl/images/cameratest/bookpage.jpg')
         retval, threshold = cv2.threshold(img, 12, 255, cv2.THRESH_BINARY)
 
         grayscaled = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -227,10 +227,10 @@ class TestCamera(unittest.TestCase):
         cap.release()
 
     def test_10(self):
-        img_bgr = cv2.imread('C:\Users\Brave\Downloads\\blocks\\blocks.jpg')
+        img_bgr = cv2.imread('http://groep11.idpi.nl/images/cameratest/opencv-template-matching-python.jpg')
         img_gray = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY)
 
-        template = cv2.imread('C:\Users\Brave\Downloads\\blocks\\blueb1.jpg', 0)
+        template = cv2.imread('http://groep11.idpi.nl/images/cameratest/opencv-template-for-matching.jpg', 0)
         w, h = template.shape[::-1]
 
         res = cv2.matchTemplate(img_gray, template, cv2.TM_CCOEFF_NORMED)
@@ -245,7 +245,7 @@ class TestCamera(unittest.TestCase):
         cv2.destroyAllWindows()
 
     def test_11(self):
-        img = cv2.imread('C:\Users\Brave\Downloads\\blocks1.jpg')
+        img = cv2.imread('http://groep11.idpi.nl/images/cameratest/python-foreground-extraction.jpg')
         mask = np.zeros(img.shape[:2], np.uint8)
 
         bgdModel = np.zeros((1, 65), np.float64)
@@ -260,7 +260,7 @@ class TestCamera(unittest.TestCase):
         plt.colorbar()
         plt.show()
     def test_12(self):
-        img = cv2.imread('C:\Users\Brave\Downloads\\blocks1.jpg')
+        img = cv2.imread('http://groep11.idpi.nl/images/cameratest/opencv-corner-detection-sample.jpg')
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         gray = np.float32(gray)
 
@@ -275,8 +275,8 @@ class TestCamera(unittest.TestCase):
         cv2.waitKey(0)
         cv2.destroyAllWindows()
     def test_13(self):
-        img1 = cv2.imread('C:\Users\Brave\Downloads\\blocks\\blocks.jpg', 0)
-        img2 = cv2.imread('C:\Users\Brave\Downloads\\blocks\\blueb1.jpg', 0)
+        img1 = cv2.imread('http://groep11.idpi.nl/images/cameratest/opencv-feature-matching-template.jpg', 0)
+        img2 = cv2.imread('http://groep11.idpi.nl/images/cameratest/opencv-feature-matching-image.jpg', 0)
 
         orb = cv2.ORB_create()
 
@@ -292,7 +292,7 @@ class TestCamera(unittest.TestCase):
         plt.imshow(img3)
         plt.show()
     def test_14(self):
-        cap = cv2.VideoCapture('C:\Users\Brave\Downloads\people-walking.mp4')
+        cap = cv2.VideoCapture('http://groep11.idpi.nl/images/cameratest/people-walking.mp4')
         fgbg = cv2.createBackgroundSubtractorMOG2()
 
         while True:
@@ -309,38 +309,12 @@ class TestCamera(unittest.TestCase):
         cap.release()
         cv2.destroyAllWindows()
     def test_15(self):
-        face_cascade = cv2.CascadeClassifier('C:\Users\Brave\Downloads\haarcascade_frontalface_default.xml')
-        eye_cascade = cv2.CascadeClassifier('C:\Users\Brave\Downloads\haarcascade_eye.xml')
-
-        cap = cv2.VideoCapture(0)
-
-        while True:
-            ret, img = cap.read()
-            gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            faces = face_cascade.detectMultiScale(gray, 1.3, 5)
-            for (x, y, w, h) in faces:
-                cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
-                roi_gray = gray[y:y + h, x:x + w]
-                roi_color = img[y:y + h, x:x + w]
-
-                eyes = eye_cascade.detectMultiScale(roi_gray)
-                for (ex, ey, ew, eh) in eyes:
-                    cv2.rectangle(roi_color, (ex, ey), (ex + ew, ey + eh), (0, 255, 0), 2)
-
-            cv2.imshow('img', img)
-            k = cv2.waitKey(30) & 0xff
-            if k == 27:
-                break
-
-        cap.release()
-        cv2.destroyAllWindows()
-    def test_16(self):
         ap = argparse.ArgumentParser()
         ap.add_argument("-i", "--image", required=True,
-                        help="C:\Users\Brave\Downloads\shapes_and_colors")
+                        help="http://groep11.idpi.nl/images/cameratest/shapes_and_colors")
         args = vars(ap.parse_args())
 
-        image = cv2.imread(args["C:\Users\Brave\Downloads\shapes_and_colors"])
+        image = cv2.imread(args["http://groep11.idpi.nl/images/cameratest/shapes_and_colors"])
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         blurred = cv2.GaussianBlur(gray, (5, 5), 0)
         thresh = cv2.threshold(blurred, 60, 255, cv2.THRESH_BINARY_INV)[1]
