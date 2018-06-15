@@ -8,16 +8,16 @@ class Dance:
         ser = serial.Serial('/dev/ttyACM0', 9600)
 
     #   functions for driving
-    def turn_left(self, speed):
+    def turn_left(self, ser, speed):
         ser.write("turnLeft"+","+str(speed))
 
-    def turn_right(self, speed):
+    def turn_right(self, ser, speed):
         ser.write("turnRight"+","+str(speed))
 
-    def move_forward(self, speed):
+    def move_forward(self, ser, speed):
         ser.write("moveForward"+","+str(speed))
 
-    def move_backward(self, speed):
+    def move_backward(self, ser, speed):
         ser.write("moveBackward"+","+str(speed))
 
     def set_start_position(self):
