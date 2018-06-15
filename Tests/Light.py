@@ -1,3 +1,9 @@
+'''
+Date:           03-08-2018
+Creator:        Thijs Zijlstra
+Version:        3.2
+Description:    Unit tests light
+'''
 import RPi.GPIO as GPIO
 import unittest
 

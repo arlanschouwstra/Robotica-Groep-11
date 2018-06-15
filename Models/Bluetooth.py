@@ -1,6 +1,7 @@
 '''
 Date:           03-08-2018
 Creator:        Arlan Schouwstra
+Edited by:      Thijs Zijlstra
 Version:        2.0
 Description:    Bluetooth
 '''

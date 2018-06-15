@@ -1,3 +1,9 @@
+'''
+Date:           03-08-2018
+Creator:        Thijs Zijlstra
+Version:        3.2
+Description:    Arm inverse kinematics
+'''
 import numpy as np
 from Models import Arm
 import unittest
