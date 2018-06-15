@@ -18,8 +18,6 @@ class ShapeDetector:
             # a square will have an aspect ratio that is approximately
             # equal to one, otherwise, the shape is a rectangle          
 
-        #else:
-            #shape = "circle"
         return shape
 
     
