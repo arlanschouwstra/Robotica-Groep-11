@@ -32,7 +32,7 @@ class Dance:
         y.moveSpeed(51, 823, 50)
         y.moveSpeed(6, 512, 50)
 
-    def build_up_speed(self, y, idServo, distance, speed):    #TESTEN!!!
+    def buildUpSpeed(self, y, idServo, distance, speed):    #TESTEN!!!
         startSpeed = speed/2
         y.moveSpeed(idServo,distance,startSpeed)
         time.sleep(0.5)
@@ -54,7 +54,7 @@ class Dance:
         y.moveSpeed(6, 612, speed)    # turn far right
         time.sleep(1)
 
-    def sprinkler_startpos(self, y, speed):
+    def sprinklerStart(self, y, speed):
         y.moveSpeed(3, 200, speed)
         y.moveSpeed(15, 823, speed)
         y.moveSpeed(23, 723, speed)
@@ -81,26 +81,26 @@ class Dance:
         time.sleep(1)
         y.moveSpeed(41, 700, speed/2)
 
-    def stretch_forward(self, y, speed):
+    def stretchForward(self, y, speed):
         y.moveSpeed(3, 0, speed)
         y.moveSpeed(15, 1023, speed)
         y.moveSpeed(23, 823, speed)
 
-    def stretch_backward(self, y, speed):
+    def stretchBackward(self, y, speed):
         y.moveSpeed(3, 200, speed)
         y.moveSpeed(15, 823, speed)
         y.moveSpeed(23, 623, speed)
 
-    def move_left(self, y, speed):
+    def moveLeft(self, y, speed):
         y.moveSpeed(41, 400, speed)
 
-    def move_right(self, y, speed):
+    def moveRight(self, y, speed):
         y.moveSpeed(41, 600, speed)
 
-    def move_center(self, y, speed):
+    def moveCenter(self, y, speed):
         y.moveSpeed(41, 500, speed)
 
-    def weave_right(self, y, speed):
+    def weaveRight(self, y, speed):
         self.stretchBackward(y, speed)
         self.moveRight(y, speed/2)
         self.stretchForward(y, speed/2)
@@ -108,7 +108,7 @@ class Dance:
         self.stretchBackward(y, speed/2)
         self.moveCenter(y, speed/2)
 
-    def weave_left(self, y, speed):
+    def weaveLeft(self, y, speed):
         self.stretchBackward(y, speed)
         self.moveLeft(y, speed/2)
         self.stretchForward(y, speed/2)
