@@ -6,6 +6,13 @@ class Dance:
     #   for serial connection between Pi and Arduino.
     def connect_usb(self):
         ser = serial.Serial('/dev/ttyACM0', 9600)
+        return ser
+
+    def send_data(self, ser, data):
+        ser.write(str(data))
+
+    def receive_data(self, ser):
+        return ser.readline()
 
     #   functions for driving
     def turn_left(self, ser, speed):
@@ -20,10 +27,7 @@ class Dance:
     def move_backward(self, ser, speed):
         ser.write("moveBackward"+","+str(speed))
 
-    def set_start_position(self):
-        # set library
-        y = x.Ax12()
-
+    def set_start_position(self, y):
         # set servos to their start positions
         y.moveSpeed(15, 823, 50)
         y.moveSpeed(3, 200, 50)
@@ -117,7 +121,6 @@ class Dance:
         self.move_center(y, speed/2)
 
     def start(self):
-        self.set_start_position()
         # (naam,beweging,snelheid)
         # -------onder servos lichaam-------
         # y.moveSpeed(3, )    # onder servo                 (0: max down, 200: max up)
@@ -130,4 +133,7 @@ class Dance:
         # y.moveSpeed(4)      # 3e servo                    (300: max left, 700: max right)
         # time.sleep(1)       # used for sleep
         y = x.Ax12()
-        self.weave_left(y, 100)
+        self.set_start_position(y)
+
+        ser = self.connect_usb()
+        self.send_data(ser, "display_group_name")
