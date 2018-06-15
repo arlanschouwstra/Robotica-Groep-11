@@ -16,14 +16,14 @@ class Arm3Link:
             the arm segment lengths
         """
         # initial joint angles
-        self.q = [.3, .3, 0] if q is None else q
+        self.q = [.3, .3, 0, 0, 0, 0] if q is None else q
         # some default arm positions
-        self.q0 = np.array([np.pi/4, np.pi/4, np.pi/4]) if q0 is None else q0
+        self.q0 = np.array([np.pi/4, np.pi/4, np.pi/4, np.pi/4, np.pi/4, np.pi/4 ]) if q0 is None else q0
         # arm segment lengths
-        self.L = np.array([1, 1, 1, 1]) if L is None else L
+        self.L = np.array([1, 1, 1, 1, 1, 1]) if L is None else L
 
-        self.max_angles = [np.pi, np.pi, np.pi/4]
-        self.min_angles = [0, 0, -np.pi/4]
+        self.max_angles = [np.pi, np.pi, np.pi/4, np.pi/4, np.pi/4, np.pi/4]
+        self.min_angles = [0, 0, -np.pi/4, np.pi/4, np.pi/4, np.pi/4]
 
     def get_xy(self, q=None):
         """Returns the corresponding hand xy coordinates for
@@ -70,7 +70,7 @@ class Arm3Link:
             """
             # weights found with trial and error,
             # get some wrist bend, but not much
-            weight = [1, 1, 1.3]
+            weight = [1, 1, 1.3, 1, 1, 1]
             return np.sqrt(np.sum([(qi - q0i)**2 * wi
                            for qi, q0i, wi in zip(q, self.q0, weight)]))
 
@@ -138,12 +138,11 @@ class Arm3Link:
             x0=self.q,
             eqcons=[x_constraint,
                     y_constraint],
-            # uncomment to add in min / max angles for the joints
-            # ieqcons=[joint_limits_upper_constraint,
-            #          joint_limits_lower_constraint],
+            ieqcons=[joint_limits_upper_constraint,
+                     joint_limits_lower_constraint],
             args=(xy,),
             iprint=0)  # iprint=0 suppresses output
 
 
-if __name__ == '__main__':
-    Arm3Link()
+if __name__ == '__Arm__':
+        Arm3Link()
