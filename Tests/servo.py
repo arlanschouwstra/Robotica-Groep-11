@@ -1,4 +1,3 @@
-import Models.ax12 as x
 from Models import Servo
 import unittest
 
@@ -6,7 +5,6 @@ import unittest
 class TestServo(unittest.TestCase):
 
     def test_position(self):
-        y = x.Ax12()
         move = getattr(Servo, 'move_position')
         read = getattr(Servo, 'read_position')
         move(3, 512, 50)
