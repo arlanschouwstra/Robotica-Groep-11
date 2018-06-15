@@ -7,6 +7,7 @@ Description:    Servos
 
 import ax12 as x
 import time
+from Models import Bluetooth
 
 
 class Servo:
@@ -14,6 +15,8 @@ class Servo:
     y = x.Ax12()
 
     def __init__(self):
+        self.time = time
+        self.bluetooth = Bluetooth
         pass
 
     # important! make sure the result position is not less than 0
@@ -251,3 +254,9 @@ class Servo:
 
         for servos in start_positions:
             self.move(data, servos[0], servos[1], servos[2], servos[3], servos[4])
+
+    def move_position(self, servo_id, position, speed):
+        self.y.moveSpeed(servo_id, position, speed)
+
+    def read_position(self, servo_id):
+        return self.y.readPosition(servo_id)

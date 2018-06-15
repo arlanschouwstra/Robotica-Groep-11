@@ -13,7 +13,7 @@ def findContours(mask, frame):
     sd = ShapeDetector()
 
     for c in cnts:
-        #compute the center of the contour, then detect the name of the
+        #compute the center of the contour, then detect the rectangle of the
         # shape using only the contour
         M = cv2.moments(c)
         if M["m10"] == 0.0 or M["m00"] == 0.0 or M["m01"] == 0.0:
@@ -23,6 +23,7 @@ def findContours(mask, frame):
         shape = sd.detect(c)
         if (shape != "rectangle"):
             continue
+        
         # multiply the contour (x, y)-coordinates by the resize ratio,
         # then draw the contours and the name of the shape on the frame
         c = c.astype("float")
@@ -34,7 +35,10 @@ def findContours(mask, frame):
 
 while True:
     _, frame = cap.read()
+    
+    #blurrs the video so more of the expected color is shown
     blur = cv2.GaussianBlur(frame, (7, 7), 3)
+    
     #color wheel 1/4th degrees changed to the left
     hsv = cv2.cvtColor(blur,cv2.COLOR_RGB2HSV)
     lower_red = np.array([220 * 0.5, 50 * 2.55,40 * 2.55])
@@ -51,24 +55,27 @@ while True:
     mask3 = cv2.inRange(hsv, lower_yellow, upper_yellow)
     mask4 = cv2.inRange(hsv, lower_orange, upper_orange)
     
+    # combining the masks together to see all blocks
     mergeMask = cv2.bitwise_or(mask1, mask2)
     mergeMask = cv2.bitwise_or(mergeMask, mask3)
     mergeMask = cv2.bitwise_or(mergeMask, mask4)
     
+    #checking if the shape is rectangle
     findContours(mask1,blur)
     findContours(mask2,blur)
     findContours(mask3,blur)
     findContours(mask4,blur)
     
+    #Showing the esolution
     res = cv2.bitwise_and(blur, blur, mask = mergeMask)
     
     #show video screens
     cv2.imshow('blurredFrame', blur)
     cv2.imshow('res', res)
     #cv2.imshow('mask', mask)
-
+    
+    #Closing the video capturing
     key = cv2.waitKey(1) & 0xFF
-
     if key == ord("q"):
         break
 
