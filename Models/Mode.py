@@ -1,3 +1,10 @@
+'''
+Date:           03-08-2018
+Creator:        Arlan Schouwstra
+Version:        1.0
+Description:    Change modes
+'''
+
 import ax12 as x
 import Servo
 
