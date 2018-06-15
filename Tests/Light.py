@@ -8,12 +8,12 @@ class TestLight(unittest.TestCase):
         GPIO.setup(pin, GPIO.OUT)
         self.pin = pin
         GPIO.output(self.pin, 1)
-        self.assertEqual()
+        self.assertEqual(GPIO.readpin(self.pin), 1)
     def turn_off(self, pin):
         GPIO.setup(pin, GPIO.OUT)
         self.pin = pin
         GPIO.output(self.pin, 0)
-        self.assertEqual()
+        self.assertEqual(GPIO.readpin(self.pin), 0)
 
 if __name__ == '_light_':
     unittest.main()

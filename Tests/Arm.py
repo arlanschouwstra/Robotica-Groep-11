@@ -2,6 +2,7 @@ import numpy as np
 from Models import Arm
 import unittest
 
+"""Unit test for arm inverse kinematics"""
 
 class TestArm(unittest.TestCase):
 
@@ -50,5 +51,5 @@ class TestArm(unittest.TestCase):
       print('-------------------------')
 
 
-if __name__ == '_arm_':
+if __name__ == '__TestArm__':
     unittest.main()

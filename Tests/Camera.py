@@ -11,6 +11,7 @@ class TestCamera(unittest.TestCase):
     def test_image_recognition(self):
         img = cv2.imread('http://groep11.idpi.nl/images/cameratest/lel336.jpg', cv2.IMREAD_COLOR)
 
+        # shapes: Rectangle, circle and a line
         cv2.line(img, (0, 0), (150, 150), (255, 255, 255), 15)
         cv2.rectangle(img, (15, 25), (200, 150), (0, 255, 0), 15)
         cv2.circle(img, (100, 63), 55, (0, 0, 255), -1)
@@ -19,6 +20,7 @@ class TestCamera(unittest.TestCase):
         # pts = pts.reshape((-1, 1, 2))
         cv2.polylines(img, [pts], True, (0, 255, 255), 5)
 
+        #text font style
         font = cv2.FONT_HERSHEY_SIMPLEX
         cv2.putText(img, 'OpenCV', (0, 130), font, 3, (200, 255, 255), 5, cv2.LINE_AA)
 
@@ -41,21 +43,6 @@ class TestCamera(unittest.TestCase):
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
-    def test_3(self):
-        img = cv2.imread('http://groep11.idpi.nl/images/cameratest/lel336.jpg', cv2.IMREAD_COLOR)
-
-        img[55, 55] = [255, 255, 255]
-        px = img[55, 55]
-
-        img[100:150, 100:150] = [255, 255, 255]
-
-        watch_face = img[37:111, 107:194]
-        img[0:74, 0:87] = watch_face
-
-        cv2.imshow('image', img)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
-
     def test_4(self):
         img1 = cv2.imread('http://groep11.idpi.nl/images/cameratest/3D-Matplotlib.png')
         img2 = cv2.imread('http://groep11.idpi.nl/images/cameratest/mainlogo.png')
@@ -63,6 +50,7 @@ class TestCamera(unittest.TestCase):
         rows, cols, channels = img2.shape
         roi = img1[0:rows, 0:cols]
 
+        # black/white detection and invert
         img2gray = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
         ret, mask = cv2.threshold(img2gray, 220, 255, cv2.THRESH_BINARY_INV)
 
@@ -89,6 +77,7 @@ class TestCamera(unittest.TestCase):
         cv2.destroyAllWindows()
 
     def test_5(self):
+        # this is made to see something which is very dark.
         img = cv2.imread('http://groep11.idpi.nl/images/cameratest/bookpage.jpg')
         retval, threshold = cv2.threshold(img, 12, 255, cv2.THRESH_BINARY)
 
@@ -106,6 +95,7 @@ class TestCamera(unittest.TestCase):
         cv2.destroyAllWindows()
 
     def test_6(self):
+        # detection for camera colour red
         cap = cv2.VideoCapture(0)
 
         while True:
@@ -131,13 +121,13 @@ class TestCamera(unittest.TestCase):
         cap.release()
 
     def test_7(self):
+        #detection of the colour red more fine tuned with blur, median and bilateral.
         cap = cv2.VideoCapture(0)
 
         while True:
             _, frame = cap.read()
             hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-            cvtColor(bgr, hsv, COLOR_BGR2HSV);
             # hsv hue sat value
             lower_red = np.array([0, 200, 120])
             upper_red = np.array([255, 255, 255])
@@ -168,6 +158,7 @@ class TestCamera(unittest.TestCase):
         cap.release()
 
     def test_8(self):
+        # morphing of the camera
         cap = cv2.VideoCapture(0)
 
         while True:
@@ -203,6 +194,7 @@ class TestCamera(unittest.TestCase):
         cap.release()
 
     def test_9(self):
+        # camera edge detection
         cap = cv2.VideoCapture(0)
 
         while True:
@@ -227,6 +219,7 @@ class TestCamera(unittest.TestCase):
         cap.release()
 
     def test_10(self):
+        # matching a piece of a picture with the whole picture and find how many we have
         img_bgr = cv2.imread('http://groep11.idpi.nl/images/cameratest/opencv-template-matching-python.jpg')
         img_gray = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY)
 
@@ -244,22 +237,8 @@ class TestCamera(unittest.TestCase):
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
-    def test_11(self):
-        img = cv2.imread('http://groep11.idpi.nl/images/cameratest/python-foreground-extraction.jpg')
-        mask = np.zeros(img.shape[:2], np.uint8)
-
-        bgdModel = np.zeros((1, 65), np.float64)
-        fgdModel = np.zeros((1, 65), np.float64)
-
-        rect = (50, 50, 300, 500)
-
-        cv2.grabCut(img, mask, rect, bgdModel, fgdModel, 5, cv2.GC_INIT_WITH_RECT)
-        mask2 = np.where((mask == 2) | (mask == 0), 0, 1).astype('uint8')
-        img = img * mask2[:, :, np.newaxis]
-        plt.imshow(img)
-        plt.colorbar()
-        plt.show()
     def test_12(self):
+        #detected corners range of 200
         img = cv2.imread('http://groep11.idpi.nl/images/cameratest/opencv-corner-detection-sample.jpg')
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         gray = np.float32(gray)
@@ -274,23 +253,7 @@ class TestCamera(unittest.TestCase):
         cv2.imshow('Corner', img)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
-    def test_13(self):
-        img1 = cv2.imread('http://groep11.idpi.nl/images/cameratest/opencv-feature-matching-template.jpg', 0)
-        img2 = cv2.imread('http://groep11.idpi.nl/images/cameratest/opencv-feature-matching-image.jpg', 0)
 
-        orb = cv2.ORB_create()
-
-        kp1, des1 = orb.detectAndCompute(img1, None)
-        kp2, des2 = orb.detectAndCompute(img2, None)
-
-        bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
-
-        matches = bf.match(des1, des2)
-        matches = sorted(matches, key=lambda x: x.distance)
-
-        img3 = cv2.drawMatches(img1, kp1, img2, kp2, matches[:10], None, flags=2)
-        plt.imshow(img3)
-        plt.show()
     def test_14(self):
         cap = cv2.VideoCapture('http://groep11.idpi.nl/images/cameratest/people-walking.mp4')
         fgbg = cv2.createBackgroundSubtractorMOG2()
@@ -308,6 +271,7 @@ class TestCamera(unittest.TestCase):
 
         cap.release()
         cv2.destroyAllWindows()
+
     def test_15(self):
         ap = argparse.ArgumentParser()
         ap.add_argument("-i", "--image", required=True,
@@ -335,8 +299,6 @@ class TestCamera(unittest.TestCase):
 
             cv2.imshow("Image", image)
             cv2.waitKey(0)
-
-
 
 if __name__ == '_camera_':
     unittest.main()
