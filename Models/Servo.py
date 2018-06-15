@@ -1,45 +1,91 @@
+'''
+Date:           03-08-2018
+Creator:        Arlan Schouwstra
+Version:        3.2
+Description:    Servos with bluetooth controller
+'''
+
 import ax12 as x
-import RF as Rf
-import bluetooth
+import time
+import Bluetooth
+import re
+import serial
+
 
 class Servo:
+    """_______VARIABLES__________"""
+    y = x.Ax12()
+    bluetooth = Bluetooth.Bluetooth()
+    ser = serial.Serial('/dev/ttyUSB0', 9600)
+
+    def __init__(self):
+        pass
+
     # important! make sure the result position is not less than 0
     # method not used but could be of use
-    @staticmethod
-    def move_degree(servo, start_position, degree, clockwise):
-        y = x.Ax12()
+    def move_degree(self, servo,
+                    start_position,
+                    degree,
+                    clockwise):
         if degree == 90:
             if clockwise:
-                y.moveSpeed(servo, (start_position - 312), 50)
+                self.y.moveSpeed(servo,
+                                 (start_position - 312),
+                                 50)
             else:
-                y.moveSpeed(servo, (start_position + 312), 50)
+                self.y.moveSpeed(servo,
+                                 (start_position + 312),
+                                 50)
         else:
             get_degree = 90 / degree
             if clockwise:
-                y.moveSpeed(servo, (start_position - (312 / get_degree)), 50)
+                self.y.moveSpeed(servo,
+                                 (start_position - (312 / get_degree)),
+                                 50)
             else:
-                y.moveSpeed(servo, (start_position - (312 / get_degree)), 50)
-        print("moving servo: ", servo, "at", degree, "degrees")
+                self.y.moveSpeed(servo,
+                                 (start_position - (312 / get_degree)),
+                                 50)
 
-    @staticmethod
-    def reset_servos():
-        y = x.Ax12()
+        print("moving servo: ",
+              servo,
+              "at",
+              degree,
+              "degrees")
+
+    def reset_servos(self):
+
         # set servos to their start positions
-        y.moveSpeed(3, 512, 50)
-        y.moveSpeed(4, 512, 50)
-        y.moveSpeed(6, 200, 50)
-        y.moveSpeed(15, 512, 50)
-        y.moveSpeed(23, 812, 50)
-        y.moveSpeed(41, 512, 50)
-        y.moveSpeed(51, 1023, 50)
+        self.y.moveSpeed(3,  # id
+                         512,  # position
+                         50)  # speed
+        self.y.moveSpeed(4,
+                         512,
+                         50)
+        self.y.moveSpeed(6,
+                         200,
+                         50)
+        self.y.moveSpeed(15,
+                         512,
+                         50)
+        self.y.moveSpeed(23,
+                         512,
+                         50)
+        self.y.moveSpeed(41,
+                         512,
+                         50)
+        self.y.moveSpeed(51,
+                         812,
+                         50)
+
         # print servos positions (for testing purposes)
-        print(y.readPosition(3))
-        print(y.readPosition(4))
-        print(y.readPosition(6))
-        print(y.readPosition(15))
-        print(y.readPosition(23))
-        print(y.readPosition(51))
-        print(y.readPosition(41))
+        print(self.y.readPosition(3))
+        print(self.y.readPosition(4))
+        print(self.y.readPosition(6))
+        print(self.y.readPosition(15))
+        print(self.y.readPosition(23))
+        print(self.y.readPosition(51))
+        print(self.y.readPosition(41))
 
     # old method to determine speed of the sensitivity for the joystick
     @staticmethod
@@ -66,67 +112,112 @@ class Servo:
     # moving the given servo forward or backward on button press
     # body, clockwise and vertical are booleans used for easy initialisations for the servos positions
     def move(self, data, servo_id, start_position, clockwise, body, vertical):
-        y = x.Ax12()
 
         # initialize each position of the joystick
-        if data < 15 & data > 10:   # move up body
-            if body:
-                if vertical:
-                    y.moveSpeed(servo_id, start_position, 50)
-                    print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
+        try:
+            if 25 > int(data[6:8]) > 20:  # move up body
+                if body:
+                    if vertical:
+                        self.y.moveSpeed(servo_id,
+                                         start_position,
+                                         50)
+                        print("Servo:",
+                              servo_id,
+                              "moved to position:",
+                              self.y.readPosition(servo_id))
 
-        if data > 15 & data < 20:   # move down body
-            if body:
-                if vertical:
-                    if not clockwise:
-                        y.moveSpeed(servo_id, start_position + 200, 50)
-                        print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
-                    else:
-                        y.moveSpeed(servo_id, start_position - 200, 50)
-                        print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
+            elif 25 < int(data[6:8]) < 30:  # move down body
+                if body:
+                    if vertical:
+                        if not clockwise:
+                            self.y.moveSpeed(servo_id,
+                                             start_position + 200,
+                                             50)
+                            print("Servo:",
+                                  servo_id,
+                                  "moved to position:",
+                                  self.y.readPosition(servo_id))
+                        else:
+                            self.y.moveSpeed(servo_id,
+                                             start_position - 200,
+                                             50)
+                            print("Servo:",
+                                  servo_id,
+                                  "moved to position:",
+                                  self.y.readPosition(servo_id))
 
-        if data < 5:                # move left body
-            if body:
-                if not vertical:
-                    y.moveSpeed(servo_id, start_position + 200, 50)
-                    print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
+            elif 15 > int(data[4:6]) > 10:  # move left body
+                if body:
+                    if not vertical:
+                        self.y.moveSpeed(servo_id,
+                                         start_position + 200,
+                                         50)
+                        print("Servo:",
+                              servo_id,
+                              "moved to position:",
+                              self.y.readPosition(servo_id))
 
-        if data > 5 & data < 10:    # move right body
-            if body:
-                if not vertical:
-                    y.moveSpeed(servo_id, start_position - 200, 50)
-                    print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
+            elif 15 < int(data[4:6]) < 20:  # move right body
+                if body:
+                    if not vertical:
+                        self.y.moveSpeed(servo_id,
+                                         start_position - 200,
+                                         50)
+                        print("Servo:",
+                              servo_id,
+                              "moved to position:",
+                              self.y.readPosition(servo_id))
 
-        if data < 25 & data > 20:  # move left head
-            if not body:
-                if not vertical:
-                    if clockwise:
-                        y.moveSpeed(servo_id, start_position + 200, 50)
-                        print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
+            elif 35 > int(data[0:2]) > 30:  # move left head
+                if not body:
+                    if not vertical:
+                        if clockwise:
+                            self.y.moveSpeed(servo_id,
+                                             start_position + 200,
+                                             50)
+                            print("Servo:",
+                                  servo_id,
+                                  "moved to position:",
+                                  self.y.readPosition(servo_id))
 
-        if data > 25 & data < 30:  # move right head
-            if not body:
-                if not vertical:
-                    if clockwise:
-                        y.moveSpeed(servo_id, start_position - 200, 50)
-                        print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
+            elif 35 < int(data[0:2]) < 40:  # move right head
+                if not body:
+                    if not vertical:
+                        if clockwise:
+                            self.y.moveSpeed(servo_id,
+                                             start_position - 200,
+                                             50)
+                            print("Servo:",
+                                  servo_id,
+                                  "moved to position:",
+                                  self.y.readPosition(servo_id))
 
-        if data < 35 & data > 30:  # move up head
-            if not body:
-                if not vertical:
-                    if not clockwise:
-                        y.moveSpeed(servo_id, start_position + 200, 50)
-                        print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
+            elif 45 > int(data[2:4]) > 40:  # move up head
+                if not body:
+                    if not vertical:
+                        if not clockwise:
+                            self.y.moveSpeed(servo_id,
+                                             start_position + 200,
+                                             50)
+                            print("Servo:",
+                                  servo_id,
+                                  "moved to position:",
+                                  self.y.readPosition(servo_id))
 
-        if data > 35 & data < 40:  # move down head
-            if not body:
-                if not vertical:
-                    if not clockwise:
-                        y.moveSpeed(servo_id, start_position - 200, 50)
-                        print("Servo:", servo_id, "moved to position:", y.readPosition(servo_id))
+            elif 45 < int(data[2:4]) < 50:  # move down head
+                if not body:
+                    if not vertical:
+                        if not clockwise:
+                            self.y.moveSpeed(servo_id,
+                                             start_position - 200,
+                                             50)
+                            print("Servo:",
+                                  servo_id,
+                                  "moved to position:",
+                                  self.y.readPosition(servo_id))
 
-        if data == 5 | data == 15 | data == 25 | data == 35:
-            y.moveSpeed(servo_id, y.readPosition(servo_id), 50)
+        except ValueError:
+            print("Could not turn servo!!")
 
     # used to call all servos
     def move_all_servos(self, data):
@@ -135,37 +226,54 @@ class Servo:
                            [4, 512, False, False, False],  # top servo
                            [6, 200, False, False, False],
                            [15, 512, False, True, True],
-                           [23, 823, True, True, True],
+                           [23, 512, False, True, True],
                            [41, 512, True, True, False],  # left under for up/down
-                           [51, 1023, True, False, False]]
-        # while necessary? test needed
-        while True:
-            for servo in start_positions:
-                self.move(data, servo[0], servo[1], servo[2], servo[3], servo[4])
+                           [51, 812, True, False, False]]
+
+        for servos in start_positions:
+            self.move(data, servos[0], servos[1], servos[2], servos[3], servos[4])
 
     # create connection with bluetooth
-    def bluetooth_connect(self):
+    def init_modes(self, result, array):
 
-        bd_addr = "98:D3:31:FB:14:C8"   # MAC-address of our bluetooth-module
-        port = 1
-        sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-        sock.connect((bd_addr, port))
+        """__________________DRIVING MODE_______________"""
+        if result[10:11] == '0':
+            self.reset_servos()            # go to the start position(maybe not needed to call this every time)
 
-        data = ""
-        while 1:
-            try:
-                data += sock.recv(1024)
-                data_end = data.find('\n')
+            if result != array[len(array) - 3]:
+                self.move_all_servos(result)
 
-                if data_end != -1:
-                    self.move_all_servos(data)
-                    data = data[data_end + 1:]
+            elif result == '35451525000':  # if not stopped, stop all servos
+                self.y.moveSpeed(3,
+                                 int(self.y.readPosition(3)),
+                                 1)
+                self.y.moveSpeed(4,
+                                 int(self.y.readPosition(4)),
+                                 1)
+                self.y.moveSpeed(6,
+                                 int(self.y.readPosition(6)),
+                                 1)
+                self.y.moveSpeed(15,
+                                 int(self.y.readPosition(15)),
+                                 1)
+                self.y.moveSpeed(23,
+                                 int(self.y.readPosition(23)),
+                                 1)
+                self.y.moveSpeed(41,
+                                 int(self.y.readPosition(41)),
+                                 1)
+                self.y.moveSpeed(51,
+                                 int(self.y.readPosition(51)),
+                                 1)
+                self.time.sleep(0.01)
 
-            except KeyboardInterrupt:
-                break
-        sock.close()
+        """_________________DANCING MODE_________________"""
+        if result[10:11] == '3':
+            string = self.ser.readline()
+            lowValue = string[1]
+            middleValue = string[2]
+            highValue = string[3]
 
     # calling the servos to move (only this needs to be called to run this code)
     def run_servos(self):
-        self.reset_servos()
-        self.bluetooth_connect()
+        self.bluetooth.bluetooth_connect()
