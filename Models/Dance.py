@@ -1,29 +1,24 @@
 import ax12 as x
 import time
-
-#board = pyfirmata.Arduino('/dev/ttyACM0')
-
-#iter8 = pyfirmata.util.Iterator(board)
-#iter8.start()
-#check_sound = board.get_pin('d:5:o')    #   .read this variable for a change when music has started, to start dance sequence.
-#start_dance = board.get_pin('d:7:o')    #   pin where leds are connected (first dance bit uses these)
-##   code for wheels.
-#motor_left = board.get_pin('d:3:p')
-#motor_right = board.get_pin('d:4:p')
-#STEPS = 10000.0
-#if joystick_left == 1:
-#    for i in range(int(STEPS)):
-#            print i
-#            motor_left.write(i / STEPS)  # hardware-PWM accepts values 0.0 ... 1.0
-#            time.sleep(0.001)
-#
-#if joystick_right == 1:
-#    for i in range(int(STEPS)):
-#            print i
-#            motor_left.write(i / STEPS)  # hardware-PWM accepts values 0.0 ... 1.0
-#            time.sleep(0.001)
+import serial
 
 class Dance:
+    #   for serial connection between Pi and Arduino.
+    def connect_usb(self):
+        ser = serial.Serial('/dev/ttyACM0', 9600)
+
+    #   functions for driving
+    def turn_left(self, speed):
+        ser.write("turnLeft"+","+str(speed))
+
+    def turn_right(self, speed):
+        ser.write("turnRight"+","+str(speed))
+
+    def move_forward(self, speed):
+        ser.write("moveForward"+","+str(speed))
+
+    def move_backward(self, speed):
+        ser.write("moveBackward"+","+str(speed))
 
     def set_start_position(self):
         # set library
@@ -137,6 +132,3 @@ class Dance:
         # time.sleep(1)       # used for sleep
         y = x.Ax12()
         self.weaveLeft(y, 100)
-
-    def play_music(self):
-        pass
