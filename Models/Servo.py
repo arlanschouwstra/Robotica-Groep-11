@@ -254,3 +254,9 @@ class Servo:
 
         for servos in start_positions:
             self.move(data, servos[0], servos[1], servos[2], servos[3], servos[4])
+
+    def move_position(self, servo_id, position, speed):
+        self.y.moveSpeed(servo_id, position, speed)
+
+    def read_position(self, servo_id):
+        return self.y.readPosition(servo_id)
