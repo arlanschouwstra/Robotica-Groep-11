@@ -1,6 +1,10 @@
 # import the necessary packages
 import RPi.GPIO as GPIO
 import time
+import serial
+
+#Serial connection
+ser = serial.Serial('/dev/ttyACM0', 9600)
 
 #GPIO Board
 GPIO.setmode(GPIO.BOARD)
@@ -25,8 +29,9 @@ def GetSensorReadings():
     print(rightlinesensor)
     return leftlinesensor, rightlinesensor
 
-
+    #or/if it serial.write()
 def Forward():
+    #ser.write(b'forward')
     GPIO.output(11, 1)
     GPIO.output(13, 0)
     GPIO.output(15, 1)
@@ -34,6 +39,7 @@ def Forward():
 
 
 def Reverse():
+    # ser.write(b'forward')
     GPIO.output(11, 0)
     GPIO.output(13, 1)
     GPIO.output(15, 0)
@@ -41,6 +47,7 @@ def Reverse():
 
 
 def Right():
+    # ser.write(b'forward')
     GPIO.output(11, 1)
     GPIO.output(13, 0)
     GPIO.output(15, 0)
@@ -48,6 +55,7 @@ def Right():
 
 
 def Left():
+    # ser.write(b'forward')
     GPIO.output(11, 0)
     GPIO.output(13, 1)
     GPIO.output(15, 1)
@@ -55,6 +63,7 @@ def Left():
 
 
 def Brake():
+    # ser.write(b'forward')
     GPIO.output(11, 1)
     GPIO.output(13, 1)
     GPIO.output(15, 1)
@@ -81,3 +90,4 @@ finally:
     Brake()
     print("Cleaning Up!")
     GPIO.cleanup()
+    serial.close()
