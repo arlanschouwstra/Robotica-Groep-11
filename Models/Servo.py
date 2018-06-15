@@ -2,25 +2,16 @@
 Date:           03-08-2018
 Creator:        Arlan Schouwstra
 Version:        3.2
-Description:    Servos with bluetooth controller
+Description:    Servos
 '''
 
 import ax12 as x
-<<<<<<< HEAD
 import time
-import Bluetooth
-import re
-import serial
 
-=======
-import bluetooth
->>>>>>> 62b54c7a50f4ca36a7cf62ae9b5b2b61fb0d73e2
 
 class Servo:
     """_______VARIABLES__________"""
     y = x.Ax12()
-    bluetooth = Bluetooth.Bluetooth()
-    ser = serial.Serial('/dev/ttyUSB0', 9600)
 
     def __init__(self):
         pass
@@ -223,6 +214,30 @@ class Servo:
         except ValueError:
             print("Could not turn servo!!")
 
+    def stop_all_servos(self):
+        self.y.moveSpeed(3,
+                         int(self.y.readPosition(3)),
+                         1)
+        self.y.moveSpeed(4,
+                         int(self.y.readPosition(4)),
+                         1)
+        self.y.moveSpeed(6,
+                         int(self.y.readPosition(6)),
+                         1)
+        self.y.moveSpeed(15,
+                         int(self.y.readPosition(15)),
+                         1)
+        self.y.moveSpeed(23,
+                         int(self.y.readPosition(23)),
+                         1)
+        self.y.moveSpeed(41,
+                         int(self.y.readPosition(41)),
+                         1)
+        self.y.moveSpeed(51,
+                         int(self.y.readPosition(51)),
+                         1)
+        self.time.sleep(0.01)
+
     # used to call all servos
     def move_all_servos(self, data):
         # initialize servos
@@ -236,48 +251,3 @@ class Servo:
 
         for servos in start_positions:
             self.move(data, servos[0], servos[1], servos[2], servos[3], servos[4])
-
-    # create connection with bluetooth
-    def init_modes(self, result, array):
-
-        """__________________DRIVING MODE_______________"""
-        if result[10:11] == '0':
-            self.reset_servos()            # go to the start position(maybe not needed to call this every time)
-
-            if result != array[len(array) - 3]:
-                self.move_all_servos(result)
-
-            elif result == '35451525000':  # if not stopped, stop all servos
-                self.y.moveSpeed(3,
-                                 int(self.y.readPosition(3)),
-                                 1)
-                self.y.moveSpeed(4,
-                                 int(self.y.readPosition(4)),
-                                 1)
-                self.y.moveSpeed(6,
-                                 int(self.y.readPosition(6)),
-                                 1)
-                self.y.moveSpeed(15,
-                                 int(self.y.readPosition(15)),
-                                 1)
-                self.y.moveSpeed(23,
-                                 int(self.y.readPosition(23)),
-                                 1)
-                self.y.moveSpeed(41,
-                                 int(self.y.readPosition(41)),
-                                 1)
-                self.y.moveSpeed(51,
-                                 int(self.y.readPosition(51)),
-                                 1)
-                self.time.sleep(0.01)
-
-        """_________________DANCING MODE_________________"""
-        if result[10:11] == '3':
-            string = self.ser.readline()
-            lowValue = string[1]
-            middleValue = string[2]
-            highValue = string[3]
-
-    # calling the servos to move (only this needs to be called to run this code)
-    def run_servos(self):
-        self.bluetooth.bluetooth_connect()

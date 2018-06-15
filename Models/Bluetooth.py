@@ -1,18 +1,22 @@
+'''
+Date:           03-08-2018
+Creator:        Arlan Schouwstra
+Version:        2.0
+Description:    Bluetooth
+'''
+
 import bluetooth
 import serial
+import Mode
+
 
 class Bluetooth:
+    mode = Mode.Mode()
 
     def __init__(self):
-        pass
+        self.sock = self.connect()
 
-    @staticmethod
-    def bluetooth_connect():
-        bd_addr = "98:D3:31:FB:14:C8"  # MAC-address of our bluetooth-module
-        port = 1
-        sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
-        sock.connect((bd_addr, port))
-
+    def read_data(self):
         # send it to arduino
         ser = serial.Serial('/dev/ttyUSB0', 9600)
 
@@ -20,7 +24,7 @@ class Bluetooth:
         while 1:
             try:
 
-                data += sock.recv(1024)                     # read incoming data
+                data += self.sock.recv(1024)                # read incoming data
                 data_end = data.find('\r\n')                # split by new line
                 array = []
                 if data_end != -1:
@@ -31,10 +35,21 @@ class Bluetooth:
                                                             # the needed int
                         result = array[len(array) - 2]
                         ser.write(result)                   # write data to arduino
-                        print result
-                        # init_modes(result, array)                # give result
+                        print result                        # testing
+                        self.mode.init_modes(result, array) # give result
 
             except KeyboardInterrupt:
                 break
 
-        sock.close()
+        self.disconnect()
+
+    @staticmethod
+    def connect():
+        bd_addr = "98:D3:31:FB:14:C8"  # MAC-address of our bluetooth-module
+        port = 1
+        sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+        sock.connect((bd_addr, port))
+        return sock
+
+    def disconnect(self):
+        self.sock.close()
