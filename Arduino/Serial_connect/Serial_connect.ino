@@ -334,16 +334,16 @@ void checkString(buttonString){
     if(buttonString == "checkSong"){
       soundFilterDance()
     }
-    else if(buttonString == "danceStart"){
+    else if(buttonString == "dance_start"){
       LEDDance()
     }
-    else if(buttonString == "lineDanceStart"){
+    else if(buttonString == "line_dance_start"){
       soundFilterLineDance()
     }
-    else if(buttonString == "displayGroupName"){
+    else if(buttonString == "display_group_name"){
       displayGroupName()
     }
-    if(buttonString != "displayGroupName"){
+    if(buttonString != "display_group_name"){
       FastLED.clear();
       FastLED.show();
     }
@@ -476,9 +476,10 @@ void loop() {
   FastLED.clear();
   
   if (Serial.available()) {
-    /*checkString(Serial.read())/*read command from PI*/
+    checkString(Serial.read())/*read command from PI*/
     /*sendback = Serial.read()*/
     /*Serial.println(sendback);*/
+    
     
   }
 }

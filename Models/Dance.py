@@ -134,6 +134,6 @@ class Dance:
         # time.sleep(1)       # used for sleep
         y = x.Ax12()
         self.set_start_position(y)
-        
+
         ser = self.connect_usb()
         self.send_data(ser, "display_group_name")
