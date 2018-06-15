@@ -1,6 +1,5 @@
 import ax12 as x
 import time
-import pyfirmata
 
 #board = pyfirmata.Arduino('/dev/ttyACM0')
 
