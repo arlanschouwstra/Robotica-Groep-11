@@ -1,20 +1,19 @@
+import RPi.GPIO as GPIO
 import unittest
 
+"""Unit test for check if the light matrix can be turned on and off."""
 class TestLight(unittest.TestCase):
 
-    def test_upper(self):
-        self.assertEqual('foo'.upper(), 'FOO')
-
-    def test_isupper(self):
-        self.assertTrue('FOO'.isupper())
-        self.assertFalse('Foo'.isupper())
-
-    def test_split(self):
-        s = 'hello world'
-        self.assertEqual(s.split(), ['hello', 'world'])
-        # check that s.split fails when the separator is not a string
-        with self.assertRaises(TypeError):
-            s.split(2)
+    def turn_on(self, pin):
+        GPIO.setup(pin, GPIO.OUT)
+        self.pin = pin
+        GPIO.output(self.pin, 1)
+        self.assertEqual()
+    def turn_off(self, pin):
+        GPIO.setup(pin, GPIO.OUT)
+        self.pin = pin
+        GPIO.output(self.pin, 0)
+        self.assertEqual()
 
 if __name__ == '_light_':
     unittest.main()

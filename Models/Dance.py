@@ -3,20 +3,21 @@ import time
 import serial
 
 class Dance:
-    # for serial connection between Pi and Arduino.
-    ser = serial.Serial('/dev/ttyACM0', 9600)
+    #   for serial connection between Pi and Arduino.
+    def connect_usb(self):
+        ser = serial.Serial('/dev/ttyACM0', 9600)
 
     #   functions for driving
-    def turnLeft(self, speed):
+    def turn_left(self, speed):
         ser.write("turnLeft"+","+str(speed))
 
-    def turnRight(self, speed):
+    def turn_right(self, speed):
         ser.write("turnRight"+","+str(speed))
 
-    def moveForward(self, speed):
+    def move_forward(self, speed):
         ser.write("moveForward"+","+str(speed))
 
-    def moveBackward(self, speed):
+    def move_backward(self, speed):
         ser.write("moveBackward"+","+str(speed))
 
     def set_start_position(self):
