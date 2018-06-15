@@ -6,11 +6,15 @@ Description:    Servos with bluetooth controller
 '''
 
 import ax12 as x
+<<<<<<< HEAD
 import time
 import Bluetooth
 import re
 import serial
 
+=======
+import bluetooth
+>>>>>>> 62b54c7a50f4ca36a7cf62ae9b5b2b61fb0d73e2
 
 class Servo:
     """_______VARIABLES__________"""

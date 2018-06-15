@@ -14,16 +14,21 @@
 #define I2C_RESTART_TX              0
 #define I2C_MAX_QUERIES             8
 #define I2C_REGISTER_NOT_SPECIFIED  -1
-
-#define LED_PIN     7
+/*  for LED-MATRIX*/
+#define LED_PIN     12
 #define NUM_LEDS    80
 #define led_per_bar 8
 #define brightness  255     // Scale 0-255
 #define MIRROR      false    // Mirror vertically
+/*  for SOUNDFILTERS*/
+#define lowpass_pin   A0
+#define bandpass_pin  A2
+#define highpass_pin  A1
 
 // the minimum interval for sampling analog input
 #define MINIMUM_SAMPLING_INTERVAL   1
 
+/*GROEP 11*/
 const uint64_t IMAGES[] PROGMEM = {
   0x0080808080800000,
   0x8040404040408000,
@@ -73,6 +78,91 @@ const uint64_t IMAGES[] PROGMEM = {
 };
 const int IMAGES_LEN = sizeof(IMAGES)/8;
 CRGB leds[NUM_LEDS];
+
+/*DAFT PUNK*/
+const uint64_t IMAGES2[] = {
+  0x0000000000000000,
+  0x8080808080808000,
+  0xc0c0c0c0c0c0c000,
+  0xe06060606060e000,
+  0xf03030303030f000,
+  0xf89898989898f800,
+  0x7ccccccccccc7c00,
+  0x3e66666666663e00,
+  0x1f33333333331f00,
+  0x8f99999999990f00,
+  0xc7cccccccccc8700,
+  0x636666e66666c300,
+  0x313333f33333e100,
+  0x989999f99999f000,
+  0xccccccfccccc7800,
+  0x6666667e66663c00,
+  0x3333333f33331e00,
+  0x9999999f99998f00,
+  0xcccccccfccccc700,
+  0x666666e76666e300,
+  0x333333f33333f100,
+  0x191919f91919f800,
+  0x0c0c0c7c0c0cfc00,
+  0x0606063e06067e00,
+  0x0303031f03033f00,
+  0x0101010f01819f00,
+  0x000000070040cf00,
+  0x8080808380a0e700,
+  0xc0c0c0c1c0d0f300,
+  0x606060606068f900,
+  0x3030303030b4fc00,
+  0x18181818185a7e00,
+  0x0c0c0c0c0c2d3f00,
+  0x0606068686161f00,
+  0x030303c3c30b0f00,
+  0x010101e1e1050700,
+  0x000000f0f0020300,
+  0x000000f8f8010100,
+  0x000000fcfc000000,
+  0x0000007e7e000000,
+  0x0000003f3f000000,
+  0x8080809f9f808000,
+  0xc0c0c0cfcfc0c000,
+  0x6060e0676760e000,
+  0x3030f0333330f000,
+  0x1818f8999998f800,
+  0x0c0c7ccccccc7c00,
+  0x06063e6666663e00,
+  0x03031f3333331f00,
+  0x01818f9999998f00,
+  0x80c0c7ccccccc700,
+  0xc060636666666300,
+  0xe030313333333100,
+  0xf098989999999800,
+  0xf8cccccccccccc00,
+  0x7c66666666666600,
+  0x3e33333333333300,
+  0x9f99999999999900,
+  0xcfcccccccccccc00,
+  0x67666666e6e66600,
+  0x333333b3f3733300,
+  0x191999d979391900,
+  0x8c8cccecbc9c8c00,
+  0xc6c6e6f6decec600,
+  0x6363737b6f676300,
+  0x3131393d37333100,
+  0x98989c9e9b999800,
+  0xcccccecfcdcccc00,
+  0x6666e7e7e6666600,
+  0x33b3f373f3b33300,
+  0x99d9793979d99900,
+  0xcc6c3c1c3c6ccc00,
+  0x66361e0e1e366600,
+  0x331b0f070f1b3300,
+  0x190d0703070d1900,
+  0x0c06030103060c00,
+  0x0603010001030600,
+  0x0301000000010300,
+  0x0100000000000100,
+  0x0000000000000000
+};
+
 
 /*==============================================================================
  * GLOBAL VARIABLES
@@ -800,6 +890,10 @@ void setup()
   FastLED.addLeds < WS2812, LED_PIN, GRB > (leds, NUM_LEDS);
   FastLED.setBrightness(brightness);
   Serial.begin(9600);
+  //  pins used for sound filters.
+  pinMode(A0, INPUT);
+  pinMode(A1, INPUT);
+  pinMode(A2, INPUT);
   
   Firmata.setFirmwareVersion(FIRMATA_FIRMWARE_MAJOR_VERSION, FIRMATA_FIRMWARE_MINOR_VERSION);
 
@@ -825,13 +919,30 @@ void setup()
 
   systemResetCallback();  // reset to default config
 }
-
 /*==============================================================================
- * DANCE()<----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ * CHECKSTRING()
+ *============================================================================*/
+void checkString(buttonString){
+    if(buttonString == "danceStart"){
+      soundFilterDance()
+    }
+    if(buttonString == "lineDanceStart"){
+      soundFilterLineDance()
+    }
+    if(buttonString == "displayGroupName"){
+      displayGroupName()
+    }
+    if(buttonString != "displayGroupName"){
+      FastLED.clear();
+      FastLED.show();
+    }
+}
+/*==============================================================================
+ * LEDMATRIX()
  *============================================================================*/
 int j = 0;
 byte hue = 0;
-
+/*  start when signal displayGroupName is received.*/
 void displayGroupName(){
     // Display the image
     uint64_t image;
@@ -860,7 +971,85 @@ void displayGroupName(){
     FastLED.show();
     FastLED.delay(100);
 }
+/*  start when signal danceStart is received AND SOUNDFILTER() returns a value to notify music has started.*/
 
+void daftPunk(){
+    // Display the image
+    uint64_t image;
+    memcpy_P(&image, &IMAGES2[j],8);
+    
+    hue = map(j, 0, IMAGES_LEN, 0, 255);
+    /*image,offset,color(hue,saturation,value)*/
+    displayImage(image, 0, CHSV(hue, 255, 150));
+    
+    /*after every 5 image, update the color*/
+    if (j + 5  < IMAGES_LEN ) {
+        memcpy_P(&image, &IMAGES[j+5],8);
+        displayImage(image, 40, CHSV(hue, 255, 255));
+    }
+    /*if the next iteration goes past the image size, reset*/
+    if (++j >= IMAGES_LEN) j = 0;
+    if (++hue >= 255) hue = 0;
+
+    FastLED.show();
+    FastLED.delay(100);
+}
+/*==============================================================================
+ * SOUNDFILTER()
+ *============================================================================*/
+int lowpass_max = 800;
+int midpass_max = 650;
+int highpass_max = 1023;
+/*NEEDS TO CHECK FOR A SPECIFIED SOUND PITCH FOR DANCE AND LINEDANCE*/
+void soundFilterDance(){
+    int lowpass_signal = analogRead(lowpass_pin);
+    int lowpass = map(lowpass_signal, 0,  lowpass_max , 0, 100); /*converts actual values to a number from 0 to 100.*/
+    /*Serial.print("lowpass_signal: ");
+    Serial.println(lowpass_signal);*/
+    const char* low_string  /*convert int to char array*/
+    sprintf(low_string, "%05d", lowpass);
+    Firmata.sendString(low_string);
+    
+    int bandpass_signal = analogRead(bandpass_pin);
+    int bandpass = map(bandpass_signal, 0,midpass_max, 0, 100);
+    /*Serial.print("bandpass_signal: ");
+    Serial.println(bandpass_signal);*/
+    const char* band_string
+    sprintf(band_string, "%05d", bandpass);
+    Firmata.sendString(band_string);
+    
+    int highpass_signal = analogRead(highpass_pin);
+    int highpass = map(highpass_signal, 0, highpass_max, 0, 100);
+    /*Serial.print("highpass_signal: ");
+    Serial.println(highpass_signal);*/
+    const char* high_string
+    sprintf(high_string, "%05d", highpass);
+    Firmata.sendString(high_string); 
+}
+/*
+void soundFilterLineDance(){
+    int lowpass_signal = analogRead(lowpass_pin);
+    //lowpass_signal = random(0, lowpass_max);
+    int lowpass = map(lowpass_signal, 0,  lowpass_max , 0, led_per_bar);
+    //lowpass_max = lowpass_signal > lowpass_max ? lowpass_signal : lowpass_max;
+    Serial.print("lowpass_signal: ");
+    Serial.println(lowpass_signal);
+    //Serial.print("Lowpass MAX: ");
+    //Serial.println(lowpass_max);
+    
+    int bandpass_signal = analogRead(bandpass_pin);
+    int bandpass = map(bandpass_signal, 0,midpass_max, 0, led_per_bar);
+    //lowpass_max = lowpass_signal > lowpass_max ? analog : lowpass_max;
+    Serial.print("bandpass_signal: ");
+    Serial.println(bandpass_signal);
+    
+    int highpass_signal = analogRead(highpass_pin);
+    int highpass = map(highpass_signal, 0, highpass_max, 0, led_per_bar);
+    //lowpass_max = lowpass_signal > lowpass_max ? analog : lowpass_max;
+    Serial.print("highpass_signal: ");
+    Serial.println(highpass_signal); 
+}
+*/
 /*==============================================================================
  * LOOP()
  *============================================================================*/
@@ -886,23 +1075,24 @@ void loop()
    * checking digital inputs.  */
   while (Firmata.available())
     Firmata.processInput();
-
-  // TODO - ensure that Stream buffer doesn't go over 60 bytes
-
+  /*/////////////////////////////////////////////////////*/  
+  /*  attach the incoming string from PI to function*/
+  firmata.attach(STRING_DATA, checkString)
+  /*/////////////////////////////////////////////////////*/
   currentMillis = millis();
   if (currentMillis - previousMillis > samplingInterval) {
     previousMillis += samplingInterval;
     /* ANALOGREAD - do all analogReads() at the configured sampling interval */
     for (pin = 0; pin < TOTAL_PINS; pin++) {
-      /*////////////////////////////////////////////////////////////////////*/
-      if (pin == 7 && Firmata.getPinState(pin) == 1){ /*ALSO CHECK IF SOUND IS RECOGNIZED!!*/
+      /*////////////////////////////////////////////////////////////////////      
+      if (pin == LED_PIN && Firmata.getPinState(pin) == 1){
         displayGroupName();
       }
-      if (pin == 7 && Firmata.getPinState(pin) == 0){
+      if (pin == LED_PIN && Firmata.getPinState(pin) == 0){
         FastLED.clear();
         FastLED.show();
       }
-      /*////////////////////////////////////////////////////////////////////*/
+      ////////////////////////////////////////////////////////////////////*/
       if (IS_PIN_ANALOG(pin) && Firmata.getPinMode(pin) == PIN_MODE_ANALOG) {
         analogPin = PIN_TO_ANALOG(pin);
         if (analogInputsToReport & (1 << analogPin)) {
