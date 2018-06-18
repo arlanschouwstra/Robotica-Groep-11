@@ -8,6 +8,7 @@
 #include <Adafruit_ILI9341.h>
 #include <Wire.h>      // this is needed for FT6206
 #include <Adafruit_FT6206.h>
+#include <SoftwareSerial.h>
 
 // The FT6206 uses hardware I2C (SCL/SDA)
 Adafruit_FT6206 ctp = Adafruit_FT6206();
@@ -38,11 +39,11 @@ uint16_t picked_color = 0;
 
 // Waardes van de joysticks
 // y_rechts omkeren wegens orientatie van de joystick
-#define x_rechts  map(analogRead(A12), 0, 1023, 1, 9)
-#define y_rechts  map(analogRead(A13), 0, 1023, 19, 11)
+#define x_rechts  map(analogRead(A12), 0, 1023, 11, 19)
+#define y_rechts  map(analogRead(A13), 0, 1023, 29, 21)
 
-#define x_links  map(analogRead(A8), 0, 1023, 21, 29)
-#define y_links  map(analogRead(A9), 0, 1023, 31, 39)
+#define x_links  map(analogRead(A8), 0, 1023, 31, 39)
+#define y_links  map(analogRead(A9), 0, 1023, 41, 49)
 
 #define LButton_pin 25
 #define RButton_pin 49
@@ -154,13 +155,14 @@ void loop() {
         if (state == 3) handleMenus();
     }
     //send to bluetooth (used for arm and tank)
-    if(BT.available())  {
-        BT.println(x_links);
-        BT.println(y_links);
-        BT.println(x_rechts);
-        BT.println(y_rechts);
-    } 
-    
+       BT.print(String(x_links));
+       BT.print(String(y_links));
+       BT.print(String(x_rechts));
+       BT.print(String(y_rechts));
+       BT.print(String(LButton));
+       BT.print(String(RButton));
+       BT.println(String(mode));
+       BT.flush();
     // Ontvang data van serieel of RF en zet dit in rx_buf of wired_string
     // Waarom twee aparte variabelen voor opslaan?
     if (WIRED) {
