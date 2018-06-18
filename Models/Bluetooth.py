@@ -24,15 +24,11 @@ class Bluetooth:
         while 1:
             try:
                 data = self.sock.recv(1024)                # read incoming data
-                #data_end = data.find('\r\n')                # split by new line
                 if len(data)> 1:
                     array = data.split()                    # splits the incoming data in an array
-                    if len(array) > 1:    # check if the last number of the array is the length of
-                                                            # the needed int
-                        ser.write(array)                   # write data to arduino
-                        print(array)                       # testing
-                        self.mode.init_modes(array, array) # give result
-
+                    ser.write(array)                   # write data to arduino
+                    print(array)                       # testing
+                    self.mode.init_modes(array, array) # give result
             except KeyboardInterrupt:
                 break
 
