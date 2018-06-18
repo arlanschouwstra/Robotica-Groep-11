@@ -26,6 +26,7 @@ class Bluetooth:
                 data = self.sock.recv(1024)                # read incoming data
                 if len(data)> 1:
                     array = data.split()                    # splits the incoming data in an array
+                    print('array %s', ''.join(array))
                     ser.write(array)                   # write data to arduino
                     print(array)                       # testing
                     self.mode.init_modes(array, array) # give result
