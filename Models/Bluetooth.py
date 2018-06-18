@@ -21,23 +21,17 @@ class Bluetooth:
         # send it to arduino
         ser = serial.Serial('/dev/ttyUSB0', 9600)
 
-        data = ""
         while 1:
             try:
-
-                data += self.sock.recv(1024)                # read incoming data
+                data = self.sock.recv(1024)                # read incoming data
                 data_end = data.find('\r\n')                # split by new line
-                array = []
                 if data_end != -1:
                     array = data.split()                    # splits the incoming data in an array
-                    data = data[data_end + 1:]
-
-                    if len(array[len(array) - 2]) == 11:    # check if the last number of the array is the length of
+                    if len(array) > 1:    # check if the last number of the array is the length of
                                                             # the needed int
-                        result = array[len(array) - 2]
-                        ser.write(result)                   # write data to arduino
-                        print(result)                       # testing
-                        self.mode.init_modes(result, array) # give result
+                        ser.write(array)                   # write data to arduino
+                        print(array)                       # testing
+                        self.mode.init_modes(array, array) # give result
 
             except KeyboardInterrupt:
                 break
