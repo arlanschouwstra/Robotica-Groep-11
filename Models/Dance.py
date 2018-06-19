@@ -110,14 +110,14 @@ class Dance:
             self.move(41, 700, speed/2)
 
     def stretch_forward(self, speed):
-        self.move(3, 0, speed)
-        self.move(15, 1023, speed)
-        self.move(23, 823, speed)
+        self.move(3, 212, speed)
+        self.move(15, 812, speed)
+        self.move(23, 812, speed)
 
     def stretch_backward(self, speed):
-        self.move(3, 200, speed)
-        self.move(15, 823, speed)
-        self.move(23, 623, speed)
+        self.move(3, 612, speed)
+        self.move(15, 412, speed)
+        self.move(23, 412, speed)
 
     def move_left(self, speed):
         self.move(41, 400, speed)
@@ -162,5 +162,9 @@ class Dance:
         ser = self.connect_usb()
         self.send_data(ser, "display_group_name")
 
-dance = Dance
-
+dance = Dance()
+dance.twist()
+#dance.set_start_position()
+#dance.stretch_backward()
+#dance.stretch_forward()
+#dance.headbang()
