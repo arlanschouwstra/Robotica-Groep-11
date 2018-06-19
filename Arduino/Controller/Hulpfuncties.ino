@@ -141,7 +141,7 @@ void handleMenus() {
             
             tft.println("RF send: ");
             char * split;
-            split = strtok(wired_string, "&");    // Split string into tokens
+            split = strtok(tx_buf, "&");    // Split string into tokens
             int i = 0;
             while (split != NULL) {
                 i % 2 ? tft.println(split) : tft.print(split);    // Print op elke regel 2 waardes
