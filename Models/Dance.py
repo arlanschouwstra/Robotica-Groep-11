@@ -52,8 +52,26 @@ class Dance:
         time.sleep(0.5)
         self.move(id_servo, distance, speed)
 
+    #   determines the required speed to go from current posistion to destination.
+    def calc_speed(self, servo_id, destination):
+        return abs(self.read_pos(servo_id)-destination)
+
+    def not_at_position(self, servo_id, destination):
+        if self.read_pos(servo_id) != destination:
+            return True
+        else:
+            return False
+
     #   TEST
     def headbang(self):
+        #if self.not_at_position(3, 512) and self.not_at_position(15, 512):
+        #    self.move(3, 512, self.calc_speed(3, 512))
+        #    self.move(15, 512, self.calc_speed(15, 512))
+        #if self.not_at_position(23, 612):
+        #    self.move(23, 612, self.calc_speed(23, 612))
+        #    time.sleep(1)
+
+
         if self.read_pos(3) != 512 and self.read_pos(15) != 512:
             self.move(3, 512, (abs(self.read_pos(3)-512)))
             self.move(15, 512, (abs(self.read_pos(15)-512)))
