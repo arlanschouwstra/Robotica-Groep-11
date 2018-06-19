@@ -53,7 +53,7 @@ uint16_t picked_color = 0;
 // Virtuelwire - vervangen zodra RCSwitch getest is
 #define VW_MAX_MESSAGE_LEN  40
 
-// RF variables
+// BT variables
 char tx_buf[VW_MAX_MESSAGE_LEN];
 uint8_t rx_buf[VW_MAX_MESSAGE_LEN];
 uint8_t buflen = VW_MAX_MESSAGE_LEN;
@@ -71,7 +71,7 @@ uint16_t old_color = picked_color;
 #define BT  Serial1
 #define PC  Serial
 
-// Verbonden via Serieel of RF
+// Verbonden via Serieel of BT
 #define WIRED   true
 
 long int timer = millis();
@@ -79,7 +79,7 @@ String wired_string;
 float volt = 11.1;
 
 /* TODO
- *  1. WIRED of RF keuze in menu zetten
+ *  1. WIRED of BT keuze in menu zetten
  *  2. enableRecieve, zoek uit of reciever op pin 18 of 19 zit
  *  3. enableTransmit, zelfde voor transmitting
  *  4. Virtuelwire weghalen zodra RCSwitch getest is
@@ -94,8 +94,8 @@ void setup(void) {
     pinMode(A12, INPUT);
     pinMode(A13, INPUT);
     
-    pinMode(18, OUTPUT); // RF TX
-    pinMode(19, INPUT);  // RF RX
+    pinMode(18, OUTPUT); // BT TX
+    pinMode(19, INPUT);  // BT RX
 
 
     /* Virtuelwire - kan weg na testen van RCSwitch
@@ -128,7 +128,7 @@ void setup(void) {
 }
 
 void loop() {
-    // Zodra joystick waardes veranderen stuur via serieel of RF
+    // Zodra joystick waardes veranderen stuur via serieel of BT
     if (xl_old != x_links || yl_old != y_links || xr_old != x_rechts || yr_old != y_links) {
         // Flank variabelen
         xl_old = x_links;
@@ -151,13 +151,13 @@ void loop() {
             //int scaled_color = map(picked_color, 0, 65536, 0, 999);
             PC.println(8000000 + picked_color);  
         }
-        // Refresh RF menu
+        // Refresh BT menu
         if (state == 3) handleMenus();
     }
     //send to bluetooth (used for arm and tank)
     String datatosend = String(x_links) + String(y_links) + String(x_rechts) + String(y_rechts) + String(LButton) + String(RButton) + String(mode);
     sendbluetooth(datatosend);
-    // Ontvang data van serieel of RF en zet dit in rx_buf of wired_string
+    // Ontvang data van serieel of BT en zet dit in rx_buf of wired_string
     // Waarom twee aparte variabelen voor opslaan?
     if (WIRED) {
         if(Serial.available() > 0) {
