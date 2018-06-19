@@ -130,15 +130,15 @@ void loop() {
 
         if (WIRED) {
             //send information to touchscreen
-            sendToScreen(1000000 + xl_old);
-            sendToScreen(2000000 + yl_old);
-            sendToScreen(3000000 + xr_old);
-            sendToScreen(4000000 + yr_old);
-            sendToScreen(5000000 + LButton);
-            sendToScreen(6000000 + RButton);
-            sendToScreen(7000000 + mode);
+            sendToScreen(1000000, xl_old);
+            sendToScreen(2000000, yl_old);
+            sendToScreen(3000000, xr_old);
+            sendToScreen(4000000, yr_old);
+            sendToScreen(5000000, LButton);
+            sendToScreen(6000000, RButton);
+            sendToScreen(7000000, mode);
             //int scaled_color = map(picked_color, 0, 65536, 0, 999);
-            sendToScreen(8000000 + picked_color);  
+            sendToScreen(8000000, picked_color);  
         }
         // Refresh BT menu
         if (state == 3) handleMenus();
