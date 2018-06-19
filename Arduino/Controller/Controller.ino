@@ -50,14 +50,6 @@ uint16_t picked_color = 0;
 #define LButton     digitalRead(LButton_pin) == HIGH
 #define RButton     digitalRead(RButton_pin) == HIGH
 
-// Virtuelwire - vervangen zodra RCSwitch getest is
-#define VW_MAX_MESSAGE_LEN  40
-
-// BT variables
-char tx_buf[VW_MAX_MESSAGE_LEN];
-uint8_t rx_buf[VW_MAX_MESSAGE_LEN];
-uint8_t buflen = VW_MAX_MESSAGE_LEN;
-
 // Flank variabelen
 int xr_old = x_rechts;
 int yr_old = y_rechts;
@@ -136,20 +128,17 @@ void loop() {
         xr_old = x_rechts;
         yr_old = y_rechts;
 
-        // Make a char array with joystick values, button pressed and current mode
-        sprintf(tx_buf, "XL=%d&YL=%d&XR=%d&YR=%d&LB=%d&RB=%d&mode=%d&c=%d", xl_old, yl_old, xr_old, yr_old, LButton, RButton, mode, picked_color);
-
         if (WIRED) {
             //send information to touchscreen
-            PC.println(1000000 + xl_old);
-            PC.println(2000000 + yl_old);
-            PC.println(3000000 + xr_old);
-            PC.println(4000000 + yr_old);
-            PC.println(5000000 + LButton);
-            PC.println(6000000 + RButton);
-            PC.println(7000000 + mode);
+            sendToScreen(1000000 + xl_old);
+            sendToScreen(2000000 + yl_old);
+            sendToScreen(3000000 + xr_old);
+            sendToScreen(4000000 + yr_old);
+            sendToScreen(5000000 + LButton);
+            sendToScreen(6000000 + RButton);
+            sendToScreen(7000000 + mode);
             //int scaled_color = map(picked_color, 0, 65536, 0, 999);
-            PC.println(8000000 + picked_color);  
+            sendToScreen(8000000 + picked_color);  
         }
         // Refresh BT menu
         if (state == 3) handleMenus();
@@ -252,8 +241,6 @@ void loop() {
                 }
             }
         }
-    } else if (state == 1) {  // Batterij status
-      
     } else if (state == 2) {  // Colorpicker
         float hue = (float) p.x / 320.0;
         float saturation = 1;
@@ -268,8 +255,6 @@ void loop() {
             tft.println("              picker");
             picked_color = hslToRgb(hue, saturation, lightness);
         }
-    } else if (state == 4) {
-      
     }
 
     // Zodra menukeuze veranderd, scherm refreshen
@@ -285,4 +270,6 @@ void sendbluetooth(String string){
        BT.flush();  
   }
 
-
+void sendToScreen(int number, int data) {
+      PC.println(number + data);
+  }
