@@ -155,14 +155,8 @@ void loop() {
         if (state == 3) handleMenus();
     }
     //send to bluetooth (used for arm and tank)
-       BT.print(String(x_links));
-       BT.print(String(y_links));
-       BT.print(String(x_rechts));
-       BT.print(String(y_rechts));
-       BT.print(String(LButton));
-       BT.print(String(RButton));
-       BT.println(String(mode));
-       BT.flush();
+    String datatosend = String(x_links) + String(y_links) + String(x_rechts) + String(y_rechts) + String(LButton) + String(RButton) + String(mode);
+    sendbluetooth(datatosend);
     // Ontvang data van serieel of RF en zet dit in rx_buf of wired_string
     // Waarom twee aparte variabelen voor opslaan?
     if (WIRED) {
@@ -285,5 +279,10 @@ void loop() {
     }
 
 }
+
+void sendbluetooth(String string){
+       BT.println(string);
+       BT.flush();  
+  }
 
 
