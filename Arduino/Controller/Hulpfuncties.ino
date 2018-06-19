@@ -137,7 +137,7 @@ void handleMenus() {
             tft.setTextSize(2);
             
             tft.print("RF received: ");
-            WIRED ? tft.println(wired_string) : tft.println((char * ) rx_buf);
+            tft.println(wired_string);
             
             tft.println("RF send: ");
             char * split;
