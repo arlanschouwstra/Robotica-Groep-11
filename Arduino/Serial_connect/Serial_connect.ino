@@ -400,7 +400,8 @@ int highpass_max = 1023;
 /*NEEDS TO CHECK FOR A SPECIFIED SOUND PITCH FOR DANCE AND LINEDANCE*/
 void soundFilterDance(){
     int lowpass_signal = analogRead(lowpass_pin);
-    int lowpass = map(lowpass_signal, 0,  lowpass_max , 1, 9); /*converts actual values to a number from 0 to 100.*/
+     /*converts actual values to a number from 0 to 100.*/
+    int lowpass = map(lowpass_signal, 0,  lowpass_max , 1, 9);
     
     int bandpass_signal = analogRead(bandpass_pin);
     int bandpass = map(bandpass_signal, 0,midpass_max, 1, 9);
@@ -412,7 +413,8 @@ void soundFilterDance(){
 
 void lineDance(){   
     int lowpass_signal = analogRead(lowpass_pin);
-    int lowpass = map(lowpass_signal, 0,  lowpass_max , 0, led_per_bar);/*  converts 0 to lowpass_max into 0 to 8 and puts the value into lowpass.*/
+    /*  converts 0 to lowpass_max into 0 to 8 and puts the value into lowpass.*/
+    int lowpass = map(lowpass_signal, 0,  lowpass_max , 0, led_per_bar);
     Serial.print("lowpass_signal: ");
     Serial.println(lowpass_signal);
 
@@ -427,27 +429,34 @@ void lineDance(){
     Serial.println(highpass_signal);
     
     int R, G, B;
-    // turn all leds off
+    /* turn all leds off*/
     for (int i = 0; i < 80; i++) leds[i] = CRGB(0, 0, 0);
     
     while (lowpass--) {
         R = lowpass > led_per_bar * 0.33 ? 255 : 0;
         G = lowpass < led_per_bar * 0.66 ? 255 : 0;
         B = 0;
-        leds[lowpass] = CRGB(R, G, B); /* while lowpass is on, all the leds in the range it has are turned on.*/
+        /* while lowpass is on, all the leds in the range it has are turned on.*/
+        leds[lowpass] = CRGB(R, G, B);
+        leds[lowpass + led_per_bar] = CRGB(R, G, B);
+        leds[lowpass + (led_per_bar * 2)] = CRGB(R, G, B);
     }
-    
+    /*if bandpass > led_per_bar*0.33, then 255, else 0*/
     while (bandpass--) {
-        R = bandpass > led_per_bar * 0.33 ? 255 : 0;/*if bandpass > led_per_bar*0.33, then 255, else 0*/
+        R = bandpass > led_per_bar * 0.33 ? 255 : 0;
         G = bandpass < led_per_bar * 0.66 ? 255 : 0;
         B = 0;
-        leds[bandpass + led_per_bar] = CRGB(R, G, B);
+        leds[bandpass + (led_per_bar * 3)] = CRGB(R, G, B);
+        leds[bandpass + (led_per_bar * 4)] = CRGB(R, G, B);
+        leds[bandpass + (led_per_bar * 5)] = CRGB(R, G, B);
     }
     while (highpass--) {
         R = highpass > led_per_bar * 0.33 ? 255 : 0;
         G = highpass < led_per_bar * 0.66 ? 255 : 0;
         B = 0;
-        leds[highpass + 2*led_per_bar] = CRGB(R, G, B);
+        leds[highpass + (led_per_bar * 6)] = CRGB(R, G, B);
+        leds[highpass + (led_per_bar * 7)] = CRGB(R, G, B);
+        leds[highpass + (led_per_bar * 8)] = CRGB(R, G, B);
     }
        
     FastLED.show();
@@ -458,11 +467,11 @@ void lineDance(){
  *============================================================================*/
 void setup() {
   // put your setup code here, to run once:
-  //  pin used for LED MATRIX
+  /*  pin used for LED MATRIX*/
   FastLED.addLeds < WS2812, LED_PIN, GRB > (leds, NUM_LEDS);
   FastLED.setBrightness(brightness);
   Serial.begin(9600);
-  //  pins used for sound filters.
+  /*  pins used for sound filters.*/
   pinMode(A0, INPUT);
   pinMode(A1, INPUT);
   pinMode(A2, INPUT);
@@ -471,8 +480,6 @@ void setup() {
  * LOOP()
  *============================================================================*/
 void loop() {
-  // put your main code here, to run repeatedly:
-  // Turn all leds off
   FastLED.clear();
   
   if (Serial.available()) {

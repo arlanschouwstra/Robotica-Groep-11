@@ -5,6 +5,7 @@ import serial
 class Dance:
     def __init__(self):
         self.move = getattr(Servo, 'move_position')
+        self.read_pos = getattr(Servo, 'read_position')
     #  for serial connection between Pi and Arduino.
     def connect_usb(self):
         ser = serial.Serial('/dev/ttyACM0', 9600)
@@ -31,61 +32,82 @@ class Dance:
 
     def set_start_position(self):
         # set servos to their start positions
-        self.move(15, 823, 50)
-        self.move(3, 200, 50)
-        self.move(23, 623, 50)
+        # from bottom to stop of the arm.
         self.move(41, 512, 50)
-        self.move(51, 823, 50)
-        self.move(6, 512, 50)
 
-    def buildup_speed(self, idServo, distance, speed):    #TESTEN!!!
-        start_speed = speed/2
-        self.move(idServo,distance,start_speed)
+        self.move(3, 512, 50)
+        self.move(15, 512, 50)
+
+        self.move(23, 512, 50)
+
+        self.move(6, 200, 50)
+
+        self.move(51, 812, 50)
+
+        self.move(4, 512, 50)
+
+    def buildup_speed(self, id_servo, distance, speed):    #TESTEN!!!
+        start_speed = speed*2
+        self.move(id_servo, distance, start_speed)
         time.sleep(0.5)
-        self.move(idServo, distance, speed)
+        self.move(id_servo, distance, speed)
 
-    def headbang(self, speed):
-        self.move(3, 100, speed)
-        self.move(15, 923, speed)
-        self.move(23, 623, speed)
-        time.sleep(1)
-        self.move(3, 200, speed)
-        self.move(15, 823, speed)
-        self.move(23, 723, speed)
-        time.sleep(1)
+    #   TEST
+    def headbang(self):
+        if self.read_pos(3) != 512 and self.read_pos(15) != 512:
+            self.move(3, 512, (abs(self.read_pos(3)-512)))
+            self.move(15, 512, (abs(self.read_pos(15)-512)))
+        if self.read_pos(23) != 612:
+            self.move(23, 612, (abs(self.read_pos(23)-612)))
+            time.sleep(1)
+        else:
+            for x in range(6):
+                self.move(3, 212, 300)
+                self.move(15, 812, 300)
+                self.move(23, 512, 100)
+                time.sleep(1)
+                self.move(3, 512, 300)
+                self.move(15, 512, 300)
+                self.move(23, 612, 100)
+                time.sleep(1)
 
-    def twist(self, speed):
-        self.move(6, 412, speed)    # turn far left
-        time.sleep(1)
-        self.move(6, 612, speed)    # turn far right
-        time.sleep(1)
-
-    def sprinkler_start(self, speed):
-        self.move(3, 200, speed)
-        self.move(15, 823, speed)
-        self.move(23, 723, speed)
-        self.move_right(y, speed)
+    #   TEST
+    def twist(self):
+        if self.read_pos(51) != 712:
+            self.move(51, 712, 100)  # start up the twist.
+            time.sleep(1)
+        else:
+            for x in range(6):
+                self.move(51, 912, 200)    # turn far left
+                time.sleep(1)
+                self.move(51, 712, 200)    # turn far right
+                time.sleep(1)
 
     def sprinkler(self, speed):
-        self.sprinkler_start(speed)
+        self.move(3, 200, speed)
+        self.move(15, 823, speed)
+        self.move(23, 723, speed)
         time.sleep(1)
-        #   move left
-        self.move(41, 600, speed/2)
+        self.move_right(speed)
         time.sleep(1)
-        self.move(41, 500, speed/2)
-        time.sleep(1)
-        self.move(41, 400, speed/2)
-        time.sleep(1)
-        self.move(41, 300, speed/2)
-        time.sleep(1)
-        #   move right
-        self.move(41, 400, speed/2)
-        time.sleep(1)
-        self.move(41, 500, speed/2)
-        time.sleep(1)
-        self.move(41, 600, speed/2)
-        time.sleep(1)
-        self.move(41, 700, speed/2)
+        for x in range(6):
+            #   move left
+            self.move(41, 600, speed/2)
+            time.sleep(1)
+            self.move(41, 500, speed/2)
+            time.sleep(1)
+            self.move(41, 400, speed/2)
+            time.sleep(1)
+            self.move(41, 300, speed/2)
+            time.sleep(1)
+            #   move right
+            self.move(41, 400, speed/2)
+            time.sleep(1)
+            self.move(41, 500, speed/2)
+            time.sleep(1)
+            self.move(41, 600, speed/2)
+            time.sleep(1)
+            self.move(41, 700, speed/2)
 
     def stretch_forward(self, speed):
         self.move(3, 0, speed)
@@ -139,3 +161,6 @@ class Dance:
 
         ser = self.connect_usb()
         self.send_data(ser, "display_group_name")
+
+dance = Dance
+
