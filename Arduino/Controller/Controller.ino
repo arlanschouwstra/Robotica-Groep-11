@@ -184,62 +184,31 @@ void loop() {
     // Geen touch op menu, handle menu opties
     // Handlemenus() vervangen wegens knipperen van scherm
     } else if (state == 0) {  // Hoofdmenu
-        if (p.x > 18 && p.x < (18 + 120)) {
-            if (p.y > 45 && p.y < (45 + 55)) {
+        if (p.x > 18 && p.x < 138) {
+            if (p.y > 45 && p.y < 100) {
                 mode = 0;
-                if (mode != old_mode) {
-                    drawButton(mode);
-                    drawButton(old_mode);
-                    //handleMenus();
-                    old_mode = mode;
-                }
+                checkModeVsOldMode(mode, old_mode);
             }
-            if (p.y > 110 && p.y < (110 + 55)) {
+            if (p.y > 110 && p.y < 165) {
                 mode = 1;
-                if (mode != old_mode) {
-                    drawButton(mode);
-                    drawButton(old_mode);
-                    //handleMenus();
-                    old_mode = mode;
-                }
-
+                checkModeVsOldMode(mode, old_mode);
             }
-            if (p.y > 175 && p.y < (175 + 55)) {
+            if (p.y > 175 && p.y < 230) {
                 mode = 2;
-                if (mode != old_mode) {
-                    drawButton(mode);
-                    drawButton(old_mode);
-                    //handleMenus();
-                    old_mode = mode;
-                }
+                checkModeVsOldMode(mode, old_mode);
             }
-        } else if (p.x > 148 && p.x < (148 + 120)) {
-            if (p.y > 45 && p.y < (45 + 55)) {
+        } else if (p.x > 148 && p.x < 268) {
+            if (p.y > 45 && p.y < 100) {
                 mode = 3;
-                if (mode != old_mode) {
-                    drawButton(mode);
-                    drawButton(old_mode);
-                    //handleMenus();
-                    old_mode = mode;
-                }
+                checkModeVsOldMode(mode, old_mode);
             }
-            if (p.y > 110 && p.y < (110 + 55)) {
+            if (p.y > 110 && p.y < 165) {
                 mode = 4;
-                if (mode != old_mode) {
-                    drawButton(mode);
-                    drawButton(old_mode);
-                    //handleMenus();
-                    old_mode = mode;
-                }
+                checkModeVsOldMode(mode, old_mode);
             }
-            if (p.y > 175 && p.y < (175 + 55)) {
+            if (p.y > 175 && p.y < 230) {
                 mode = 5;
-                if (mode != old_mode) {
-                    drawButton(mode);
-                    drawButton(old_mode);
-                    //handleMenus();
-                    old_mode = mode;
-                }
+                checkModeVsOldMode(mode, old_mode);
             }
         }
     } else if (state == 2) {  // Colorpicker
@@ -274,3 +243,13 @@ void sendbluetooth(String string){
 void sendToScreen(int number, int data) {
       PC.println(number + data);
   }
+
+void checkModeVsOldMode(int newMode, int oldMode){
+                if (newMode != oldMode) {
+                    drawButton(mode);
+                    drawButton(old_mode);
+                    //handleMenus();
+                    old_mode = mode;
+                }  
+}
+
