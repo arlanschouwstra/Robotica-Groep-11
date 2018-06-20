@@ -63,14 +63,15 @@ class Servo:
                            812,
                            50)
 
+        #already in the unit test. We should run the test on every boot.
         # print servos positions (for testing purposes)
-        print(self.y.readPosition(3))
-        print(self.y.readPosition(4))
-        print(self.y.readPosition(6))
-        print(self.y.readPosition(15))
-        print(self.y.readPosition(23))
-        print(self.y.readPosition(51))
-        print(self.y.readPosition(41))
+        #print(self.y.readPosition(3))
+        #print(self.y.readPosition(4))
+        #print(self.y.readPosition(6))
+        #print(self.y.readPosition(15))
+        #print(self.y.readPosition(23))
+        #print(self.y.readPosition(51))
+        #print(self.y.readPosition(41))
 
     # old method to determine speed of the sensitivity for the joystick
     @staticmethod
@@ -98,72 +99,37 @@ class Servo:
     # body, clockwise and vertical are booleans used for easy initialisations for the servos positions
     def move(self, data, servo_id, start_position, clockwise, body, vertical):
         # initialize each position of the joystick
+        data02 = int(data[0:2])
+        data24 = int(data[2:4])
+        data46 = int(data[4:6])
+        data68 = int(data[6:8])
         try:
-            if 25 > int(data[6:8]) > 20:  # move up body
-                if body:
-                    if vertical:
-                        self.move_position(servo_id,
-                                           start_position,
-                                           50)
-
-            elif 25 < int(data[6:8]) < 30:  # move down body
-                if body:
-                    if vertical:
-                        if not clockwise:
-                            self.move_position(servo_id,
-                                               start_position + 200,
-                                               50)
-                        else:
-                            self.move_position(servo_id,
-                                               start_position - 200,
-                                               50)
+            if 25 > data68 > 20:  # move up body
+                    self.move_position(servo_id,
+                                       start_position,
+                                       50)
 
 
-            elif 15 > int(data[4:6]) > 10:  # move left body
-                if body:
-                    if not vertical:
-                        self.move_position(servo_id,
-                                           start_position + 200,
-                                           50)
-
-            elif 15 < int(data[4:6]) < 20:  # move right body
-                if body:
-                    if not vertical:
-                        self.move_position(servo_id,
-                                           start_position - 200,
-                                           50)
-            elif 35 > int(data[0:2]) > 30:  # move left head
-                if not body:
-                    if not vertical:
-                        if clockwise:
-                            self.move_position(servo_id,
-                                               start_position + 200,
-                                               50)
-
-            elif 35 < int(data[0:2]) < 40:  # move right head
-                if not body:
-                    if not vertical:
-                        if clockwise:
-                            self.move_position(servo_id,
-                                               start_position - 200,
-                                               50)
-
-            elif 45 > int(data[2:4]) > 40:  # move up head
-                if not body:
-                    if not vertical:
-                        if not clockwise:
-                            self.move_position(servo_id,
-                                               start_position + 200,
-                                               50)
+            self.move_position(servo_id,
+                               start_position (+ 200 if data68 > 25 and not clockwise else - 200  ),
+                               50)
 
 
-            elif 45 < int(data[2:4]) < 50:  # move down head
-                if not body:
-                    if not vertical:
-                        if not clockwise:
-                            self.move_position(servo_id,
-                                               start_position - 200,
-                                               50)
+
+
+            self.move_position(servo_id,
+                               start_position (+ 200 if data46 < 15 else - 200  ),
+                               50)
+
+
+            self.move_position(servo_id,
+                               start_position (+ 200 if data02 < 35 else - 200  ),
+                               50)
+
+
+            self.move_position(servo_id,
+                               start_position (+ 200 if data24 < 45 else - 200  ),
+                               50)
             print("Servo:",
                   servo_id,
                   "moved to position:",
