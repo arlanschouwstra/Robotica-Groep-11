@@ -28,8 +28,6 @@ int state = 0,
 
 // Mode van de robot
 int mode = 0;
-#define VW_MAX_MESSAGE_LEN  40
-char tx_buf[VW_MAX_MESSAGE_LEN];
 // Define colors
 #define GRAY  RGB(38, 37, 36)
 #define BLACK ILI9341_BLACK
@@ -128,7 +126,6 @@ void loop() {
         yl_old = y_links;
         xr_old = x_rechts;
         yr_old = y_rechts;
-        sprintf(tx_buf, "XL=%d&YL=%d&XR=%d&YR=%d&LB=%d&RB=%d&mode=%d&c=%d", xl_old, yl_old, xr_old, yr_old, LButton, RButton, mode, picked_color);
         if (WIRED) {
             //send information to touchscreen
             sendToScreen(1000000, xl_old);

@@ -128,27 +128,6 @@ void handleMenus() {
         case 2:
             //tft.fillRect(0, 40, 320, 200, GRAY);
             drawHSL();
-            break;  
-        // RF menu      ------------------------------------------------------------ 
-        case 3:
-            tft.fillRect(0, 40, 320, 200, GRAY);
-            tft.setCursor(0, 60);
-            tft.setTextColor(ILI9341_WHITE);
-            tft.setTextSize(2);
-            
-            tft.print("RF received: ");
-            tft.println(wired_string);
-            
-            tft.println("RF send: ");
-            char * split;
-            split = strtok(tx_buf, "&");    // Split string into tokens
-            int i = 0;
-            while (split != NULL) {
-                i % 2 ? tft.println(split) : tft.print(split);    // Print op elke regel 2 waardes
-                if (i % 2 == 0) tft.print("  ");                  // Ruimte tussen de waardes
-                split = strtok(NULL, "&");                        // Ga naar volgende token
-                i++;                                             
-            }
             break;
     }
 }
