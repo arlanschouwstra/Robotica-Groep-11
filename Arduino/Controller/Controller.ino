@@ -120,37 +120,18 @@ void setup(void) {
 
 void loop() {
     // Zodra joystick waardes veranderen stuur via serieel of BT
-    if (xl_old != x_links || yl_old != y_links || xr_old != x_rechts || yr_old != y_links) {
+    if (xl_old != x_links || yl_old != y_links || xr_old != x_rechts || yr_old != y_rechts) {
         // Flank variabelen
         xl_old = x_links;
         yl_old = y_links;
         xr_old = x_rechts;
         yr_old = y_rechts;
-        if (WIRED) {
-            //send information to touchscreen
-            sendToScreen(1000000, xl_old);
-            sendToScreen(2000000, yl_old);
-            sendToScreen(3000000, xr_old);
-            sendToScreen(4000000, yr_old);
-            sendToScreen(5000000, LButton);
-            sendToScreen(6000000, RButton);
-            sendToScreen(7000000, mode);
-            //int scaled_color = map(picked_color, 0, 65536, 0, 999);
-            sendToScreen(8000000, picked_color);  
-        }
-        // Refresh BT menu
-        if (state == 3) handleMenus();
     }
+    
     //send to bluetooth (used for arm and tank)
     String datatosend = String(x_links) + String(y_links) + String(x_rechts) + String(y_rechts) + String(LButton) + String(RButton) + String(mode);
     sendbluetooth(datatosend);
-    // Ontvang data van serieel of BT en zet dit in rx_buf of wired_string
-    // Waarom twee aparte variabelen voor opslaan?
-    if (WIRED) {
-        if(Serial.available() > 0) {
-            wired_string = Serial.readStringUntil('\n');
-        }
-    } 
+
     //checking for availability
     PC.println("available");
     
