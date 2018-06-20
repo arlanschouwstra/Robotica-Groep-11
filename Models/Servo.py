@@ -116,10 +116,6 @@ class Servo:
                         self.move_position(servo_id,
                                            start_position,
                                            50)
-                        print("Servo:",
-                              servo_id,
-                              "moved to position:",
-                              self.y.readPosition(servo_id))
 
             elif 25 < int(data[6:8]) < 30:  # move down body
                 if body:
@@ -128,18 +124,11 @@ class Servo:
                             self.move_position(servo_id,
                                                start_position + 200,
                                                50)
-                            print("Servo:",
-                                  servo_id,
-                                  "moved to position:",
-                                  self.y.readPosition(servo_id))
                         else:
                             self.move_position(servo_id,
                                                start_position - 200,
                                                50)
-                            print("Servo:",
-                                  servo_id,
-                                  "moved to position:",
-                                  self.y.readPosition(servo_id))
+
 
             elif 15 > int(data[4:6]) > 10:  # move left body
                 if body:
@@ -147,10 +136,6 @@ class Servo:
                         self.move_position(servo_id,
                                            start_position + 200,
                                            50)
-                        print("Servo:",
-                              servo_id,
-                              "moved to position:",
-                              self.y.readPosition(servo_id))
 
             elif 15 < int(data[4:6]) < 20:  # move right body
                 if body:
@@ -158,11 +143,6 @@ class Servo:
                         self.move_position(servo_id,
                                            start_position - 200,
                                            50)
-                        print("Servo:",
-                              servo_id,
-                              "moved to position:",
-                              self.y.readPosition(servo_id))
-
             elif 35 > int(data[0:2]) > 30:  # move left head
                 if not body:
                     if not vertical:
@@ -170,10 +150,6 @@ class Servo:
                             self.move_position(servo_id,
                                                start_position + 200,
                                                50)
-                            print("Servo:",
-                                  servo_id,
-                                  "moved to position:",
-                                  self.y.readPosition(servo_id))
 
             elif 35 < int(data[0:2]) < 40:  # move right head
                 if not body:
@@ -182,10 +158,6 @@ class Servo:
                             self.move_position(servo_id,
                                                start_position - 200,
                                                50)
-                            print("Servo:",
-                                  servo_id,
-                                  "moved to position:",
-                                  self.y.readPosition(servo_id))
 
             elif 45 > int(data[2:4]) > 40:  # move up head
                 if not body:
@@ -194,10 +166,7 @@ class Servo:
                             self.move_position(servo_id,
                                                start_position + 200,
                                                50)
-                            print("Servo:",
-                                  servo_id,
-                                  "moved to position:",
-                                  self.y.readPosition(servo_id))
+
 
             elif 45 < int(data[2:4]) < 50:  # move down head
                 if not body:
@@ -206,10 +175,10 @@ class Servo:
                             self.move_position(servo_id,
                                                start_position - 200,
                                                50)
-                            print("Servo:",
-                                  servo_id,
-                                  "moved to position:",
-                                  self.y.readPosition(servo_id))
+            print("Servo:",
+                  servo_id,
+                  "moved to position:",
+                  self.y.readPosition(servo_id))
 
         except ValueError:
             print("Could not turn servo!!")
