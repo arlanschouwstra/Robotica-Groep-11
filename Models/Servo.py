@@ -114,9 +114,6 @@ class Servo:
                                start_position (+ 200 if data68 > 25 and not clockwise else - 200  ),
                                50)
 
-
-
-
             self.move_position(servo_id,
                                start_position (+ 200 if data46 < 15 else - 200  ),
                                50)
@@ -162,7 +159,9 @@ class Servo:
                            1)
         time.sleep(0.01)
 
-    # used to call all servos
+
+    def parse_data(self, data):
+        pass
     def move_all_servos(self, data):
         # initialize servos
         start_positions = [[3, 512, True, True, True],     # right under for up/down
