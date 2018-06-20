@@ -58,7 +58,9 @@ boolean old_lb = LButton;
 boolean old_rb = RButton;
 int old_mode = mode;
 uint16_t old_color = picked_color;
-
+int old[] = {xl_old, yl_old, xr_old, yr_old};
+String names[] = {"lx: ", "ly: ", "rx: ", "ry: "};
+int current[] = {x_links, y_links, x_rechts, y_rechts};
 #define BT  Serial1
 #define PC  Serial
 
@@ -87,14 +89,6 @@ void setup(void) {
     
     pinMode(18, OUTPUT); // BT TX
     pinMode(19, INPUT);  // BT RX
-
-
-    /* Virtuelwire - kan weg na testen van RCSwitch
-    vw_set_ptt_inverted(true); //
-    vw_set_tx_pin(18);
-    vw_set_rx_pin(19);
-    vw_setup(2000); // speed of data transfer Kbps
-    */
     
     while (!Serial); // used for leonardo debugging
 
@@ -120,109 +114,13 @@ void setup(void) {
 
 void loop() {
     // Zodra joystick waardes veranderen stuur via serieel of BT
-    if (xl_old != x_links || yl_old != y_links || xr_old != x_rechts || yr_old != y_rechts) {
         // Flank variabelen
-        xl_old = x_links;
-        yl_old = y_links;
-        xr_old = x_rechts;
-        yr_old = y_rechts;
-    }
-    
-    //send to bluetooth (used for arm and tank)
-    String datatosend = String(x_links) + String(y_links) + String(x_rechts) + String(y_rechts) + String(LButton) + String(RButton) + String(mode);
-    sendbluetooth(datatosend);
-
-    //checking for availability
-    PC.println("available");
+    check_change();
     
     // Wait for a touch
     if (!ctp.touched()) {
         return;
     }
-    // Retrieve a point  
-    TS_Point px = ctp.getPoint(),
-              p = ctp.getPoint();
-
-    // flip it around to match the screen.
-    p.x = map(px.y, 0, 320, 320, 0);
-    p.y = map(px.x, 0, 240, 0, 240);
-
-    // alles onder y < 40 is menu
-    if (p.y < 40) {
-        // Menukeuze op basis van x coordinaat
-        for (int i = 0; i < aantal_menus; i++) {
-            if (p.x < (i + 1) * boxsize) {
-                if (i != old_state) { // Voorkomen van flikkeren
-                    drawMenus(i);
-                    state = i;
-                }
-                break;
-            }
-        }
-    // Geen touch op menu, handle menu opties
-    // Handlemenus() vervangen wegens knipperen van scherm
-    } else if (state == 0) {  // Hoofdmenu
-        if (p.x > 18 && p.x < 138) {
-            if (p.y > 45 && p.y < 100) {
-                mode = 0;
-            }
-            if (p.y > 110 && p.y < 165) {
-                mode = 1;
-            }
-            if (p.y > 175 && p.y < 230) {
-                mode = 2;
-            }
-        } else if (p.x > 148 && p.x < 268) {
-            if (p.y > 45 && p.y < 100) {
-                mode = 3;
-            }
-            if (p.y > 110 && p.y < 165) {
-                mode = 4;
-            }
-            if (p.y > 175 && p.y < 230) {
-                mode = 5;
-            }
-        }
-     checkModeVsOldMode(mode, old_mode);
-    } else if (state == 2) {  // Colorpicker
-        float hue = (float) p.x / 320.0;
-        float saturation = 1;
-        float lightness = ((float) p.y - 40.0) / (240.0 - 10.0);
-        if (picked_color != hslToRgb(hue, saturation, lightness)) {
-
-            tft.fillRect(2 * boxsize, 0, boxsize, 40, hslToRgb(hue, saturation, lightness));
-            tft.setCursor(0, 2);
-            tft.setTextColor(ILI9341_WHITE);
-            tft.setTextSize(2);
-            tft.println("              Color");
-            tft.println("              picker");
-            picked_color = hslToRgb(hue, saturation, lightness);
-        }
-    }
-
-    // Zodra menukeuze veranderd, scherm refreshen
-    if (state != old_state) {
-        handleMenus();
-        old_state = state;
-    }
-
-}
-
-void sendbluetooth(String string){
-       BT.println(string);
-       BT.flush();  
-  }
-
-void sendToScreen(int number, int data) {
-      PC.println(number + data);
-  }
-
-void checkModeVsOldMode(int newMode, int oldMode){
-                if (newMode != oldMode) {
-                    drawButton(mode);
-                    drawButton(old_mode);
-                    //handleMenus();
-                    old_mode = mode;
-                }  
+    handleTouchEvent();
 }
 

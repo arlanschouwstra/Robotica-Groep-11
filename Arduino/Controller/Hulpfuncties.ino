@@ -88,24 +88,6 @@ void handleMenus() {
          // Hoofdmenu ------------------------------------------------------------------
          case 0:
             tft.fillRect(0, 40, 320, 200, GRAY);
-            /*
-            tft.setCursor(0, 220);
-            tft.setTextColor(ILI9341_BLUE);
-            tft.setTextSize(2);
-            tft.print(" Programmmatijd: ");
-            tft.print((millis() - timer) / 1000);
-            tft.println("s");
-            */
-            
-            //drawRoundRect(uint16_t x0, uint16_t y0, uint16_t w, uint16_t h, uint16_t radius, uint16_t color);
-            /*
-            drawButton(18, 45, mode == 0 ? ORANGE : BLACK, "  Drive", "  mode");
-            drawButton(18, 110, mode == 1 ? ORANGE : BLACK, "  Linedance", "  mode");
-            drawButton(18, 175, mode == 2 ? ORANGE : BLACK, "  Knaben", "  Wunder");
-            drawButton(148, 45, mode == 3 ? ORANGE : BLACK, "             Dancing", "             mode");
-            drawButton(148, 110, mode == 4 ? ORANGE : BLACK, "             Obstacle", "             course");
-            drawButton(148, 175, mode == 5 ? ORANGE : BLACK, "             Transport", "             & rebuild");
-            */
             for (int i = 0; i < 6; i++) drawButton(i);  // Doet hetzelfde als hierboven staat
             break;
         // Batterij status ------------------------------------------------------------
@@ -178,6 +160,103 @@ void drawHSL() {
       tft.drawPixel(x, y, hslToRgb(hue, saturation, lightness));
     }
   }
+}
+
+void check_change(){
+ 
+   for(int i = 0; i < old.length(); i++){
+     if(old[i] != current[i]){
+        old[i] = current[i];
+        sendbluetooth("{"+names[i] + current[i]+"}");
+      }
+   }
+}
+
+void sendbluetooth(String string){
+       BT.println(string);
+       BT.flush();  
+}
+
+void sendToScreen(int number, int data) {
+      PC.println(number + data);
+}
+
+void checkModeVsOldMode(int newMode, int oldMode){
+                if (newMode != oldMode) {
+                    drawButton(mode);
+                    drawButton(old_mode);
+                    //handleMenus();
+                    old_mode = mode;
+                }  
+}
+
+void handleTouchEvent(){
+      // Retrieve a point  
+    TS_Point px = ctp.getPoint(),
+              p = ctp.getPoint();
+
+    // flip it around to match the screen.
+    p.x = map(px.y, 0, 320, 320, 0);
+    p.y = map(px.x, 0, 240, 0, 240);
+
+    // alles onder y < 40 is menu
+    if (p.y < 40) {
+        // Menukeuze op basis van x coordinaat
+        for (int i = 0; i < aantal_menus; i++) {
+            if (p.x < (i + 1) * boxsize) {
+                if (i != old_state) { // Voorkomen van flikkeren
+                    drawMenus(i);
+                    state = i;
+                }
+                break;
+            }
+        }
+    // Geen touch op menu, handle menu opties
+    // Handlemenus() vervangen wegens knipperen van scherm
+    } else if (state == 0) {  // Hoofdmenu
+        if (p.x > 18 && p.x < 138) {
+            if (p.y > 45 && p.y < 100) {
+                mode = 0;
+            }
+            if (p.y > 110 && p.y < 165) {
+                mode = 1;
+            }
+            if (p.y > 175 && p.y < 230) {
+                mode = 2;
+            }
+        } else if (p.x > 148 && p.x < 268) {
+            if (p.y > 45 && p.y < 100) {
+                mode = 3;
+            }
+            if (p.y > 110 && p.y < 165) {
+                mode = 4;
+            }
+            if (p.y > 175 && p.y < 230) {
+                mode = 5;
+            }
+        }
+     checkModeVsOldMode(mode, old_mode);
+    } else if (state == 2) {  // Colorpicker
+        float hue = (float) p.x / 320.0;
+        float saturation = 1;
+        float lightness = ((float) p.y - 40.0) / (240.0 - 10.0);
+        if (picked_color != hslToRgb(hue, saturation, lightness)) {
+
+            tft.fillRect(2 * boxsize, 0, boxsize, 40, hslToRgb(hue, saturation, lightness));
+            tft.setCursor(0, 2);
+            tft.setTextColor(ILI9341_WHITE);
+            tft.setTextSize(2);
+            tft.println("              Color");
+            tft.println("              picker");
+            picked_color = hslToRgb(hue, saturation, lightness);
+        }
+    }
+
+    // Zodra menukeuze veranderd, scherm refreshen
+    if (state != old_state) {
+        handleMenus();
+        old_state = state;
+    }
 }
 
 
