@@ -187,30 +187,25 @@ void loop() {
         if (p.x > 18 && p.x < 138) {
             if (p.y > 45 && p.y < 100) {
                 mode = 0;
-                checkModeVsOldMode(mode, old_mode);
             }
             if (p.y > 110 && p.y < 165) {
                 mode = 1;
-                checkModeVsOldMode(mode, old_mode);
             }
             if (p.y > 175 && p.y < 230) {
                 mode = 2;
-                checkModeVsOldMode(mode, old_mode);
             }
         } else if (p.x > 148 && p.x < 268) {
             if (p.y > 45 && p.y < 100) {
                 mode = 3;
-                checkModeVsOldMode(mode, old_mode);
             }
             if (p.y > 110 && p.y < 165) {
                 mode = 4;
-                checkModeVsOldMode(mode, old_mode);
             }
             if (p.y > 175 && p.y < 230) {
                 mode = 5;
-                checkModeVsOldMode(mode, old_mode);
             }
         }
+     checkModeVsOldMode(mode, old_mode);
     } else if (state == 2) {  // Colorpicker
         float hue = (float) p.x / 320.0;
         float saturation = 1;
