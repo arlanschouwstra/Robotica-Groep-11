@@ -65,13 +65,13 @@ class Servo:
 
         #already in the unit test. We should run the test on every boot.
         # print servos positions (for testing purposes)
-        #print(self.y.readPosition(3))
-        #print(self.y.readPosition(4))
-        #print(self.y.readPosition(6))
-        #print(self.y.readPosition(15))
-        #print(self.y.readPosition(23))
-        #print(self.y.readPosition(51))
-        #print(self.y.readPosition(41))
+        # print(self.y.readPosition(3))
+        # print(self.y.readPosition(4))
+        # print(self.y.readPosition(6))
+        # print(self.y.readPosition(15))
+        # print(self.y.readPosition(23))
+        # print(self.y.readPosition(51))
+        # print(self.y.readPosition(41))
 
     # old method to determine speed of the sensitivity for the joystick
     @staticmethod
@@ -105,30 +105,24 @@ class Servo:
         data68 = int(data[6:8])
         try:
             if 25 > data68 > 20:  # move up body
-                    self.move_position(servo_id,
-                                       start_position,
-                                       50)
-
+                self.move_position(servo_id,
+                                   start_position,
+                                   50)
 
             self.move_position(servo_id,
-                               start_position (+ 200 if data68 > 25 and not clockwise else - 200  ),
+                               start_position(+ 200 if data68 > 25 and not clockwise else - 200),
                                50)
 
-
-
-
             self.move_position(servo_id,
-                               start_position (+ 200 if data46 < 15 else - 200  ),
+                               start_position(+ 200 if data46 < 15 else - 200),
                                50)
 
-
             self.move_position(servo_id,
-                               start_position (+ 200 if data02 < 35 else - 200  ),
+                               start_position(+ 200 if data02 < 35 else - 200),
                                50)
 
-
             self.move_position(servo_id,
-                               start_position (+ 200 if data24 < 45 else - 200  ),
+                               start_position(+ 200 if data24 < 45 else - 200),
                                50)
             print("Servo:",
                   servo_id,
@@ -165,19 +159,19 @@ class Servo:
     # used to call all servos
     def move_all_servos(self, data):
         # initialize servos
-        start_positions = [[3, 512, True, True, True],     # right under for up/down
+        start_positions = [[3, 512, True, True, True],  # right under for up/down
                            [4, 512, False, False, False],  # top servo
                            [6, 200, False, False, False],
                            [15, 512, False, True, True],
                            [23, 512, False, True, True],
-                           [41, 512, True, True, False],   # left under for up/down
+                           [41, 512, True, True, False],  # left under for up/down
                            [51, 812, True, False, False]]
 
         for servos in start_positions:
             self.move(data, servos[0], servos[1], servos[2], servos[3], servos[4])
 
-    def move_position(self, servo_id, position, speed):    # for easy usage in other classes
+    def move_position(self, servo_id, position, speed):  # for easy usage in other classes
         self.y.moveSpeed(servo_id, position, speed)
 
-    def read_position(self, servo_id):                     # for easy usage in other classes
+    def read_position(self, servo_id):  # for easy usage in other classes
         return self.y.readPosition(servo_id)
