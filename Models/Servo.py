@@ -24,25 +24,14 @@ class Servo:
                     start_position,
                     degree,
                     clockwise):
-        if degree == 90:
-            if clockwise:
-                self.move_position(servo,
-                                   (start_position - 312),
-                                   50)
-            else:
-                self.move_position(servo,
-                                   (start_position + 312),
-                                   50)
+        if clockwise:
+            self.move_position(servo,
+                               (start_position - (312 if degree == 90 else 312 / (90 / degree))),
+                               50)
         else:
-            get_degree = 90 / degree
-            if clockwise:
-                self.move_position(servo,
-                                   (start_position - (312 / get_degree)),
-                                   50)
-            else:
-                self.move_position(servo,
-                                   (start_position - (312 / get_degree)),
-                                   50)
+            self.move_position(servo,
+                               (start_position + (312 if degree == 90 else 312 / (90 / degree))),
+                               50)
 
         print("moving servo: ",
               servo,
