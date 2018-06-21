@@ -17,18 +17,6 @@ class Dance:
     def receive_data(self, ser):
         return ser.readline()
 
-    #   functions for driving
-    def turn_left(self, ser, speed):
-        ser.write("turnLeft"+","+str(speed))
-
-    def turn_right(self, ser, speed):
-        ser.write("turnRight"+","+str(speed))
-
-    def move_forward(self, ser, speed):
-        ser.write("moveForward"+","+str(speed))
-
-    def move_backward(self, ser, speed):
-        ser.write("moveBackward"+","+str(speed))
 
     def set_start_position(self):
         # set servos to their start positions
@@ -46,7 +34,10 @@ class Dance:
 
         self.move(4, 512, 50)
 
-    def buildup_speed(self, id_servo, distance, speed):    #TESTEN!!!
+#   ///////////////////////////////////////////////////////////////////////
+#   TESTEN.
+#   ///////////////////////////////////////////////////////////////////////
+    def buildup_speed(self, id_servo, distance, speed):
         start_speed = speed*2
         self.move(id_servo, distance, start_speed)
         time.sleep(0.5)
@@ -62,7 +53,6 @@ class Dance:
         else:
             return False
 
-    #   TEST
     def headbang(self):
         #if self.not_at_position(3, 512) and self.not_at_position(15, 512):
         #    self.move(3, 512, self.calc_speed(3, 512))
@@ -70,8 +60,6 @@ class Dance:
         #if self.not_at_position(23, 612):
         #    self.move(23, 612, self.calc_speed(23, 612))
         #    time.sleep(1)
-
-
         if self.read_pos(3) != 512 and self.read_pos(15) != 512:
             self.move(3, 512, (abs(self.read_pos(3)-512)))
             self.move(15, 512, (abs(self.read_pos(15)-512)))
@@ -89,7 +77,6 @@ class Dance:
                 self.move(23, 612, 100)
                 time.sleep(1)
 
-    #   TEST
     def twist(self):
         if self.read_pos(51) != 712:
             self.move(51, 712, 100)  # start up the twist.
@@ -100,6 +87,33 @@ class Dance:
                 time.sleep(1)
                 self.move(51, 712, 200)    # turn far right
                 time.sleep(1)
+#   ///////////////////////////////////////////////////////////////////////
+#   AANPASSEN.
+#   ///////////////////////////////////////////////////////////////////////
+    def move_left(self, speed):
+        self.move(41, 400, speed)
+
+    def move_right(self, speed):
+        self.move(41, 600, speed)
+
+    def move_center(self, speed):
+        self.move(41, 500, speed)
+
+    def weave_right(self, speed):
+        self.stretch_backward(speed)
+        self.move_right(speed/2)
+        self.stretch_forward(speed/2)
+        self.move_left(speed/2)
+        self.stretch_backward(speed/2)
+        self.move_center(speed/2)
+
+    def weave_left(self, speed):
+        self.stretch_backward(speed)
+        self.move_left(speed/2)
+        self.stretch_forward(speed/2)
+        self.move_right(speed/2)
+        self.stretch_backward(speed/2)
+        self.move_center(speed/2)
 
     def sprinkler(self, speed):
         self.move(3, 200, speed)
@@ -127,6 +141,9 @@ class Dance:
             time.sleep(1)
             self.move(41, 700, speed/2)
 
+#   ///////////////////////////////////////////////////////////////////////
+#   TESTED.
+#   ///////////////////////////////////////////////////////////////////////
     def stretch_forward(self, speed):
         self.move(3, 212, speed)
         self.move(15, 812, speed)
@@ -136,31 +153,6 @@ class Dance:
         self.move(3, 612, speed)
         self.move(15, 412, speed)
         self.move(23, 412, speed)
-
-    def move_left(self, speed):
-        self.move(41, 400, speed)
-
-    def move_right(self, speed):
-        self.move(41, 600, speed)
-
-    def move_center(self, speed):
-        self.move(41, 500, speed)
-
-    def weave_right(self, speed):
-        self.stretch_backward(speed)
-        self.move_right(speed/2)
-        self.stretch_forward(speed/2)
-        self.move_left(speed/2)
-        self.stretch_backward(speed/2)
-        self.move_center(speed/2)
-
-    def weave_left(self, speed):
-        self.stretch_backward(speed)
-        self.move_left(speed/2)
-        self.stretch_forward(speed/2)
-        self.move_right(speed/2)
-        self.stretch_backward(speed/2)
-        self.move_center(speed/2)
 
     def start(self):
         # (naam,beweging,snelheid)
