@@ -34,20 +34,26 @@ int mode = 0;
 #define RED  RGB(255, 0, 0)
 #define ORANGE RGB(0, 51, 0)
 
-uint16_t picked_color = 0;
+#define BT  Serial1
+#define PC  Serial
+
+// Verbonden via Serieel of BT
+#define WIRED   true
 
 // Waardes van de joysticks
 // y_rechts omkeren wegens orientatie van de joystick
 #define x_rechts  map(analogRead(A12), 0, 1023, 11, 19)
-#define y_rechts  map(analogRead(A13), 0, 1023, 29, 21)
+#define y_rechts  map(analogRead(A13), 0, 1023, 19, 11)
 
-#define x_links  map(analogRead(A8), 0, 1023, 31, 39)
-#define y_links  map(analogRead(A9), 0, 1023, 41, 49)
+#define x_links  map(analogRead(A8), 0, 1023, 11, 19)
+#define y_links  map(analogRead(A9), 0, 1023, 11, 19)
 
 #define LButton_pin 25
 #define RButton_pin 49
 #define LButton     digitalRead(LButton_pin) == HIGH
 #define RButton     digitalRead(RButton_pin) == HIGH
+int LButton_old = 0;
+int RButton_old = 0;
 
 // Flank variabelen
 int xr_old = x_rechts;
@@ -57,15 +63,12 @@ int yl_old = y_links;
 boolean old_lb = LButton;
 boolean old_rb = RButton;
 int old_mode = mode;
+uint16_t picked_color = 0;
 uint16_t old_color = picked_color;
-int old[] = {xl_old, yl_old, xr_old, yr_old};
-String names[] = {"lx: ", "ly: ", "rx: ", "ry: "};
-int current[] = {x_links, y_links, x_rechts, y_rechts};
-#define BT  Serial1
-#define PC  Serial
+int old[] = {xl_old, yl_old, xr_old, yr_old, LButton_old, RButton_old, old_mode};
+String names[] = {"lx: ", "ly: ", "rx: ", "ry: ", "LB: ", "RB: ", "mode: "};
+int current[] = {x_links, y_links, x_rechts, y_rechts, LButton, RButton, mode};
 
-// Verbonden via Serieel of BT
-#define WIRED   true
 
 long int timer = millis();
 String wired_string;
@@ -115,12 +118,12 @@ void setup(void) {
 void loop() {
     // Zodra joystick waardes veranderen stuur via serieel of BT
         // Flank variabelen
-    check_change();
-    
+    checkChange();
     // Wait for a touch
     if (!ctp.touched()) {
         return;
     }
+    
     handleTouchEvent();
 }
 

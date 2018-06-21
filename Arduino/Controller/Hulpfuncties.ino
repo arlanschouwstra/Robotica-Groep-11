@@ -162,17 +162,32 @@ void drawHSL() {
   }
 }
 
-void check_change(){
+bool checkChange(){
+     xr_old = x_rechts;
+ yr_old = y_rechts;
+ xl_old = x_links;
+ yl_old = y_links;
+ old_lb = LButton;
+ old_rb = RButton;
+ old_mode = mode;
  
-   for(int i = 0; i < old.length(); i++){
+ current[0]= x_links;
+ current[1]= y_links;
+ current[2]= x_rechts;
+ current[3]= y_rechts;
+ current[4]= LButton;
+ current[5] = RButton;
+ 
+ old_color = picked_color;
+   for(int i = 0; i < sizeof(old); i++){
      if(old[i] != current[i]){
-        old[i] = current[i];
-        sendbluetooth("{"+names[i] + current[i]+"}");
+        sendBluetooth("{"+names[i] + current[i]+"}");
       }
    }
+  old = current;
 }
 
-void sendbluetooth(String string){
+void sendBluetooth(String string){
        BT.println(string);
        BT.flush();  
 }
