@@ -8,30 +8,34 @@ Description:    Bluetooth
 
 import bluetooth
 import serial
-import Mode
-
+from Mode import Mode
+import json
+from pprint import pprint
 
 class Bluetooth:
-    mode = Mode.Mode()
+    mode = Mode()
 
     def __init__(self):
         self.sock = self.connect()
 
     def read_data(self):
         # send it to arduino
-        ser = serial.Serial('/dev/ttyUSB0', 9600)
+        # ser = serial.Serial('/dev/ttyUSB0', 9600)
 
         while 1:
             try:
                 data = self.sock.recv(1024)                # read incoming data
                 print("data: %s", data)
+                json_receive = json.load(data)
+                print(json_receive)
                 # print('data %s', data)
                 #if len(data)> 1:
                 #    array = data.split("\r\n")                    # splits the incoming data in an array
                 #    # print('array %s', ''.join(array))
                 #    last_number = [len(array) - 1]
                 #    ser.write(last_number)                   # write data to arduino
-                #    self.mode.init_modes(last_number) # give result
+                # self.mode.init_modes(json_receive)   # give result
+
             except KeyboardInterrupt:
                 break
 
