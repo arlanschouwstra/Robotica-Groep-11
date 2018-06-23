@@ -7,7 +7,7 @@ Description:    Change modes
 
 import ax12 as x
 import Servo
-
+from LineDetection import LineDetection
 
 class Mode:
     y = x.Ax12()
@@ -38,6 +38,10 @@ class Mode:
         """________________LINE DANCE MODE_______________"""
         if result[10:11] == '1':
             pass
+
+        """________________LINE DETECTION________________"""
+        if result[10:11] == '4':
+            LineDetection().send_value_canon()
 
         """_____________TRANSPORT AND REBUILD____________"""
         if result[10:11] == '5':
