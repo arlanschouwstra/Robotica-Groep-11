@@ -49,31 +49,27 @@ while True:
     upper_yellow = np.array([220 * 0.5, 100 * 2.55, 100 * 2.55])
     lower_orange = np.array([200 * 0.5, 60 * 2.55, 60 * 2.55])
     upper_orange = np.array([250 * 0.5, 100 * 2.55, 100 * 2.55])
-    lower_blue = np.array([100,50,50])
-    upper_blue = np.array([150,50,50])
-    # masks for the given hsv colors.
+    
     mask1 = cv2.inRange(hsv, lower_red, upper_red)
     mask2 = cv2.inRange(hsv, lower_green, upper_green)
     mask3 = cv2.inRange(hsv, lower_yellow, upper_yellow)
     mask4 = cv2.inRange(hsv, lower_orange, upper_orange)
-    mask5 = cv2.inRange(hsv, lower_blue, upper_blue)
     
     # combining the masks together to see all blocks
     mergeMask = cv2.bitwise_or(mask1, mask2)
     mergeMask = cv2.bitwise_or(mergeMask, mask3)
     mergeMask = cv2.bitwise_or(mergeMask, mask4)
-    mergeMask = cv2.bitwise_or(mergeMask, mask5)
     
     #checking if the shape is rectangle
-#    findContours(mask1,blur)
-#    findContours(mask2,blur)
-#    findContours(mask3,blur)
-#    findContours(mask4,blur)
-
+    findContours(mask1,blur)
+    findContours(mask2,blur)
+    findContours(mask3,blur)
+    findContours(mask4,blur)
+    
+    #Showing the esolution
     res = cv2.bitwise_and(blur, blur, mask = mergeMask)
     
     #show video screens
-    cv2.imshow('keypoints',frame2)
     cv2.imshow('blurredFrame', blur)
     cv2.imshow('res', res)
     #cv2.imshow('mask', mask)
