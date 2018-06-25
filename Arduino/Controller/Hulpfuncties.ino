@@ -1,31 +1,31 @@
-void drawMenus(uint8_t keuze) { 
-  // Menublokken
-  int color;
-  for (int i = 0; i < aantal_menus; i++) {
-    color = (i == 2 && keuze == i) ? picked_color : (keuze == i ? GRAY : BLACK);
-    tft.fillRect(i*boxsize, 0, boxsize, 40, color);
-  }
+void drawMenus(uint8_t keuze) {
+    // Menublokken
+    int color;
+    for (int i = 0; i < aantal_menus; i++) {
+        color = (i == 2 && keuze == i) ? picked_color : (keuze == i ? GRAY : BLACK);
+        tft.fillRect(i * boxsize, 0, boxsize, 40, color);
+    }
 
-  // Menu teksten
-  tft.setCursor(0, 2);
-  tft.setTextColor(ILI9341_WHITE);
-  tft.setTextSize(2);
-  tft.println(" Hoofd");
-  tft.println(" menu");
+    // Menu teksten
+    tft.setCursor(0, 2);
+    tft.setTextColor(ILI9341_WHITE);
+    tft.setTextSize(2);
+    tft.println(" Hoofd");
+    tft.println(" menu");
 
-  // 7 spaties per vak
-  tft.setCursor(0, 2);
-  tft.println("       Accu");
-  tft.println("       status");
+    // 7 spaties per vak
+    tft.setCursor(0, 2);
+    tft.println("       Accu");
+    tft.println("       status");
 
-  tft.setCursor(0, 2);
-  tft.println("              Color");
-  tft.println("              picker");
+    tft.setCursor(0, 2);
+    tft.println("              Color");
+    tft.println("              picker");
 
 
-  tft.setCursor(0, 2);
-  tft.println("                     RF");
-  tft.println("                     Con");
+    tft.setCursor(0, 2);
+    tft.println("                     RF");
+    tft.println("                     Con");
 }
 
 
@@ -46,7 +46,7 @@ void drawButton(uint8_t keuze) {
 
     // Highlight de gekozen mode
     int color = keuze == mode ? ORANGE : BLACK;
-    
+
     if (keuze == 0) {
         text1 = "  Drive";
         text2 = "  mode";
@@ -71,7 +71,7 @@ void drawButton(uint8_t keuze) {
         text1 = "             Transport";
         text2 = "             & rebuild";
     }
-    
+
     tft.fillRoundRect(x, y, 120, 55, 15, color);
     tft.drawRoundRect(x, y, 120, 55, 15, ILI9341_WHITE);
     tft.setCursor(0, y + 13);
@@ -85,12 +85,12 @@ void drawButton(uint8_t keuze) {
 void handleMenus() {
     //PC.println(state);
     switch (state) {
-         // Hoofdmenu ------------------------------------------------------------------
-         case 0:
+        // Hoofdmenu ------------------------------------------------------------------
+        case 0:
             tft.fillRect(0, 40, 320, 200, GRAY);
             for (int i = 0; i < 6; i++) drawButton(i);  // Doet hetzelfde als hierboven staat
             break;
-        // Batterij status ------------------------------------------------------------
+            // Batterij status ------------------------------------------------------------
         case 1:
             tft.fillRect(0, 40, 320, 200, GRAY);
             tft.setCursor(0, 60);
@@ -106,7 +106,7 @@ void handleMenus() {
             tft.print(volt);
             tft.print("A");
             break;
-        // Colorpicker   ------------------------------------------------------------
+            // Colorpicker   ------------------------------------------------------------
         case 2:
             //tft.fillRect(0, 40, 320, 200, GRAY);
             drawHSL();
@@ -118,110 +118,114 @@ void handleMenus() {
 // -------------- Functies voor de colorpicker --------------
 // Get 16-bit equivalent of 24-bit color
 uint16_t RGB(uint8_t r, uint8_t g, uint8_t b) {
-  return ((r / 8) << 11) | ((g / 4) << 5) | (b / 8);
+    return ((r / 8) << 11) | ((g / 4) << 5) | (b / 8);
 }
 
-float hue2rgb (float p, float q, float t) {
-  if (t < 0) t += 1;
-  if (t > 1) t -= 1;
-  if (t < 1.0 / 6) return p + (q - p) * 6 * t;
-  if (t < 1.0 / 2) return q;
-  if (t < 2.0 / 3) return p + (q - p) * (2.0 / 3 - t) * 6;
-  return p;
+float hue2rgb(float p, float q, float t) {
+    if (t < 0) t += 1;
+    if (t > 1) t -= 1;
+    if (t < 1.0 / 6) return p + (q - p) * 6 * t;
+    if (t < 1.0 / 2) return q;
+    if (t < 2.0 / 3) return p + (q - p) * (2.0 / 3 - t) * 6;
+    return p;
 }
 
 uint16_t hslToRgb(float h, float s, float l) {
-  float r, g, b;
+    float r, g, b;
 
-  if (s == 0) {
-    r = g = b = l; // achromatic
-  } else {
-    float q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-    float p = 2 * l - q;
-    r = hue2rgb(p, q, h + 1.0 / 3);
-    g = hue2rgb(p, q, h);
-    b = hue2rgb(p, q, h - 1.0 / 3);
-  }
-  return RGB(min(r * 255, 255), min(g * 255, 255), min(b * 255, 255));
+    if (s == 0) {
+        r = g = b = l; // achromatic
+    } else {
+        float q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        float p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1.0 / 3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1.0 / 3);
+    }
+    return RGB(min(r * 255, 255), min(g * 255, 255), min(b * 255, 255));
 }
 
 void drawHSL() {
-  tft.fillRect(0, 40, 320, 200, RGB(0, 0, 0));
-  float hue;
-  float saturation = 1;
-  float lightness;
-  unsigned int height = 240;
-  unsigned int width = 320;
-  for (unsigned int x = 0; x < width; x += 1) {
-    hue = ((float)x) / width;
-    for (unsigned int y = 40; y < height; y += 1) {
-      lightness = ((float)y-40) / (height - 10); // top NUM_WHITE_PIXELS pixels represent white, full power
-      
-      tft.drawPixel(x, y, hslToRgb(hue, saturation, lightness));
+    tft.fillRect(0, 40, 320, 200, RGB(0, 0, 0));
+    float hue;
+    float saturation = 1;
+    float lightness;
+    unsigned int height = 240;
+    unsigned int width = 320;
+    for (unsigned int x = 0; x < width; x += 1) {
+        hue = ((float) x) / width;
+        for (unsigned int y = 40; y < height; y += 1) {
+            lightness = ((float) y - 40) / (height - 10); // top NUM_WHITE_PIXELS pixels represent white, full power
+
+            tft.drawPixel(x, y, hslToRgb(hue, saturation, lightness));
+        }
     }
-  }
 }
 
-bool checkChange(){
- xr_old = x_rechts;
- yr_old = y_rechts;
- xl_old = x_links;
- yl_old = y_links;
- old_lb = LButton;
- old_rb = RButton;
- old_mode = mode;
- old[0]= xl_old;
- old[1]= yl_old;
- old[2]= xr_old;
- old[3]= yr_old;
- //old[4]= LButton;
-// old[5] = RButton;
-// old[6] = mode;
- current[0]= x_links;
- current[1]= y_links;
- current[2]= x_rechts;
- current[3]= y_rechts;
- //current[4]= LButton;
- //current[5] = RButton;
- //current[6] = mode;
- 
- old_color = picked_color;
-   for(int i = 0; i < sizeof(old); i++){
-     int oldNumber = old[i];
-     int currentNumber = current[i];
-     if(oldNumber != currentNumber){
-        old[i] = currentNumber;
-        String numberToSend = String(currentNumber);
-        sendBluetooth(numberToSend);
-      }
-   }
+bool checkChange() {
+    xr_old = x_rechts;
+    yr_old = y_rechts;
+    xl_old = x_links;
+    yl_old = y_links;
+    old_lb = LButton;
+    old_rb = RButton;
+    old_mode = mode;
+    current[0] = x_links;
+    current[1] = y_links;
+    current[2] = x_rechts;
+    current[3] = y_rechts;
+    current[4] = LButton;
+    current[5] = RButton;
+    current[6] = mode;
+
+    old_color = picked_color;
+    int i;
+    int oldNumber;
+    int currentNumber;
+    for (i = 0; i < sizeof(old); i++) {
+        oldNumber = old[i];
+        currentNumber = current[i];
+        if (oldNumber != currentNumber) {
+            old[i] = currentNumber;
+            String numberToSend = String(currentNumber);
+            sendBluetooth(numberToSend);
+        }
+    }
+    old[0] = xl_old;
+    old[1] = yl_old;
+    old[2] = xr_old;
+    old[3] = yr_old;
+    old[4] = LButton;
+    old[5] = RButton;
+    old[6] = mode;
 }
 
-void sendBluetooth(String string){
-       BT.println(string);
-       BT.flush();  
+void sendBluetooth(String string) {
+    BT.println(string);
+    BT.flush();
 }
 
 void sendToScreen(int number, int data) {
-      PC.println(number + data);
+    PC.println(number + data);
 }
 
-void checkModeVsOldMode(int newMode, int oldMode){
-      if (newMode != oldMode) {
-       drawButton(mode);
-       drawButton(old_mode);
-       //handleMenus();
-       old_mode = mode;
-      }  
+void checkModeVsOldMode(int newMode, int oldMode) {
+    if (newMode != oldMode) {
+        drawButton(mode);
+        drawButton(old_mode);
+        //handleMenus();
+        old_mode = mode;
+    }
 }
-bool IsBetweenNumbers(int value, int number1, int number2){
+
+bool IsBetweenNumbers(int value, int number1, int number2) {
     return value > number1 && value < number2;
 }
 
-void handleTouchEvent(){
-      // Retrieve a point  
+void handleTouchEvent() {
+    // Retrieve a point
     TS_Point px = ctp.getPoint(),
-              p = ctp.getPoint();
+            p = ctp.getPoint();
 
     // flip it around to match the screen.
     p.x = map(px.y, 0, 320, 320, 0);
@@ -240,8 +244,8 @@ void handleTouchEvent(){
                 break;
             }
         }
-    // Geen touch op menu, handle menu opties
-    // Handlemenus() vervangen wegens knipperen van scherm
+        // Geen touch op menu, handle menu opties
+        // Handlemenus() vervangen wegens knipperen van scherm
     } else if (state == 0) {  // Hoofdmenu
         if (IsBetweenNumbers(x, 18, 138)) {
             if (IsBetweenNumbers(y, 45, 100)) {
@@ -264,7 +268,7 @@ void handleTouchEvent(){
                 mode = 5;
             }
         }
-     checkModeVsOldMode(mode, old_mode);
+        checkModeVsOldMode(mode, old_mode);
     } else if (state == 2) {  // Colorpicker
         float hue = (float) x / 320.0;
         float saturation = 1;
