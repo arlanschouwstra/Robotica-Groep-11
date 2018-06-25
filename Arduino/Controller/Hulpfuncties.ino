@@ -170,39 +170,28 @@ bool checkChange() {
     old_lb = LButton;
     old_rb = RButton;
     old_mode = mode;
-    current[0] = x_links;
-    current[1] = y_links;
-    current[2] = x_rechts;
-    current[3] = y_rechts;
+    old_color = picked_color;
+    current[0] = x_rechts;
+    current[1] = y_rechts;
+    current[2] = x_links;
+    current[3] = y_links;
     current[4] = LButton;
     current[5] = RButton;
     current[6] = mode;
-
-    old_color = picked_color;
     int i;
-    int oldNumber;
-    int currentNumber;
-    for (i = 0; i < sizeof(old); i++) {
-        oldNumber = old[i];
-        currentNumber = current[i];
-        if (oldNumber != currentNumber) {
-            old[i] = currentNumber;
-            String numberToSend = String(currentNumber);
-            sendBluetooth(numberToSend);
+    String name1;
+    for (i = 0; i < 7; i++) {
+        name1 = names[i];
+        if (old[i] != current[i]) {
+        //    PC.println("Equals: " + String(old[i]) + " " + String(current[i]) + " Position:" + String(i) );
+            old[i] = current[i];
+            sendBluetooth(names[i] + String(current[i]));
         }
     }
-    old[0] = xl_old;
-    old[1] = yl_old;
-    old[2] = xr_old;
-    old[3] = yr_old;
-    old[4] = LButton;
-    old[5] = RButton;
-    old[6] = mode;
 }
 
 void sendBluetooth(String string) {
     BT.println(string);
-    BT.flush();
 }
 
 void sendToScreen(int number, int data) {

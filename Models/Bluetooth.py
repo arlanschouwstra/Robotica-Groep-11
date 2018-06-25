@@ -21,15 +21,14 @@ class Bluetooth:
     def read_data(self):
         # send it to arduino
         # ser = serial.Serial('/dev/ttyUSB0', 9600)
-
-        while 1:
+        while self.sock.connected():
             try:
-                data = self.sock.recv(1024)                # read incoming data
-                print("data: %s", data)
-                json_receive = json.load(data)
-                print(json_receive)
-                # print('data %s', data)
-                #if len(data)> 1:
+                data = self.sock.recv(8)                # read incoming data
+                data_split = data.split()
+
+                print("splitted data: %s", data_split)
+
+                # if len(data)> 1:
                 #    array = data.split("\r\n")                    # splits the incoming data in an array
                 #    # print('array %s', ''.join(array))
                 #    last_number = [len(array) - 1]

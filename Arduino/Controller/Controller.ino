@@ -56,18 +56,20 @@ int LButton_old = 0;
 int RButton_old = 0;
 
 // Flank variabelen
-int xr_old = x_rechts;
-int yr_old = y_rechts;
-int xl_old = x_links;
-int yl_old = y_links;
-boolean old_lb = LButton;
-boolean old_rb = RButton;
-int old_mode = mode;
+int xr_old = 0;
+int yr_old = 0;
+int xl_old = 0;
+int yl_old = 0;
+boolean old_lb = 0;
+boolean old_rb = 0;
+int old_mode = 0;
 uint16_t picked_color = 0;
 uint16_t old_color = picked_color;
-int old[7];
-String names[] = {"lx: ", "ly: ", "rx: ", "ry: ", "LB: ", "RB: ", "mode: "};
-int current[7];
+//int old[7];
+int old[7] = {xl_old, yl_old, xr_old, yr_old, old_lb, old_rb, mode};
+int current[7] = {x_links, y_links, x_rechts, y_rechts, LButton, RButton, mode};
+String names[7] = {"lx: ", "ly: ", "rx: ", "ry: ", "LB: ", "RB: ", "md: "};
+//int current[7];
 int y;
 int x;
 
@@ -101,7 +103,7 @@ void setup(void) {
     PC.println(F("Cap Touch Paint!"));
     BT.begin(9600);
     tft.begin();
-
+    
     if (!ctp.begin(40)) { // pass in 'sensitivity' coefficient
         PC.println("Couldn't start FT6206 touchscreen controller");
         while (1);
@@ -111,17 +113,17 @@ void setup(void) {
 
     picked_color = GRAY;
     tft.setRotation(1);
-    old[0] = x_links;
-    old[1] = y_links;
-    old[2] = x_rechts;
-    old[3] = y_rechts;
+    //old[0] = x_links;
+    //old[1] = y_links;
+    //old[2] = x_rechts;
+    //old[3] = y_rechts;
 // old[4]= LButton;
     //old[5] = RButton;
     //old[6] = mode;
-    current[0] = x_links;
-    current[1] = y_links;
-    current[2] = x_rechts;
-    current[3] = y_rechts;
+    //current[0] = x_links;
+   // current[1] = y_links;
+    //current[2] = x_rechts;
+   // current[3] = y_rechts;
 // current[4]= LButton;
 // current[5] = RButton;
 // current[6] = mode;
