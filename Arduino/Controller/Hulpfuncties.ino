@@ -187,9 +187,11 @@ bool checkChange(){
  
  old_color = picked_color;
    for(int i = 0; i < sizeof(old); i++){
-     if(old[i] != current[i]){
-        old[i] = current[i];
-        String numberToSend = String(1);
+     int oldNumber = old[i];
+     int currentNumber = current[i];
+     if(oldNumber != currentNumber){
+        old[i] = currentNumber;
+        String numberToSend = String(currentNumber);
         sendBluetooth(numberToSend);
       }
    }

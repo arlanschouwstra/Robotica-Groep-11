@@ -20,11 +20,11 @@ Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
 
 // Aantal menus
 #define aantal_menus  4
-int boxsize = 320/aantal_menus;
+int boxsize = 320 / aantal_menus;
 
 // Huidige status van controller, oftewel in welk menu we zitten
 int state = 0,
-    old_state = 0;
+        old_state = 0;
 
 // Mode van de robot
 int mode = 0;
@@ -87,13 +87,13 @@ void setup(void) {
     pinMode(RButton_pin, INPUT);
 
     pinMode(A8, INPUT);
-    pinMode(A9, INPUT );
+    pinMode(A9, INPUT);
     pinMode(A12, INPUT);
     pinMode(A13, INPUT);
-    
+
     pinMode(18, OUTPUT); // BT TX
     pinMode(19, INPUT);  // BT RX
-    
+
     while (!Serial); // used for leonardo debugging
 
     // Initialiseer Seriele verbindingen en scherm
@@ -108,37 +108,37 @@ void setup(void) {
     }
 
     PC.println("Capacitive touchscreen started");
-    
+
     picked_color = GRAY;
     tft.setRotation(1);
-  old[0]= x_links;
- old[1]= y_links;
- old[2]= x_rechts;
- old[3]= y_rechts;
+    old[0] = x_links;
+    old[1] = y_links;
+    old[2] = x_rechts;
+    old[3] = y_rechts;
 // old[4]= LButton;
- //old[5] = RButton;
- //old[6] = mode;
- current[0]= x_links;
- current[1]= y_links;
- current[2]= x_rechts;
- current[3]= y_rechts;
+    //old[5] = RButton;
+    //old[6] = mode;
+    current[0] = x_links;
+    current[1] = y_links;
+    current[2] = x_rechts;
+    current[3] = y_rechts;
 // current[4]= LButton;
 // current[5] = RButton;
 // current[6] = mode;
- 
+
     drawMenus(0);
     handleMenus();
 }
 
 void loop() {
     // Zodra joystick waardes veranderen stuur via serieel of BT
-        // Flank variabelen
+    // Flank variabelen
     checkChange();
     // Wait for a touch
     if (!ctp.touched()) {
         return;
     }
-    
+
     handleTouchEvent();
 }
 
