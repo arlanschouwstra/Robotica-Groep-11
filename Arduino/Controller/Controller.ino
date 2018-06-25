@@ -65,10 +65,11 @@ boolean old_rb = RButton;
 int old_mode = mode;
 uint16_t picked_color = 0;
 uint16_t old_color = picked_color;
-int old[] = {xl_old, yl_old, xr_old, yr_old, LButton_old, RButton_old, old_mode};
+int old[7];
 String names[] = {"lx: ", "ly: ", "rx: ", "ry: ", "LB: ", "RB: ", "mode: "};
-int current[] = {x_links, y_links, x_rechts, y_rechts, LButton, RButton, mode};
-
+int current[7];
+int y;
+int x;
 
 long int timer = millis();
 String wired_string;
@@ -110,7 +111,21 @@ void setup(void) {
     
     picked_color = GRAY;
     tft.setRotation(1);
-
+  old[0]= x_links;
+ old[1]= y_links;
+ old[2]= x_rechts;
+ old[3]= y_rechts;
+ old[4]= LButton;
+ old[5] = RButton;
+ old[6] = mode;
+ current[0]= x_links;
+ current[1]= y_links;
+ current[2]= x_rechts;
+ current[3]= y_rechts;
+ current[4]= LButton;
+ current[5] = RButton;
+ current[6] = mode;
+ 
     drawMenus(0);
     handleMenus();
 }

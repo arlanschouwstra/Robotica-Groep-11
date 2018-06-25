@@ -163,7 +163,7 @@ void drawHSL() {
 }
 
 bool checkChange(){
-     xr_old = x_rechts;
+ xr_old = x_rechts;
  yr_old = y_rechts;
  xl_old = x_links;
  yl_old = y_links;
@@ -177,10 +177,12 @@ bool checkChange(){
  current[3]= y_rechts;
  current[4]= LButton;
  current[5] = RButton;
+ current[6] = mode;
  
  old_color = picked_color;
    for(int i = 0; i < sizeof(old); i++){
      if(old[i] != current[i]){
+        old[i] = current[i];
         sendBluetooth("{"+names[i] + current[i]+"}");
       }
    }
@@ -197,12 +199,12 @@ void sendToScreen(int number, int data) {
 }
 
 void checkModeVsOldMode(int newMode, int oldMode){
-                if (newMode != oldMode) {
-                    drawButton(mode);
-                    drawButton(old_mode);
-                    //handleMenus();
-                    old_mode = mode;
-                }  
+      if (newMode != oldMode) {
+       drawButton(mode);
+       drawButton(old_mode);
+       //handleMenus();
+       old_mode = mode;
+      }  
 }
 
 void handleTouchEvent(){
@@ -213,12 +215,13 @@ void handleTouchEvent(){
     // flip it around to match the screen.
     p.x = map(px.y, 0, 320, 320, 0);
     p.y = map(px.x, 0, 240, 0, 240);
-
+    y = p.y;
+    x = p.x;
     // alles onder y < 40 is menu
-    if (p.y < 40) {
+    if (y < 40) {
         // Menukeuze op basis van x coordinaat
         for (int i = 0; i < aantal_menus; i++) {
-            if (p.x < (i + 1) * boxsize) {
+            if (x < (i + 1) * boxsize) {
                 if (i != old_state) { // Voorkomen van flikkeren
                     drawMenus(i);
                     state = i;
@@ -229,32 +232,32 @@ void handleTouchEvent(){
     // Geen touch op menu, handle menu opties
     // Handlemenus() vervangen wegens knipperen van scherm
     } else if (state == 0) {  // Hoofdmenu
-        if (p.x > 18 && p.x < 138) {
-            if (p.y > 45 && p.y < 100) {
+        if (IsBetweenNumbers(x, 18, 138)) {
+            if (IsBetweenNumber(y, 45, 100)) {
                 mode = 0;
             }
-            if (p.y > 110 && p.y < 165) {
+            if (IsBetweenNumbers(y, 110, 165)) {
                 mode = 1;
             }
-            if (p.y > 175 && p.y < 230) {
+            if (IsBetweenNumbers(y, 175, 230)) {
                 mode = 2;
             }
-        } else if (p.x > 148 && p.x < 268) {
-            if (p.y > 45 && p.y < 100) {
+        } else if (IsBetweenNumbers(x, 148, 268)) {
+            if (IsBetweenNumbers(y, 45, 100)) {
                 mode = 3;
             }
-            if (p.y > 110 && p.y < 165) {
+            if (IsBetweenNumbers(y, 110, 165)) {
                 mode = 4;
             }
-            if (p.y > 175 && p.y < 230) {
+            if (IsBetweenNumbers(y, 175, 230)) {
                 mode = 5;
             }
         }
      checkModeVsOldMode(mode, old_mode);
     } else if (state == 2) {  // Colorpicker
-        float hue = (float) p.x / 320.0;
+        float hue = (float) x / 320.0;
         float saturation = 1;
-        float lightness = ((float) p.y - 40.0) / (240.0 - 10.0);
+        float lightness = ((float) y - 40.0) / (240.0 - 10.0);
         if (picked_color != hslToRgb(hue, saturation, lightness)) {
 
             tft.fillRect(2 * boxsize, 0, boxsize, 40, hslToRgb(hue, saturation, lightness));
@@ -272,6 +275,10 @@ void handleTouchEvent(){
         handleMenus();
         old_state = state;
     }
+}
+
+bool IsBetweenNumbers(int value, int number1, int number2){
+    return value > number1 && value < number2;
 }
 
 
