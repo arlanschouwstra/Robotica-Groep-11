@@ -170,23 +170,29 @@ bool checkChange(){
  old_lb = LButton;
  old_rb = RButton;
  old_mode = mode;
- 
+ old[0]= xl_old;
+ old[1]= yl_old;
+ old[2]= xr_old;
+ old[3]= yr_old;
+ //old[4]= LButton;
+// old[5] = RButton;
+// old[6] = mode;
  current[0]= x_links;
  current[1]= y_links;
  current[2]= x_rechts;
  current[3]= y_rechts;
- current[4]= LButton;
- current[5] = RButton;
- current[6] = mode;
+ //current[4]= LButton;
+ //current[5] = RButton;
+ //current[6] = mode;
  
  old_color = picked_color;
    for(int i = 0; i < sizeof(old); i++){
      if(old[i] != current[i]){
         old[i] = current[i];
-        sendBluetooth("{"+names[i] + current[i]+"}");
+        String numberToSend = String(1);
+        sendBluetooth(numberToSend);
       }
    }
-  old = current;
 }
 
 void sendBluetooth(String string){
@@ -205,6 +211,9 @@ void checkModeVsOldMode(int newMode, int oldMode){
        //handleMenus();
        old_mode = mode;
       }  
+}
+bool IsBetweenNumbers(int value, int number1, int number2){
+    return value > number1 && value < number2;
 }
 
 void handleTouchEvent(){
@@ -233,7 +242,7 @@ void handleTouchEvent(){
     // Handlemenus() vervangen wegens knipperen van scherm
     } else if (state == 0) {  // Hoofdmenu
         if (IsBetweenNumbers(x, 18, 138)) {
-            if (IsBetweenNumber(y, 45, 100)) {
+            if (IsBetweenNumbers(y, 45, 100)) {
                 mode = 0;
             }
             if (IsBetweenNumbers(y, 110, 165)) {
@@ -275,10 +284,6 @@ void handleTouchEvent(){
         handleMenus();
         old_state = state;
     }
-}
-
-bool IsBetweenNumbers(int value, int number1, int number2){
-    return value > number1 && value < number2;
 }
 
 

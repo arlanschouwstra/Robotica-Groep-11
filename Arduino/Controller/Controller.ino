@@ -115,16 +115,16 @@ void setup(void) {
  old[1]= y_links;
  old[2]= x_rechts;
  old[3]= y_rechts;
- old[4]= LButton;
- old[5] = RButton;
- old[6] = mode;
+// old[4]= LButton;
+ //old[5] = RButton;
+ //old[6] = mode;
  current[0]= x_links;
  current[1]= y_links;
  current[2]= x_rechts;
  current[3]= y_rechts;
- current[4]= LButton;
- current[5] = RButton;
- current[6] = mode;
+// current[4]= LButton;
+// current[5] = RButton;
+// current[6] = mode;
  
     drawMenus(0);
     handleMenus();
