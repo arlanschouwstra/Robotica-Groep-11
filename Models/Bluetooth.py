@@ -30,8 +30,10 @@ class Bluetooth:
                 print("splitted data: %s", data_split)
                 data = '{"xr": 12}'
                 jsonObject = json.loads(data)
-                key = sorted(jsonObject.keys())
-                value = sorted(jsonObject[key])
+                key = list(jsonObject.keys())[0]
+                # print('key : %s', key)
+                value = jsonObject[key]
+                # print('value : %s', value)
                 if key == 'md':
                     self.mode.init_modes(value)  # give result
                 # if len(data) > 1:
