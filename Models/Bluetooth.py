@@ -28,24 +28,17 @@ class Bluetooth:
                 data_split = data.split()
 
                 print("splitted data: %s", data_split)
-                data = '{"xr": 12}'
+                # data = '{"xr": 12}'
                 jsonObject = json.loads(data)
                 key = list(jsonObject.keys())[0]
-                # print('key : %s', key)
+                print('key : %s', key)
                 value = jsonObject[key]
-                # print('value : %s', value)
+                print('value : %s', value)
                 if key == 'md':
                     self.mode.change_mode(value)  # give result
                 else:
                     self.mode.init_modes(key, value)   # give result
-            # if len(data) > 1:
-                #     array = data.split("")                    # splits the incoming data in an array
-                # #    # print('array %s', ''.join(array))
-                #     last_number = [len(array) - 1]
-                #     ser.write(last_number)                   # write data to arduino
-                #     self.mode.init_modes(last_number)   # give result
-                #self.mode.init_modes(value)   # give result
-
+                ser.write(value)
             except KeyboardInterrupt:
                 break
 
