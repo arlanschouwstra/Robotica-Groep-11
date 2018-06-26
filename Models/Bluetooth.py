@@ -21,20 +21,26 @@ class Bluetooth:
     def read_data(self):
         # send it to arduino
         ser = serial.Serial('/dev/ttyUSB0', 9600)
-        
+
         while self.sock.connected():
             try:
                 data = self.sock.recv(8)                # read incoming data
                 data_split = data.split()
 
                 print("splitted data: %s", data_split)
-
-                if len(data) > 1:
-                    array = data.split("")                    # splits the incoming data in an array
-                #    # print('array %s', ''.join(array))
-                    last_number = [len(array) - 1]
-                    ser.write(last_number)                   # write data to arduino
-                    self.mode.init_modes(last_number)   # give result
+                data = '{"xr": 12}'
+                jsonObject = json.loads(data)
+                key = sorted(jsonObject.keys())
+                value = sorted(jsonObject[key])
+                if key == 'md':
+                    self.mode.init_modes(value)  # give result
+                # if len(data) > 1:
+                #     array = data.split("")                    # splits the incoming data in an array
+                # #    # print('array %s', ''.join(array))
+                #     last_number = [len(array) - 1]
+                #     ser.write(last_number)                   # write data to arduino
+                #     self.mode.init_modes(last_number)   # give result
+                #self.mode.init_modes(value)   # give result
 
             except KeyboardInterrupt:
                 break
