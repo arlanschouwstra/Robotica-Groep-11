@@ -35,8 +35,10 @@ class Bluetooth:
                 value = jsonObject[key]
                 # print('value : %s', value)
                 if key == 'md':
-                    self.mode.init_modes(value)  # give result
-                # if len(data) > 1:
+                    self.mode.change_mode(value)  # give result
+                else:
+                    self.mode.init_modes(key, value)   # give result
+            # if len(data) > 1:
                 #     array = data.split("")                    # splits the incoming data in an array
                 # #    # print('array %s', ''.join(array))
                 #     last_number = [len(array) - 1]

@@ -126,7 +126,7 @@ class Servo:
                            1)
         time.sleep(0.01)
 
-    def move_all_servos(self, data):
+    def move_all_servos(self, key, data):
         # initialize servos
         # start_positions = [[3, 512, True, True, True],  # right under for up/down
         #                    [4, 512, False, False, False],  # top servo
@@ -136,16 +136,16 @@ class Servo:
         #                    [41, 512, True, True, False],  # left under for up/down
         #                    [51, 812, True, False, False]]
 
-        if 'lx' in data:
-            self.move(data["lx"], 41, 512, True, False)
-        if 'ly' in data:
-            self.move(data["ly"], 3, 512, True, True)
-            self.move(data["ly"], 15, 512, False, True)
-            self.move(data["ly"], 23, 512, False, True)
-        if 'rx' in data:
-            self.move(data["rx"], 6, 200, False, False)
-        if 'ry' in data:
-            self.move(data["ry"], 51, 512, True, False)
+        if 'lx' == key:
+            self.move(data, 41, 512, True, False)
+        if 'ly' == key:
+            self.move(data, 3, 512, True, True)
+            self.move(data, 15, 512, False, True)
+            self.move(data, 23, 512, False, True)
+        if 'rx' == key:
+            self.move(data, 6, 200, False, False)
+        if 'ry' == key:
+            self.move(data, 51, 512, True, False)
 
             # self.move(data, servos[0], servos[1], servos[2], servos[3], servos[4])
 
