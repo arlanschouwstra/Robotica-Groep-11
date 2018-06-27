@@ -82,7 +82,7 @@ class CodecInfo(tuple):
     """Codec details when looking up the codec registry"""
 
     # Private API to allow Python to blacklist the known non-Unicode
-    # codecs in the standard Models. A more general mechanism to
+    # codecs in the standard library. A more general mechanism to
     # reliably distinguish test encodings from other codecs will hopefully
     # be defined for Python 3.5
     #
@@ -472,14 +472,16 @@ class StreamReader(Codec):
             self.charbuffer = "".join(self.linebuffer)
             self.linebuffer = None
 
+        if chars < 0:
+            # For compatibility with other read() methods that take a
+            # single argument
+            chars = size
+
         # read until we get the required number of characters (if available)
         while True:
             # can the request be satisfied from the character buffer?
             if chars >= 0:
                 if len(self.charbuffer) >= chars:
-                    break
-            elif size >= 0:
-                if len(self.charbuffer) >= size:
                     break
             # we need more data
             if size < 0:

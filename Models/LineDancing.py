@@ -11,18 +11,26 @@ class LineDance():
         self.detect()
 
     def detect(self):
+        is_running_612 = False  # type: bool
+        is_running_812 = False  # type: bool
+
         while True:
             if self.ser.inWaiting() > 0:
-                inputValue = self.ser.readline()
-                print(inputValue)
-                if inputValue.startswith('{beat: 8}') or inputValue.startswith('{beat: 7}'):
-                    print('Bo0M!!')
-                    if self.read_pos(1) >= 805:
-                        self.move_serv(1, 612, 200)
+                input_value = self.ser.readline()
+                print(input_value)
 
-                    if self.read_pos(1) <= 614:
+                if input_value.startswith('{beat: 8}'):
+                    print('Bo0M!!')
+                    if self.read_pos(1) >= 810 and not is_running_612:
+                        self.move_serv(1, 612, 200)
+                        is_running_812 = False
+                        is_running_612 = True
+
+                    elif self.read_pos(1) <= 614 and not is_running_812:
                         self.move_serv(1, 812, 200)
-                time.sleep(0.5)
+                        is_running_812 = True
+                        is_running_612 = False
+
     def move_serv(self, servo_id, position, speed):
         return self.move(servo_id, position, speed)
 

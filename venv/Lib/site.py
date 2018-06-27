@@ -362,9 +362,9 @@ def addusersitepackages(known_paths):
 def setBEGINLIBPATH():
     """The OS/2 EMX port has optional extension modules that do double duty
     as DLLs (and must use the .DLL file extension) for other extensions.
-    The Models search path needs to be amended so these will be found
+    The library search path needs to be amended so these will be found
     during module import.  Use BEGINLIBPATH so that these are at the start
-    of the Models search path.
+    of the library search path.
 
     """
     dllpath = os.path.join(sys.prefix, "Lib", "lib-dynload")

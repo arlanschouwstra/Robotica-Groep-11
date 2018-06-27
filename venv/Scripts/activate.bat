@@ -1,5 +1,5 @@
 @echo off
-set "VIRTUAL_ENV=C:\Users\arlan\PycharmProjects\untitled\venv"
+set "VIRTUAL_ENV=C:\Users\arlan\Documents\GitHub\Robotica-Groep-11\venv"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"

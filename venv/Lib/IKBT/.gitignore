@@ -1,9 +1,0 @@
-*.pyc
-fk_eqns/*
-*_log.txt
-BT*_log.txt
-IK_*
-t.*
-*report.html
-.directory
-*.npy
