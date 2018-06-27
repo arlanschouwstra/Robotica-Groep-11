@@ -8,13 +8,13 @@ Description:    Servos
 
 import math
 from pyax12.connection import Connection
-import ax12 as x
+# import ax12 as x
 import time
 
 
 class Servo:
     """_______VARIABLES__________"""
-    y = x.Ax12()
+    # y = x.Ax12()
 
     def __init__(self):
         self.time = time
@@ -88,25 +88,25 @@ class Servo:
 
     def stop_all_servos(self):
         self.move_position(3,
-                           int(self.y.readPosition(3)),
+                           int(self.read_position(3)),
                            1)
         self.move_position(4,
-                           int(self.y.readPosition(4)),
+                           int(self.read_position(4)),
                            1)
         self.move_position(6,
-                           int(self.y.readPosition(6)),
+                           int(self.read_position(6)),
                            1)
         self.move_position(15,
-                           int(self.y.readPosition(15)),
+                           int(self.read_position(15)),
                            1)
         self.move_position(23,
-                           int(self.y.readPosition(23)),
+                           int(self.read_position(23)),
                            1)
         self.move_position(41,
-                           int(self.y.readPosition(41)),
+                           int(self.read_position(41)),
                            1)
         self.move_position(51,
-                           int(self.y.readPosition(51)),
+                           int(self.read_position(51)),
                            1)
         time.sleep(0.01)
 
