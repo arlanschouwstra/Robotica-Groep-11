@@ -8,7 +8,6 @@ Description:    Servos
 
 import math
 from pyax12.connection import Connection
-# import ax12 as x
 import time
 
 
@@ -111,15 +110,6 @@ class Servo:
         time.sleep(0.01)
 
     def move_all_servos(self, key, data):
-        # initialize servos
-        # start_positions = [[3, 512, True, True, True],  # right under for up/down
-        #                    [4, 512, False, False, False],  # top servo
-        #                    [6, 200, False, False, False],
-        #                    [15, 512, False, True, True],
-        #                    [23, 512, False, True, True],
-        #                    [41, 512, True, True, False],  # left under for up/down
-        #                    [51, 812, True, False, False]]
-
         if 'lx' == key:
             self.move(data, 41, 512, True, False)
         if 'ly' == key:
